@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初一英语背单词 - 译林版/人教版/外研版</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <header class="app-header">
+    <div class="header-left">
+      <span class="app-title">初一英语背单词</span>
+    </div>
+    <div class="header-right">
+      <select id="versionSelect" class="header-select" title="选择教材版本">
+        <!-- 由JS动态填充 -->
+      </select>
+      <select id="bookSelect" class="header-select" title="选择上/下册">
+        <!-- 由JS动态填充 -->
+      </select>
+    </div>
+  </header>
+
+  <!-- 主体区域 -->
+  <div class="app-body">
+    <!-- 左侧单元列表 -->
+    <aside class="unit-sidebar" id="unitSidebar">
+      <h3 class="sidebar-title">单元列表</h3>
+      <ul class="unit-list" id="unitList">
+        <!-- 由JS动态填充 -->
+      </ul>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+      <!-- Tab导航 -->
+      <nav class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="flashcard">单词卡</button>
+        <button class="tab-btn" data-tab="wordlist">生词表</button>
+        <button class="tab-btn" data-tab="phrases">短语</button>
+        <button class="tab-btn" data-tab="sentences">经典句子</button>
+        <button class="tab-btn" data-tab="textreader">课文讲解</button>
+        <button class="tab-btn" data-tab="grammar">语法</button>
+        <button class="tab-btn" data-tab="exam">中考真题</button>
+        <button class="tab-btn" data-tab="dictation">默写</button>
+        <button class="tab-btn" data-tab="wordbook">生词本</button>
+      </nav>
+
+      <!-- Tab内容区 -->
+      <div class="tab-content" id="tabContent">
+        <!-- 由JS动态填充 -->
+      </div>
+    </main>
+  </div>
+
+  <!-- 底部打卡状态条 -->
+  <footer class="app-footer">
+    <div class="footer-left" id="footerCheckinInfo">
+      <span class="footer-icon">📅</span>
+      <span id="checkinStatusText">今日尚未打卡</span>
+    </div>
+    <div class="footer-center" id="footerStreakInfo">
+      <span class="footer-icon">🔥</span>
+      <span id="streakText">连续打卡：0天</span>
+    </div>
+    <div class="footer-right">
+      <button class="checkin-btn" id="checkinBtn">今日打卡</button>
+    </div>
+  </footer>
+
+  <!-- 打卡日历弹窗 -->
+  <div class="modal-overlay" id="calendarModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>打卡日历</h3>
+        <button class="modal-close" id="calendarClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="calendar-nav">
+          <button id="prevMonth">&lt; 上月</button>
+          <span id="calendarTitle">2026年1月</span>
+          <button id="nextMonth">下月 &gt;</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid">
+          <!-- 由JS动态填充 -->
+        </div>
+        <div class="calendar-stats" id="calendarStats">
+          <!-- 由JS动态填充 -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 打卡成功弹窗 -->
+  <div class="modal-overlay" id="encourageModal">
+    <div class="modal-content encourage-modal">
+      <div class="modal-body">
+        <p class="encourage-text" id="encourageText"></p>
+        <button class="checkin-btn" id="encourageClose">太棒了！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 关键词解释弹窗 -->
+  <div class="modal-overlay" id="keywordModal">
+    <div class="modal-content keyword-modal">
+      <div class="modal-header">
+        <h3 id="keywordTitle">关键词解释</h3>
+        <button class="modal-close" id="keywordClose">&times;</button>
+      </div>
+      <div class="modal-body" id="keywordBody">
+        <!-- 由JS动态填充 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 数据脚本（必须按顺序加载） -->
+  <script src="js/data-app.js"></script>
+  <script src="js/data-7a.js"></script>
+  <script src="js/data-7b.js"></script>
+  <script src="js/data-other.js"></script>
+  <!-- 逻辑脚本 -->
+  <script src="js/flashcard.js"></script>
+  <script src="js/dictation.js"></script>
+  <script src="js/text-reader.js"></script>
+  <script src="js/exam.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
