@@ -1383,3 +1383,174 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #9E9E9E;
 }
+
+/* ===== 错题详细分析面板 ===== */
+.exam-analysis {
+  display: none;
+  margin-top: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #FFCDD2;
+  background: #FFFBF0;
+}
+
+.exam-analysis.show {
+  display: block;
+  animation: analysisSlideIn 0.3s ease;
+}
+
+@keyframes analysisSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.analysis-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+  font-size: 16px;
+  font-weight: 600;
+  color: #C62828;
+}
+
+.analysis-header-icon {
+  font-size: 20px;
+}
+
+.analysis-compare {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #FAFAFA;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.compare-row {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.compare-wrong {
+  background: #FFEBEE;
+  border-left: 4px solid #F44336;
+}
+
+.compare-correct {
+  background: #E8F5E9;
+  border-left: 4px solid #4CAF50;
+}
+
+.compare-label {
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+}
+
+.compare-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.compare-wrong .compare-value {
+  color: #C62828;
+  text-decoration: line-through;
+}
+
+.compare-correct .compare-value {
+  color: #2E7D32;
+}
+
+.analysis-block {
+  padding: 12px 16px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.analysis-block:last-of-type {
+  border-bottom: none;
+}
+
+.analysis-block-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.analysis-block-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #555;
+}
+
+.analysis-block-wrong .analysis-block-title {
+  color: #C62828;
+}
+
+.analysis-block-correct .analysis-block-title {
+  color: #2E7D32;
+}
+
+.analysis-block-tip {
+  background: #E3F2FD;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.analysis-block-tip .analysis-block-title {
+  color: #1565C0;
+}
+
+.analysis-block-tip .analysis-block-body {
+  color: #1565C0;
+}
+
+.analysis-speak-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-top: 1px solid #E0E0E0;
+  background: #FFF3E0;
+  color: #E65100;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.analysis-speak-btn:hover {
+  background: #FFE0B2;
+}
+
+/* 答对时解析面板样式 */
+.exam-explanation.correct {
+  background: #E8F5E9;
+  border-left: 4px solid #4CAF50;
+}
+
+/* 移动端适配 */
+@media (max-width: 600px) {
+  .analysis-compare {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .analysis-header {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .analysis-block-title {
+    font-size: 14px;
+  }
+
+  .analysis-block-body {
+    font-size: 13px;
+  }
+}
