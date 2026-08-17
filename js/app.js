@@ -270,6 +270,50 @@ window.VocabApp = window.VocabApp || {};
       }
     },
 
+    /* ===== 单元解锁（闯关） ===== */
+
+    /**
+     * 获取已完成（通关）的单元集合
+     * @returns {Object} { "7a-u1": true, ... } true=已通关
+     */
+    getCompletedUnits: function () {
+      return this.get(VocabConfig.storageKeys.unitUnlock, {});
+    },
+
+    /**
+     * 标记某单元为已通关（完成打卡）
+     */
+    markUnitCompleted: function (unitId) {
+      var data = this.getCompletedUnits();
+      data[unitId] = true;
+      this.set(VocabConfig.storageKeys.unitUnlock, data);
+    },
+
+    /**
+     * 某单元是否已通关
+     */
+    isUnitCompleted: function (unitId) {
+      return !!this.getCompletedUnits()[unitId];
+    },
+
+    /**
+     * 某单元是否已解锁（可进入）
+     * 规则：第一个单元恒解锁；其余单元需上一个单元已通关
+     */
+    isUnitUnlocked: function (unitId) {
+      var units = getUnits();
+      for (var i = 0; i < units.length; i++) {
+        if (units[i].unitId === unitId) {
+          // 第一个单元永远解锁
+          if (i === 0) return true;
+          // 其余单元：上一个单元已通关才解锁
+          var prevUnit = units[i - 1];
+          return this.isUnitCompleted(prevUnit.unitId);
+        }
+      }
+      return false;
+    },
+
     /* ===== 默写成绩 ===== */
 
     getDictationScores: function () {
@@ -488,10 +532,20 @@ window.VocabApp = window.VocabApp || {};
 
     for (var i = 0; i < units.length; i++) {
       var unit = units[i];
+      var unlocked = Storage.isUnitUnlocked(unit.unitId);
+      var completed = Storage.isUnitCompleted(unit.unitId);
+
       var li = document.createElement('li');
       li.className = 'unit-item';
       if (unit.unitId === state.unitId) {
         li.classList.add('active');
+      }
+      if (completed) {
+        li.classList.add('completed');
+      }
+      // 未解锁且非当前选中：锁定态
+      if (!unlocked) {
+        li.classList.add('locked');
       }
       li.setAttribute('data-unit-id', unit.unitId);
 
@@ -506,8 +560,25 @@ window.VocabApp = window.VocabApp || {};
         li.appendChild(topicSpan);
       }
 
+      // 状态标记（🔒 锁定 / ✓ 已通关）
+      var badgeSpan = document.createElement('span');
+      badgeSpan.className = 'unit-badge';
+      if (completed) {
+        badgeSpan.textContent = '✓ 已通关';
+        badgeSpan.classList.add('badge-completed');
+      } else if (!unlocked) {
+        badgeSpan.textContent = '🔒 未解锁';
+        badgeSpan.classList.add('badge-locked');
+      }
+      li.appendChild(badgeSpan);
+
       li.addEventListener('click', function () {
         var unitId = this.getAttribute('data-unit-id');
+        // 未解锁的单元不可进入
+        if (!Storage.isUnitUnlocked(unitId)) {
+          showToast('🔒 请先完成上一个单元，再来挑战这一关！');
+          return;
+        }
         state.unitId = unitId;
         renderUnitList();
         switchTab(state.tab);
@@ -1040,6 +1111,32 @@ window.VocabApp = window.VocabApp || {};
     return div.innerHTML;
   }
 
+  /**
+   * 轻量级提示框（Toast）
+   */
+  function showToast(message) {
+    var existing = document.getElementById('appToast');
+    if (existing) existing.remove();
+
+    var toast = document.createElement('div');
+    toast.id = 'appToast';
+    toast.className = 'app-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // 触发出现动画
+    requestAnimationFrame(function () {
+      toast.classList.add('show');
+    });
+
+    setTimeout(function () {
+      toast.classList.remove('show');
+      setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, 2200);
+  }
+
   /* ============================================================
      暴露到全局
      ============================================================ */
@@ -1053,6 +1150,27 @@ window.VocabApp = window.VocabApp || {};
   VocabApp.switchTab = switchTab;
   VocabApp.renderTabContent = renderTabContent;
   VocabApp.escapeHtml = escapeHtml;
+  VocabApp.showToast = showToast;
+
+  /**
+   * 单词卡完成单元打卡后回调：刷新侧边栏解锁态，并提示奖励
+   */
+  VocabApp.onUnitCompleted = function (unitId) {
+    renderUnitList();
+    var units = getUnits();
+    var nextUnit = null;
+    for (var i = 0; i < units.length; i++) {
+      if (units[i].unitId === unitId) {
+        if (units[i + 1]) nextUnit = units[i + 1];
+        break;
+      }
+    }
+    if (nextUnit) {
+      showToast('🎉 通关成功！已解锁：' + nextUnit.title);
+    } else {
+      showToast('🏆 太厉害了！所有单元都通关啦！');
+    }
+  };
 
   /* ============================================================
      DOM加载完成后初始化

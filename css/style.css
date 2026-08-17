@@ -156,6 +156,113 @@ body {
   opacity: 0.7;
 }
 
+/* 单元锁定态（闯关未解锁） */
+.unit-item.locked {
+  cursor: not-allowed;
+  opacity: 0.55;
+  color: var(--text-light);
+}
+
+.unit-item.locked:hover {
+  background: transparent;
+  border-left-color: transparent;
+}
+
+.unit-item.completed {
+  border-left-color: var(--success, #4CAF50);
+}
+
+.unit-item.completed.active {
+  border-left-color: var(--success, #4CAF50);
+}
+
+/* 单元状态徽标：🔒 未解锁 / ✓ 已通关 */
+.unit-badge {
+  display: block;
+  font-size: 11px;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.unit-badge.badge-locked {
+  color: #9E9E9E;
+}
+
+.unit-badge.badge-completed {
+  color: #4CAF50;
+}
+
+/* 单词卡顶部：完成单元打卡栏 */
+.unit-complete-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.unit-complete-status {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.unit-complete-status.done {
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+.unit-complete-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 20px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.unit-complete-btn:hover {
+  background: var(--primary-dark);
+}
+
+.unit-complete-btn.done {
+  background: #4CAF50;
+  cursor: default;
+  opacity: 0.9;
+}
+
+/* 轻提示 Toast */
+.app-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 80px;
+  transform: translate(-50%, 20px);
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 24px;
+  font-size: 14px;
+  max-width: 86%;
+  text-align: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.app-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 /* ===== 主内容区 ===== */
 .main-content {
   flex: 1;
@@ -1375,6 +1482,26 @@ body {
 
   .unit-item .unit-topic {
     display: none;
+  }
+
+  .unit-item.locked {
+    opacity: 0.5;
+  }
+
+  .unit-badge {
+    display: inline-block;
+    margin-top: 0;
+    margin-left: 6px;
+    font-size: 11px;
+  }
+
+  .unit-complete-bar {
+    padding: 10px 12px;
+  }
+
+  .unit-complete-btn {
+    padding: 8px 14px;
+    font-size: 13px;
   }
 
   .tab-nav {

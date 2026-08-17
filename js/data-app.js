@@ -43,7 +43,8 @@ window.VocabConfig = {
     dictationScores: 'vocabApp_dictation_scores',
     examScores: 'vocabApp_exam_scores',
     wordbook: 'vocabApp_wordbook',
-    settings: 'vocabApp_settings'
+    settings: 'vocabApp_settings',
+    unitUnlock: 'vocabApp_unit_unlock'
   },
 
   /** 鼓励语列表 */
