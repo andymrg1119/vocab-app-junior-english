@@ -139,6 +139,14 @@ window.VocabApp.TextReader = (function () {
     if (VocabApp.speak) {
       VocabApp.speak(text);
     }
+    // 闯关：标记该句已朗读，刷新进度条（每句都朗读过即过关）
+    if (currentUnit && VocabApp.Storage && VocabApp.Storage.markItemRead) {
+      VocabApp.Storage.markItemRead(currentUnit.unitId, 'textreader', text);
+      sentenceEl.classList.add('read');
+      if (VocabApp.updateTabProgress) {
+        VocabApp.updateTabProgress(currentUnit, 'textreader');
+      }
+    }
   }
 
   /**

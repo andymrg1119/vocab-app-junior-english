@@ -35,7 +35,6 @@ window.VocabApp.Flashcard = (function () {
     container.innerHTML = buildHTML();
     bindEvents();
     updateCard();
-    updateUnitCompleteButton();
   }
 
   /**
@@ -43,10 +42,6 @@ window.VocabApp.Flashcard = (function () {
    */
   function buildHTML() {
     var html = '';
-    html += '  <div class="unit-complete-bar" id="unitCompleteBar">';
-    html += '    <span class="unit-complete-status" id="unitCompleteStatus"></span>';
-    html += '    <button class="unit-complete-btn" id="unitCompleteBtn">🎯 完成本单元打卡</button>';
-    html += '  </div>';
     html += '  <div class="flashcard-wrapper" id="flashcardWrapper">';
     html += '    <div class="flashcard" id="flashcard">';
     html += '      <div class="flashcard-face flashcard-front" id="cardFront">';
@@ -124,43 +119,6 @@ window.VocabApp.Flashcard = (function () {
         e.stopPropagation();
         markMastery(false);
       });
-    }
-
-    var completeBtn = document.getElementById('unitCompleteBtn');
-    if (completeBtn) {
-      completeBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        VocabApp.Storage.markUnitCompleted(currentUnit.unitId);
-        updateUnitCompleteButton();
-        // 通知外部刷新侧边栏解锁状态
-        if (VocabApp.onUnitCompleted) {
-          VocabApp.onUnitCompleted(currentUnit.unitId);
-        }
-      });
-    }
-  }
-
-  /**
-   * 更新单元完成按钮与状态文字
-   */
-  function updateUnitCompleteButton() {
-    if (!currentUnit) return;
-    var statusEl = document.getElementById('unitCompleteStatus');
-    var btn = document.getElementById('unitCompleteBtn');
-    if (!statusEl || !btn) return;
-
-    if (VocabApp.Storage.isUnitCompleted(currentUnit.unitId)) {
-      statusEl.textContent = '🎉 本单元已完成打卡';
-      statusEl.className = 'unit-complete-status done';
-      btn.textContent = '✓ 已通关';
-      btn.disabled = true;
-      btn.classList.add('done');
-    } else {
-      statusEl.textContent = '学完后点这里完成打卡，解锁下一单元';
-      statusEl.className = 'unit-complete-status';
-      btn.textContent = '🎯 完成本单元打卡';
-      btn.disabled = false;
-      btn.classList.remove('done');
     }
   }
 
@@ -287,6 +245,11 @@ window.VocabApp.Flashcard = (function () {
 
     // 更新学习进度
     VocabApp.Storage.updateProgress(currentUnit.unitId, currentIndex);
+
+    // 刷新闯关进度条（单词卡全部已掌握即过关）
+    if (VocabApp.updateTabProgress) {
+      VocabApp.updateTabProgress(currentUnit, 'flashcard');
+    }
   }
 
   return {

@@ -314,6 +314,51 @@ window.VocabApp = window.VocabApp || {};
       return false;
     },
 
+    /* ===== 逐项朗读记录（闯关） ===== */
+
+    /**
+     * 获取已朗读项集合
+     * @returns {Object} { "7a-u1|wordlist|grade": true, ... }
+     */
+    getReadItems: function () {
+      return this.get(VocabConfig.storageKeys.readItems, {});
+    },
+
+    /**
+     * 标记某单元的某环节某一项已朗读
+     */
+    markItemRead: function (unitId, section, itemKey) {
+      var data = this.getReadItems();
+      data[unitId + '|' + section + '|' + itemKey] = true;
+      this.set(VocabConfig.storageKeys.readItems, data);
+    },
+
+    /**
+     * 某单元的某环节某一项是否已朗读
+     */
+    isItemRead: function (unitId, section, itemKey) {
+      return !!this.getReadItems()[unitId + '|' + section + '|' + itemKey];
+    },
+
+    /* ===== 真题通关（闯关） ===== */
+
+    /**
+     * 标记某单元中考真题已全对通关
+     */
+    markExamPassed: function (unitId) {
+      var data = this.get(VocabConfig.storageKeys.examPass, {});
+      data[unitId] = true;
+      this.set(VocabConfig.storageKeys.examPass, data);
+    },
+
+    /**
+     * 某单元中考真题是否已全对通关
+     */
+    isExamPassed: function (unitId) {
+      var data = this.get(VocabConfig.storageKeys.examPass, {});
+      return !!data[unitId];
+    },
+
     /* ===== 默写成绩 ===== */
 
     getDictationScores: function () {
@@ -589,6 +634,159 @@ window.VocabApp = window.VocabApp || {};
   }
 
   /* ============================================================
+     闯关逻辑（Tab 级顺序解锁）
+     ============================================================ */
+
+  // 单元内各环节的闯关顺序（生词本为自由工具，不计入）
+  var TAB_ORDER = ['flashcard', 'wordlist', 'phrases', 'sentences', 'textreader', 'grammar', 'exam', 'dictation'];
+
+  var TAB_LABELS = {
+    flashcard: '单词卡（把每个单词都标记为已掌握）',
+    wordlist: '生词表（把每个单词都朗读过）',
+    phrases: '短语（把每个短语都朗读过）',
+    sentences: '经典句子（把每句都朗读过）',
+    textreader: '课文讲解（把每句都朗读过）',
+    grammar: '语法（把每个例句都朗读过）',
+    exam: '中考真题（做完一整套且全部答对）',
+    dictation: '默写（一次性全对）'
+  };
+
+  // 取某环节需要"朗读/完成"的项列表
+  function tabItems(unit, tabId) {
+    var i, j, result = [];
+    switch (tabId) {
+      case 'wordlist':
+        return unit.words || [];
+      case 'phrases':
+        return unit.phrases || [];
+      case 'sentences':
+        return unit.sentences || [];
+      case 'grammar':
+        if (unit.grammar && unit.grammar.points) {
+          for (i = 0; i < unit.grammar.points.length; i++) {
+            var gexs = unit.grammar.points[i].examples || [];
+            for (j = 0; j < gexs.length; j++) result.push(gexs[j]);
+          }
+        }
+        return result;
+      case 'textreader':
+        if (unit.text && unit.text.paragraphs) {
+          for (i = 0; i < unit.text.paragraphs.length; i++) {
+            var tsents = unit.text.paragraphs[i].sentences || [];
+            for (j = 0; j < tsents.length; j++) result.push(tsents[j]);
+          }
+        }
+        return result;
+      default:
+        return [];
+    }
+  }
+
+  // 取某一项的稳定 key（用于朗读记录）
+  function itemKeyFor(item) {
+    if (typeof item === 'string') return item;
+    if (item.word) return item.word;
+    if (item.phrase) return item.phrase;
+    if (item.en) return item.en;
+    return JSON.stringify(item);
+  }
+
+  // 某环节是否已通关
+  function isTabCompleted(unit, tabId) {
+    if (tabId === 'flashcard') {
+      var words = unit.words || [];
+      if (words.length === 0) return false;
+      var mastered = Storage.getMasteredWords();
+      for (var i = 0; i < words.length; i++) {
+        if (mastered[words[i].word] !== true) return false;
+      }
+      return true;
+    }
+    if (tabId === 'exam') return Storage.isExamPassed(unit.unitId);
+    if (tabId === 'dictation') return Storage.isUnitCompleted(unit.unitId);
+    // 朗读类环节
+    var items = tabItems(unit, tabId);
+    if (items.length === 0) return false;
+    for (var k = 0; k < items.length; k++) {
+      if (!Storage.isItemRead(unit.unitId, tabId, itemKeyFor(items[k]))) return false;
+    }
+    return true;
+  }
+
+  // 某环节是否已解锁（可进入）
+  function isTabUnlocked(unit, tabId) {
+    if (!Storage.isUnitUnlocked(unit.unitId)) return false; // 单元未解锁则整单元锁定
+    var idx = TAB_ORDER.indexOf(tabId);
+    if (idx <= 0) return true; // 第一个环节恒解锁
+    return isTabCompleted(unit, TAB_ORDER[idx - 1]); // 上一个环节完成才解锁
+  }
+
+  // 刷新 Tab 栏的锁定态 + 进度条
+  function updateTabBar() {
+    var unit = getCurrentUnit();
+    var tabs = document.querySelectorAll('.tab-btn');
+    for (var i = 0; i < tabs.length; i++) {
+      var tabName = tabs[i].getAttribute('data-tab');
+      var unlocked = unit ? isTabUnlocked(unit, tabName) : true;
+      var isFree = (tabName === 'wordbook');
+      tabs[i].classList.toggle('locked', !unlocked && !isFree);
+      if (unlocked || isFree) {
+        tabs[i].removeAttribute('title');
+      } else {
+        var prevIdx = TAB_ORDER.indexOf(tabName) - 1;
+        tabs[i].title = '🔒 请先完成：' + (TAB_LABELS[TAB_ORDER[prevIdx]] || '');
+      }
+    }
+    updateTabProgress(unit, state.tab);
+  }
+
+  // 刷新顶部进度条
+  function updateTabProgress(unit, tabId) {
+    var bar = document.getElementById('tabProgressBar');
+    if (!bar) return;
+    if (!unit) { bar.innerHTML = ''; return; }
+
+    if (tabId === 'wordbook') {
+      bar.innerHTML = '<span class="tp-info">📚 生词本是复习工具，随时可用</span>';
+      return;
+    }
+
+    var html = '';
+    var done = isTabCompleted(unit, tabId);
+    if (tabId === 'flashcard') {
+      var words = unit.words || [];
+      var m = Storage.getMasteredWords();
+      var c = 0;
+      for (var i = 0; i < words.length; i++) if (m[words[i].word] === true) c++;
+      html = '本环节：已掌握 ' + c + ' / ' + words.length + (done ? ' ✓' : '（全部标记为已掌握即过关）');
+    } else if (tabId === 'exam') {
+      html = done ? '本环节：中考真题 已全对 ✓' : '本环节：中考真题（做完一整套且全部答对即过关）';
+    } else if (tabId === 'dictation') {
+      html = done ? '🏆 本单元已通关！' : '本环节：默写（一次性全对即通关本单元）';
+    } else {
+      var items = tabItems(unit, tabId);
+      var read = 0;
+      for (var k = 0; k < items.length; k++) {
+        if (Storage.isItemRead(unit.unitId, tabId, itemKeyFor(items[k]))) read++;
+      }
+      html = '本环节：已朗读 ' + read + ' / ' + items.length + (done ? ' ✓' : '（全部朗读过即过关）');
+    }
+
+    if (done) {
+      html = '<span class="tp-done">✓ ' + html + '</span>';
+    } else {
+      html = '<span class="tp-info">' + html + '</span>';
+    }
+    bar.innerHTML = html;
+  }
+
+  // 供各模块调用：刷新侧边栏 + Tab 栏
+  VocabApp.refreshGating = function () {
+    renderUnitList();
+    updateTabBar();
+  };
+
+  /* ============================================================
      Tab导航
      ============================================================ */
 
@@ -603,6 +801,15 @@ window.VocabApp = window.VocabApp || {};
   }
 
   function switchTab(tabName) {
+    // 闯关：未解锁的环节不可进入（生词本除外）
+    var unit = getCurrentUnit();
+    if (unit && tabName !== 'wordbook' && !isTabUnlocked(unit, tabName)) {
+      var idx = TAB_ORDER.indexOf(tabName);
+      var prevLabel = idx > 0 ? TAB_LABELS[TAB_ORDER[idx - 1]] : '';
+      showToast('🔒 请先完成上一环节：' + prevLabel);
+      return;
+    }
+
     state.tab = tabName;
 
     // 更新Tab按钮状态
@@ -613,6 +820,9 @@ window.VocabApp = window.VocabApp || {};
 
     // 渲染内容
     renderTabContent(tabName);
+
+    // 刷新锁定态与进度条
+    updateTabBar();
   }
 
   function renderTabContent(tabName) {
@@ -688,7 +898,8 @@ window.VocabApp = window.VocabApp || {};
       }
       html += '  </div>';
       html += '  <div class="word-actions">';
-      html += '    <button class="btn-speak" data-word="' + escapeHtml(w.word) + '">🔊</button>';
+      var read = Storage.isItemRead(unit.unitId, 'wordlist', w.word);
+      html += '    <button class="btn-speak' + (read ? ' read' : '') + '" data-word="' + escapeHtml(w.word) + '">' + (read ? '✓' : '🔊') + '</button>';
       html += '    <button class="btn-star ' + (starred ? 'starred' : '') + '" data-word="' + escapeHtml(w.word) + '" data-index="' + i + '">★</button>';
       if (mastered === true) {
         html += '    <span style="color:#4CAF50;font-size:13px;">✓ 已掌握</span>';
@@ -705,7 +916,12 @@ window.VocabApp = window.VocabApp || {};
     var speakBtns = container.querySelectorAll('.btn-speak');
     for (var s = 0; s < speakBtns.length; s++) {
       speakBtns[s].addEventListener('click', function () {
-        speak(this.getAttribute('data-word'));
+        var word = this.getAttribute('data-word');
+        speak(word);
+        Storage.markItemRead(unit.unitId, 'wordlist', word);
+        this.textContent = '✓';
+        this.classList.add('read');
+        updateTabProgress(unit, 'wordlist');
       });
     }
 
@@ -776,7 +992,8 @@ window.VocabApp = window.VocabApp || {};
         html += '  <div class="phrase-example">' + escapeHtml(p.example) + '</div>';
       }
       html += '  <div class="phrase-actions">';
-      html += '    <button class="speak-btn" data-phrase="' + i + '">🔊 朗读</button>';
+      var pread = Storage.isItemRead(unit.unitId, 'phrases', p.phrase);
+      html += '    <button class="speak-btn' + (pread ? ' read' : '') + '" data-phrase="' + i + '">' + (pread ? '✓ 已读' : '🔊 朗读') + '</button>';
       html += '  </div>';
       html += '</div>';
     }
@@ -788,7 +1005,12 @@ window.VocabApp = window.VocabApp || {};
     for (var s = 0; s < speakBtns.length; s++) {
       speakBtns[s].addEventListener('click', function () {
         var idx = parseInt(this.getAttribute('data-phrase'), 10);
-        speak(unit.phrases[idx].phrase);
+        var phrase = unit.phrases[idx].phrase;
+        speak(phrase);
+        Storage.markItemRead(unit.unitId, 'phrases', phrase);
+        this.textContent = '✓ 已读';
+        this.classList.add('read');
+        updateTabProgress(unit, 'phrases');
       });
     }
 
@@ -814,7 +1036,8 @@ window.VocabApp = window.VocabApp || {};
       html += '    <div class="sentence-cn">' + escapeHtml(s.cn) + '</div>';
       html += '  </div>';
       html += '  <div class="sentence-actions">';
-      html += '    <button class="speak-btn" data-sentence="' + i + '">🔊 朗读</button>';
+      var sread = Storage.isItemRead(unit.unitId, 'sentences', s.en);
+      html += '    <button class="speak-btn' + (sread ? ' read' : '') + '" data-sentence="' + i + '">' + (sread ? '✓ 已读' : '🔊 朗读') + '</button>';
       html += '  </div>';
       html += '</div>';
     }
@@ -826,7 +1049,12 @@ window.VocabApp = window.VocabApp || {};
     for (var j = 0; j < speakBtns.length; j++) {
       speakBtns[j].addEventListener('click', function () {
         var idx = parseInt(this.getAttribute('data-sentence'), 10);
-        speak(unit.sentences[idx].en);
+        var en = unit.sentences[idx].en;
+        speak(en);
+        Storage.markItemRead(unit.unitId, 'sentences', en);
+        this.textContent = '✓ 已读';
+        this.classList.add('read');
+        updateTabProgress(unit, 'sentences');
       });
     }
 
@@ -873,8 +1101,14 @@ window.VocabApp = window.VocabApp || {};
       (function (li) {
         li.style.cursor = 'pointer';
         li.title = '点击朗读';
+        if (Storage.isItemRead(unit.unitId, 'grammar', li.textContent)) {
+          li.classList.add('read');
+        }
         li.addEventListener('click', function () {
           speak(li.textContent);
+          Storage.markItemRead(unit.unitId, 'grammar', li.textContent);
+          li.classList.add('read');
+          updateTabProgress(unit, 'grammar');
         });
       })(exampleLis[k]);
     }
@@ -1149,6 +1383,10 @@ window.VocabApp = window.VocabApp || {};
   VocabApp.getUnits = getUnits;
   VocabApp.switchTab = switchTab;
   VocabApp.renderTabContent = renderTabContent;
+  VocabApp.updateTabProgress = updateTabProgress;
+  VocabApp.updateTabBar = updateTabBar;
+  VocabApp.isTabUnlocked = isTabUnlocked;
+  VocabApp.isTabCompleted = isTabCompleted;
   VocabApp.escapeHtml = escapeHtml;
   VocabApp.showToast = showToast;
 

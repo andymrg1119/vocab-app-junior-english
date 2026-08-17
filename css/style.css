@@ -192,51 +192,68 @@ body {
   color: #4CAF50;
 }
 
-/* 单词卡顶部：完成单元打卡栏 */
-.unit-complete-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+/* 闯关：Tab 锁定态（上一个环节未完成，不可进入） */
+.tab-btn.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  color: var(--text-light);
+  filter: grayscale(0.3);
 }
 
-.unit-complete-status {
-  font-size: 14px;
+.tab-btn.locked:hover {
+  background: transparent;
   color: var(--text-light);
 }
 
-.unit-complete-status.done {
+/* Tab 锁定态：加锁图标 */
+.tab-btn.locked::after {
+  content: ' 🔒';
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+/* 闯关进度条（顶部，显示当前环节完成进度） */
+.tab-progress-bar {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text-light);
+  min-height: 18px;
+  box-sizing: border-box;
+}
+
+.tab-progress-bar .tp-info {
+  display: inline-block;
+}
+
+.tab-progress-bar .tp-done {
+  display: inline-block;
   color: #4CAF50;
   font-weight: 600;
 }
 
-.unit-complete-btn {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 20px;
-  background: var(--primary);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.unit-complete-btn:hover {
-  background: var(--primary-dark);
-}
-
-.unit-complete-btn.done {
-  background: #4CAF50;
+/* 朗读完成态标记（🔊 → ✓ 已读） */
+.btn-speak.read,
+.speak-btn.read {
+  background: #E8F5E9;
+  color: #4CAF50;
+  border-color: #C8E6C9;
   cursor: default;
-  opacity: 0.9;
+}
+
+/* 课文句子朗读后轻微高亮 */
+.text-sentence.read {
+  background: #F1F8F2;
+  border-left-color: #4CAF50;
+}
+
+/* 语法例句朗读后标记（绿色 + 删除线提示已完成） */
+.grammar-examples li.read {
+  color: #4CAF50;
+  text-decoration: line-through;
+  text-decoration-color: rgba(76, 175, 80, 0.4);
 }
 
 /* 轻提示 Toast */

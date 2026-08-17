@@ -392,6 +392,13 @@ window.VocabApp.Exam = (function () {
           total: total,
           date: new Date().toISOString()
         });
+
+        // 闯关：一整套全部答对即通关，解锁默写环节
+        if (correct === total && !VocabApp.Storage.isExamPassed(currentUnit.unitId)) {
+          VocabApp.Storage.markExamPassed(currentUnit.unitId);
+          if (VocabApp.refreshGating) VocabApp.refreshGating();
+          if (VocabApp.showToast) VocabApp.showToast('🎉 中考真题全对！已解锁默写环节');
+        }
       }
     }
   }

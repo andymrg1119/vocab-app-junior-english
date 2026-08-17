@@ -307,6 +307,16 @@ window.VocabApp.Dictation = (function () {
     var errorRate = Math.round((wrongCount / total) * 100);
     var passed = score >= PASS_THRESHOLD;
 
+    // 闯关：默写满分（100分）即通关本单元，解锁下一单元
+    if (passed) {
+      var alreadyCompleted = VocabApp.Storage.isUnitCompleted(currentUnit.unitId);
+      VocabApp.Storage.markUnitCompleted(currentUnit.unitId);
+      if (VocabApp.refreshGating) VocabApp.refreshGating();
+      if (!alreadyCompleted && VocabApp.onUnitCompleted) {
+        VocabApp.onUnitCompleted(currentUnit.unitId);
+      }
+    }
+
     // 保存默写成绩（含准确率和错误率）
     VocabApp.Storage.saveDictationScore(currentUnit.unitId, {
       mode: mode,

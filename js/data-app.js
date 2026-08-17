@@ -44,7 +44,9 @@ window.VocabConfig = {
     examScores: 'vocabApp_exam_scores',
     wordbook: 'vocabApp_wordbook',
     settings: 'vocabApp_settings',
-    unitUnlock: 'vocabApp_unit_unlock'
+    unitUnlock: 'vocabApp_unit_unlock',
+    readItems: 'vocabApp_read_items',
+    examPass: 'vocabApp_exam_pass'
   },
 
   /** 鼓励语列表 */
