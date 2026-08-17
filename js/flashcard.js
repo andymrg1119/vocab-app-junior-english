@@ -1,7 +1,7 @@
 /**
  * flashcard.js
  * 翻面单词卡组件
- * 功能：卡片翻转、发音、上下张切换、已掌握/未掌握标记
+ * 功能：卡片翻转、发音、上下张切换、已掌握/未掌握标记、跟读评分
  */
 window.VocabApp = window.VocabApp || {};
 
@@ -60,9 +60,11 @@ window.VocabApp.Flashcard = (function () {
     html += '    <span class="card-counter" id="cardCounter"></span>';
     html += '    <button class="card-nav-btn" id="nextCard" title="下一张">›</button>';
     html += '  </div>';
-    html += '  <div style="text-align:center;">';
-    html += '    <button class="speak-btn" id="cardSpeak">🔊 朗读单词</button>';
+    html += '  <div class="flashcard-action-btns">';
+    html += '    <button class="speak-btn" id="cardSpeak">🔊 朗读</button>';
+    html += '    <button class="readalong-btn" id="cardReadAlong">🎤 跟读</button>';
     html += '  </div>';
+    html += '  <div class="readalong-result-container" id="readalongResult"></div>';
     html += '  <div class="mastery-btns">';
     html += '    <button class="mastery-btn mastered" id="markMastered">✓ 已掌握</button>';
     html += '    <button class="mastery-btn unmastered" id="markUnmastered">✗ 未掌握</button>';
@@ -79,6 +81,7 @@ window.VocabApp.Flashcard = (function () {
     var prevBtn = document.getElementById('prevCard');
     var nextBtn = document.getElementById('nextCard');
     var speakBtn = document.getElementById('cardSpeak');
+    var readAlongBtn = document.getElementById('cardReadAlong');
     var masteredBtn = document.getElementById('markMastered');
     var unmasteredBtn = document.getElementById('markUnmastered');
 
@@ -103,6 +106,12 @@ window.VocabApp.Flashcard = (function () {
       speakBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         speakCurrent();
+      });
+    }
+    if (readAlongBtn) {
+      readAlongBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        startReadAlong();
       });
     }
     if (masteredBtn) {
@@ -170,6 +179,12 @@ window.VocabApp.Flashcard = (function () {
     document.getElementById('nextCard').disabled =
       (currentIndex === currentUnit.words.length - 1);
 
+    // 清空跟读结果
+    var readalongResult = document.getElementById('readalongResult');
+    if (readalongResult) {
+      readalongResult.innerHTML = '';
+    }
+
     // 更新掌握状态
     updateMasteryButtons(word.word);
   }
@@ -217,6 +232,22 @@ window.VocabApp.Flashcard = (function () {
     var word = currentUnit.words[currentIndex];
     if (word && VocabApp.speak) {
       VocabApp.speak(word.word);
+    }
+  }
+
+  /**
+   * 跟读：先播放发音，然后录音识别打分
+   */
+  function startReadAlong() {
+    if (!currentUnit || !currentUnit.words) return;
+    var word = currentUnit.words[currentIndex];
+    if (!word) return;
+
+    var resultContainer = document.getElementById('readalongResult');
+    if (!resultContainer) return;
+
+    if (VocabApp.ReadAlong && VocabApp.ReadAlong.start) {
+      VocabApp.ReadAlong.start(word.word, resultContainer);
     }
   }
 

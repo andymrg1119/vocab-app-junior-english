@@ -59,6 +59,62 @@ window.VocabApp = window.VocabApp || {};
     window.speechSynthesis.speak(utterance);
   }
 
+  /**
+   * 带回调的朗读：朗读结束后执行回调
+   * 用于跟读功能：先播放，播完再开始录音
+   */
+  function speakWithCallback(text, callback) {
+    if (!window.speechSynthesis) {
+      if (callback) callback();
+      return;
+    }
+    window.speechSynthesis.cancel();
+
+    var utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-GB';
+    utterance.rate = 0.85;
+    utterance.pitch = 1.0;
+
+    // 优先选择英式英语语音
+    var voices = window.speechSynthesis.getVoices();
+    var britishVoice = null;
+    for (var i = 0; i < voices.length; i++) {
+      var lang = voices[i].lang || '';
+      if (lang.indexOf('en-GB') === 0 || lang.indexOf('en_GB') === 0) {
+        britishVoice = voices[i];
+        break;
+      }
+    }
+    if (britishVoice) {
+      utterance.voice = britishVoice;
+    } else {
+      for (var j = 0; j < voices.length; j++) {
+        if (voices[j].lang.indexOf('en') === 0) {
+          utterance.voice = voices[j];
+          break;
+        }
+      }
+    }
+
+    var fired = false;
+    function safeCallback() {
+      if (!fired) {
+        fired = true;
+        if (callback) callback();
+      }
+    }
+
+    utterance.onend = safeCallback;
+    utterance.onerror = safeCallback;
+
+    window.speechSynthesis.speak(utterance);
+
+    // 超时保护：如果 onend 没触发，按预估时间后继续
+    var wordCount = text.split(/\s+/).length;
+    var estimatedMs = Math.max(2000, wordCount * 700 + 1000);
+    setTimeout(safeCallback, estimatedMs);
+  }
+
   // 语音列表可能异步加载
   if (window.speechSynthesis) {
     window.speechSynthesis.onvoiceschanged = function () {
@@ -271,6 +327,210 @@ window.VocabApp = window.VocabApp || {};
         }
       }
       this.set(VocabConfig.storageKeys.wordbook, newBook);
+    }
+  };
+
+  /* ============================================================
+     跟读评分模块 (ReadAlong)
+     使用 Web Speech API: 先播放发音，再录音识别，对比打分
+     80分以上为过关
+     ============================================================ */
+
+  var ReadAlong = {
+    /**
+     * 启动跟读流程
+     * @param {string} targetText - 目标文本（英文单词/短语/句子）
+     * @param {HTMLElement} container - 显示结果的容器
+     */
+    start: function (targetText, container) {
+      var self = this;
+
+      // 检查浏览器支持
+      var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        container.innerHTML =
+          '<div class="readalong-error">⚠️ 当前浏览器不支持语音识别，请使用 Chrome 浏览器</div>';
+        return;
+      }
+
+      // 步骤1：先播放发音
+      container.innerHTML = '<div class="readalong-status speaking"><span class="readalong-pulse"></span>🔊 正在播放发音...</div>';
+
+      speakWithCallback(targetText, function () {
+        // 步骤2：播放完毕，开始录音
+        // 短暂延迟，确保语音合成完全停止
+        setTimeout(function () {
+          self._startRecording(targetText, container);
+        }, 300);
+      });
+    },
+
+    /**
+     * 开始录音识别
+     */
+    _startRecording: function (targetText, container) {
+      var self = this;
+      var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      container.innerHTML =
+        '<div class="readalong-status recording">' +
+        '<span class="readalong-mic-icon">🎤</span>' +
+        '<span class="readalong-rec-text">正在听你读...</span>' +
+        '<span class="readalong-wave"></span>' +
+        '<span class="readalong-wave"></span>' +
+        '<span class="readalong-wave"></span>' +
+        '</div>';
+
+      var recognition = new SpeechRecognition();
+      recognition.lang = 'en-GB';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 5;
+      recognition.continuous = false;
+
+      var hasResult = false;
+
+      recognition.onresult = function (event) {
+        hasResult = true;
+        var results = event.results[0];
+        var bestScore = 0;
+        var bestText = '';
+
+        // 取多个候选中最匹配的
+        for (var i = 0; i < results.length; i++) {
+          var transcript = results[i].transcript.trim().toLowerCase();
+          var score = self._calculateScore(transcript, targetText.toLowerCase());
+          if (score > bestScore) {
+            bestScore = score;
+            bestText = transcript;
+          }
+        }
+
+        self._showResult(targetText, bestText, Math.round(bestScore), container);
+      };
+
+      recognition.onerror = function (event) {
+        hasResult = true;
+        var errorMsg = '识别失败';
+        if (event.error === 'no-speech') {
+          errorMsg = '没有听到声音，请大声读出来';
+        } else if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          errorMsg = '请允许使用麦克风权限';
+        } else if (event.error === 'aborted') {
+          errorMsg = '录音被中断，请重试';
+        } else {
+          errorMsg = '识别出错：' + event.error;
+        }
+        self._showError(targetText, errorMsg, container);
+      };
+
+      recognition.onend = function () {
+        if (!hasResult) {
+          self._showError(targetText, '没有听到声音，请大声读出来', container);
+        }
+      };
+
+      try {
+        recognition.start();
+      } catch (e) {
+        self._showError(targetText, '录音启动失败，请重试', container);
+      }
+    },
+
+    /**
+     * 显示评分结果
+     */
+    _showResult: function (target, transcript, score, container) {
+      var passed = score >= 80;
+      var html = '';
+      html += '<div class="readalong-result ' + (passed ? 'pass' : 'fail') + '">';
+      html += '  <div class="readalong-score-circle ' + (passed ? 'pass' : 'fail') + '">';
+      html += '    <span class="score-num">' + score + '</span>';
+      html += '    <span class="score-unit">分</span>';
+      html += '  </div>';
+      html += '  <div class="readalong-status-text ' + (passed ? 'pass' : 'fail') + '">';
+      html += passed ? '🎉 过关！' : '💪 未过关（需80分）';
+      html += '  </div>';
+      html += '  <div class="readalong-detail">';
+      html += '    <div class="readalong-said"><span class="detail-label">你说：</span>' + escapeHtml(transcript || '（未识别）') + '</div>';
+      html += '    <div class="readalong-target"><span class="detail-label">原文：</span>' + escapeHtml(target) + '</div>';
+      html += '  </div>';
+      if (!passed) {
+        html += '  <button class="readalong-retry-btn">🔄 再读一次</button>';
+      } else {
+        html += '  <div class="readalong-passed-msg">✨ 发音很棒！</div>';
+      }
+      html += '</div>';
+
+      container.innerHTML = html;
+
+      var retryBtn = container.querySelector('.readalong-retry-btn');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', function () {
+          ReadAlong.start(target, container);
+        });
+      }
+    },
+
+    /**
+     * 显示错误
+     */
+    _showError: function (target, message, container) {
+      var html = '';
+      html += '<div class="readalong-error">' + message + '</div>';
+      html += '<button class="readalong-retry-btn">🔄 再读一次</button>';
+      container.innerHTML = html;
+
+      var retryBtn = container.querySelector('.readalong-retry-btn');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', function () {
+          ReadAlong.start(target, container);
+        });
+      }
+    },
+
+    /**
+     * 计算相似度得分（0-100）
+     * 使用 Levenshtein 编辑距离算法
+     */
+    _calculateScore: function (str1, str2) {
+      // 去标点、去多余空格
+      str1 = str1.replace(/[.,!?;:'"`""'']/g, '').replace(/\s+/g, ' ').trim();
+      str2 = str2.replace(/[.,!?;:'"`""'']/g, '').replace(/\s+/g, ' ').trim();
+
+      if (str1 === str2) return 100;
+      if (str1.length === 0 || str2.length === 0) return 0;
+
+      var distance = this._levenshtein(str1, str2);
+      var maxLength = Math.max(str1.length, str2.length);
+      var score = Math.max(0, (1 - distance / maxLength) * 100);
+      return Math.round(score);
+    },
+
+    /**
+     * Levenshtein 编辑距离
+     */
+    _levenshtein: function (str1, str2) {
+      var matrix = [];
+      for (var i = 0; i <= str2.length; i++) {
+        matrix[i] = [i];
+      }
+      for (var j = 0; j <= str1.length; j++) {
+        matrix[0][j] = j;
+      }
+      for (var i = 1; i <= str2.length; i++) {
+        for (var j = 1; j <= str1.length; j++) {
+          if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+            matrix[i][j] = matrix[i - 1][j - 1];
+          } else {
+            matrix[i][j] = Math.min(
+              matrix[i - 1][j - 1] + 1,
+              matrix[i][j - 1] + 1,
+              matrix[i - 1][j] + 1
+            );
+          }
+        }
+      }
+      return matrix[str2.length][str1.length];
     }
   };
 
@@ -613,24 +873,35 @@ window.VocabApp = window.VocabApp || {};
       if (p.example) {
         html += '  <div class="phrase-example">' + escapeHtml(p.example) + '</div>';
       }
+      html += '  <div class="phrase-actions">';
+      html += '    <button class="speak-btn" data-phrase="' + i + '">🔊 朗读</button>';
+      html += '    <button class="readalong-btn" data-phrase="' + i + '">🎤 跟读</button>';
+      html += '  </div>';
+      html += '  <div class="readalong-result-container" id="phraseReadAlong_' + i + '"></div>';
       html += '</div>';
     }
     html += '</div>';
     container.innerHTML = html;
 
     // 绑定朗读
-    var phraseEls = container.querySelectorAll('.phrase-card');
-    for (var j = 0; j < phraseEls.length; j++) {
-      (function (index) {
-        var btn = document.createElement('button');
-        btn.className = 'speak-btn';
-        btn.textContent = '🔊 朗读';
-        btn.style.marginTop = '8px';
-        btn.addEventListener('click', function () {
-          speak(unit.phrases[index].phrase);
-        });
-        phraseEls[index].appendChild(btn);
-      })(j);
+    var speakBtns = container.querySelectorAll('.phrase-actions .speak-btn');
+    for (var s = 0; s < speakBtns.length; s++) {
+      speakBtns[s].addEventListener('click', function () {
+        var idx = parseInt(this.getAttribute('data-phrase'), 10);
+        speak(unit.phrases[idx].phrase);
+      });
+    }
+
+    // 绑定跟读
+    var readAlongBtns = container.querySelectorAll('.phrase-actions .readalong-btn');
+    for (var r = 0; r < readAlongBtns.length; r++) {
+      readAlongBtns[r].addEventListener('click', function () {
+        var idx = parseInt(this.getAttribute('data-phrase'), 10);
+        var resultContainer = document.getElementById('phraseReadAlong_' + idx);
+        if (resultContainer && VocabApp.ReadAlong) {
+          VocabApp.ReadAlong.start(unit.phrases[idx].phrase, resultContainer);
+        }
+      });
     }
   }
 
@@ -653,17 +924,34 @@ window.VocabApp = window.VocabApp || {};
       html += '    <div class="sentence-en">' + escapeHtml(s.en) + '</div>';
       html += '    <div class="sentence-cn">' + escapeHtml(s.cn) + '</div>';
       html += '  </div>';
-      html += '  <button class="speak-btn" data-sentence="' + i + '">🔊</button>';
+      html += '  <div class="sentence-actions">';
+      html += '    <button class="speak-btn" data-sentence="' + i + '">🔊 朗读</button>';
+      html += '    <button class="readalong-btn" data-sentence="' + i + '">🎤 跟读</button>';
+      html += '  </div>';
+      html += '  <div class="readalong-result-container" id="sentenceReadAlong_' + i + '"></div>';
       html += '</div>';
     }
     html += '</div>';
     container.innerHTML = html;
 
-    var speakBtns = container.querySelectorAll('.speak-btn');
+    // 绑定朗读
+    var speakBtns = container.querySelectorAll('.sentence-actions .speak-btn');
     for (var j = 0; j < speakBtns.length; j++) {
       speakBtns[j].addEventListener('click', function () {
         var idx = parseInt(this.getAttribute('data-sentence'), 10);
         speak(unit.sentences[idx].en);
+      });
+    }
+
+    // 绑定跟读
+    var readAlongBtns = container.querySelectorAll('.sentence-actions .readalong-btn');
+    for (var r = 0; r < readAlongBtns.length; r++) {
+      readAlongBtns[r].addEventListener('click', function () {
+        var idx = parseInt(this.getAttribute('data-sentence'), 10);
+        var resultContainer = document.getElementById('sentenceReadAlong_' + idx);
+        if (resultContainer && VocabApp.ReadAlong) {
+          VocabApp.ReadAlong.start(unit.sentences[idx].en, resultContainer);
+        }
       });
     }
   }
@@ -952,6 +1240,8 @@ window.VocabApp = window.VocabApp || {};
      ============================================================ */
 
   VocabApp.speak = speak;
+  VocabApp.speakWithCallback = speakWithCallback;
+  VocabApp.ReadAlong = ReadAlong;
   VocabApp.Storage = Storage;
   VocabApp.state = state;
   VocabApp.getCurrentUnit = getCurrentUnit;

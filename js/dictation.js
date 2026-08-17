@@ -1,6 +1,8 @@
 /**
  * dictation.js
- * 默写功能
+ * 默写功能（重构版）
+ * 规则：每题只能提交一次，提交后不可修改，必须全部默写完成，
+ * 达到80分才算过关。
  * 支持两种模式：中→英（看中文写英文）和英→中（看英文写中文）
  */
 window.VocabApp = window.VocabApp || {};
@@ -15,6 +17,9 @@ window.VocabApp.Dictation = (function () {
   var correctCount = 0;
   var wrongCount = 0;
   var answered = false;
+  var wrongWords = [];
+  var PASS_THRESHOLD = 80;
+  var containerEl = null;
 
   /**
    * 渲染默写区域
@@ -23,6 +28,8 @@ window.VocabApp.Dictation = (function () {
    */
   function render(unit, container) {
     currentUnit = unit;
+    containerEl = container;
+    resetState();
 
     if (!unit || !unit.words || unit.words.length === 0) {
       container.innerHTML =
@@ -30,79 +37,82 @@ window.VocabApp.Dictation = (function () {
       return;
     }
 
-    // 初始化词序（打乱）
-    wordOrder = shuffleArray(unit.words.slice());
+    showStartScreen();
+  }
+
+  function resetState() {
+    wordOrder = [];
     currentIndex = 0;
     correctCount = 0;
     wrongCount = 0;
     answered = false;
-
-    container.innerHTML = buildHTML();
-    bindEvents();
-    showQuestion();
+    wrongWords = [];
   }
 
-  /**
-   * 构建HTML结构
-   */
-  function buildHTML() {
+  /* ============================================================
+     开始页面
+     ============================================================ */
+  function showStartScreen() {
+    var total = currentUnit.words.length;
+
     var html = '';
     html += '<div class="dictation-container">';
-    html += '  <div class="dictation-header">';
-    html += '    <div class="dictation-mode">';
-    html += '      <button class="mode-btn active" data-mode="cn2en">中→英</button>';
-    html += '      <button class="mode-btn" data-mode="en2cn">英→中</button>';
+    html += '  <div class="dictation-start-screen">';
+    html += '    <div class="dictation-start-icon">📝</div>';
+    html += '    <h3 class="dictation-start-title">单词默写</h3>';
+    html += '    <div class="dictation-start-info">';
+    html += '      <div class="dictation-info-row"><span class="info-label">本课单词</span><span class="info-value">' + total + ' 个</span></div>';
+    html += '      <div class="dictation-info-row"><span class="info-label">过关分数</span><span class="info-value pass-text">' + PASS_THRESHOLD + ' 分</span></div>';
+    html += '      <div class="dictation-info-row"><span class="info-label">当前模式</span><span class="info-value" id="modeDisplay">中→英</span></div>';
     html += '    </div>';
-    html += '    <div class="dictation-progress">';
-    html += '      进度：<span id="dictProgress">1/' + wordOrder.length + '</span>';
-    html += '      ｜ <span class="correct-count" id="dictCorrect">✓0</span>';
-    html += '      <span class="wrong-count" id="dictWrong">✗0</span>';
+    html += '    <div class="dictation-rules">';
+    html += '      <div class="rule-item">⚠️ 每题只能提交<strong>一次</strong>，提交后<strong>不能修改</strong></div>';
+    html += '      <div class="rule-item">⚠️ 必须<strong>全部默写完成</strong>才能查看成绩</div>';
+    html += '      <div class="rule-item">⚠️ 达到 <strong>' + PASS_THRESHOLD + ' 分</strong>才算过关</div>';
     html += '    </div>';
+    html += '    <div class="dictation-mode-select">';
+    html += '      <button class="mode-btn active" data-mode="cn2en">中→英（看中文写英文）</button>';
+    html += '      <button class="mode-btn" data-mode="en2cn">英→中（看英文写中文）</button>';
+    html += '    </div>';
+    html += '    <button class="dictation-btn primary dictation-start-btn" id="dictStart">🚀 开始默写</button>';
     html += '  </div>';
-    html += '  <div id="dictContent"></div>';
     html += '</div>';
-    return html;
-  }
 
-  /**
-   * 绑定事件
-   */
-  function bindEvents() {
-    var modeBtns = document.querySelectorAll('.mode-btn');
+    containerEl.innerHTML = html;
+
+    // 模式切换
+    var modeBtns = containerEl.querySelectorAll('.mode-btn');
     for (var i = 0; i < modeBtns.length; i++) {
       modeBtns[i].addEventListener('click', function () {
-        var newMode = this.getAttribute('data-mode');
-        if (newMode !== mode) {
-          switchMode(newMode);
+        mode = this.getAttribute('data-mode');
+        for (var j = 0; j < modeBtns.length; j++) {
+          modeBtns[j].classList.toggle('active', modeBtns[j].getAttribute('data-mode') === mode);
+        }
+        var modeDisplay = document.getElementById('modeDisplay');
+        if (modeDisplay) {
+          modeDisplay.textContent = mode === 'cn2en' ? '中→英' : '英→中';
         }
       });
     }
+
+    document.getElementById('dictStart').addEventListener('click', function () {
+      startDictation();
+    });
   }
 
-  /**
-   * 切换模式
-   */
-  function switchMode(newMode) {
-    mode = newMode;
-    var modeBtns = document.querySelectorAll('.mode-btn');
-    for (var i = 0; i < modeBtns.length; i++) {
-      var btn = modeBtns[i];
-      btn.classList.toggle('active', btn.getAttribute('data-mode') === newMode);
-    }
-    // 重新开始
+  /* ============================================================
+     开始默写
+     ============================================================ */
+  function startDictation() {
+    resetState();
     wordOrder = shuffleArray(currentUnit.words.slice());
-    currentIndex = 0;
-    correctCount = 0;
-    wrongCount = 0;
-    answered = false;
     showQuestion();
   }
 
-  /**
-   * 显示当前题目
-   */
+  /* ============================================================
+     显示当前题目
+     ============================================================ */
   function showQuestion() {
-    var content = document.getElementById('dictContent');
     if (currentIndex >= wordOrder.length) {
       showResult();
       return;
@@ -114,41 +124,54 @@ window.VocabApp.Dictation = (function () {
     if (mode === 'cn2en') {
       labelText = '请根据中文释义拼写英文单词';
       promptText = word.meaning + ' (' + (word.pos || '') + ')';
-      placeholder = '在此输入英文单词...';
+      placeholder = '输入英文单词...';
     } else {
       labelText = '请根据英文单词写出中文释义';
-      promptText = word.word + ' ' + (word.phonetic || '');
-      placeholder = '在此输入中文释义...';
+      promptText = word.word + '  ' + (word.phonetic || '');
+      placeholder = '输入中文释义...';
     }
 
+    var progressPercent = Math.round((currentIndex / wordOrder.length) * 100);
+
     var html = '';
-    html += '<div class="dictation-card">';
-    html += '  <div class="dictation-prompt">';
-    html += '    <span class="dict-label">' + labelText + '</span>';
-    html += '    <span id="dictPrompt">' + escapeHtml(promptText) + '</span>';
+    html += '<div class="dictation-container">';
+    html += '  <div class="dictation-quiz-header">';
+    html += '    <div class="dictation-progress-bar">';
+    html += '      <div class="dictation-progress-fill" style="width:' + progressPercent + '%"></div>';
+    html += '    </div>';
+    html += '    <div class="dictation-progress-info">';
+    html += '      <span>第 <strong>' + (currentIndex + 1) + '</strong> / ' + wordOrder.length + ' 题</span>';
+    html += '      <span class="correct-count">✓ ' + correctCount + '</span>';
+    html += '      <span class="wrong-count">✗ ' + wrongCount + '</span>';
+    html += '    </div>';
     html += '  </div>';
-    html += '  <input type="text" class="dictation-input" id="dictInput" placeholder="' + placeholder + '" autocomplete="off" autocapitalize="off" spellcheck="false">';
-    html += '  <div class="dictation-feedback" id="dictFeedback"></div>';
-    html += '</div>';
-    html += '<div class="dictation-controls">';
-    html += '  <button class="dictation-btn primary" id="dictSubmit">提交答案</button>';
-    html += '  <button class="dictation-btn secondary" id="dictNext" style="display:none;">下一题</button>';
-    html += '  <button class="dictation-btn secondary" id="dictRestart">重新开始</button>';
+    html += '  <div class="dictation-card">';
+    html += '    <div class="dictation-prompt">';
+    html += '      <span class="dict-label">' + labelText + '</span>';
+    html += '      <span class="dict-prompt-text" id="dictPrompt">' + escapeHtml(promptText) + '</span>';
+    html += '    </div>';
+    html += '    <input type="text" class="dictation-input" id="dictInput" placeholder="' + placeholder + '" autocomplete="off" autocapitalize="off" spellcheck="false">';
+    html += '    <div class="dictation-feedback" id="dictFeedback"></div>';
+    html += '  </div>';
+    html += '  <div class="dictation-controls">';
+    html += '    <button class="dictation-btn primary" id="dictSubmit">提交答案（仅一次）</button>';
+    html += '    <button class="dictation-btn primary" id="dictNext" style="display:none;">下一题 →</button>';
+    html += '  </div>';
+    html += '  <div class="dictation-warning">⚠️ 提交后不可修改，请确认答案后再提交</div>';
     html += '</div>';
 
-    content.innerHTML = html;
+    containerEl.innerHTML = html;
     answered = false;
 
-    // 绑定事件
     var input = document.getElementById('dictInput');
     var submitBtn = document.getElementById('dictSubmit');
     var nextBtn = document.getElementById('dictNext');
-    var restartBtn = document.getElementById('dictRestart');
 
     input.focus();
 
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
         if (!answered) {
           checkAnswer();
         } else {
@@ -166,23 +189,11 @@ window.VocabApp.Dictation = (function () {
     nextBtn.addEventListener('click', function () {
       nextQuestion();
     });
-
-    restartBtn.addEventListener('click', function () {
-      wordOrder = shuffleArray(currentUnit.words.slice());
-      currentIndex = 0;
-      correctCount = 0;
-      wrongCount = 0;
-      answered = false;
-      updateProgress();
-      showQuestion();
-    });
-
-    updateProgress();
   }
 
-  /**
-   * 检查答案
-   */
+  /* ============================================================
+     检查答案（只能提交一次）
+     ============================================================ */
   function checkAnswer() {
     var word = wordOrder[currentIndex];
     var input = document.getElementById('dictInput');
@@ -196,13 +207,17 @@ window.VocabApp.Dictation = (function () {
     if (mode === 'cn2en') {
       correctAnswer = word.word.toLowerCase();
     } else {
-      correctAnswer = word.meaning.trim();
+      correctAnswer = word.meaning.trim().toLowerCase();
     }
 
-    var isCorrect = (mode === 'cn2en')
-      ? (userInput === correctAnswer)
-      : (userInput === correctAnswer.toLowerCase());
+    // 空答案算错
+    if (userInput === '') {
+      userInput = '（未作答）';
+    }
 
+    var isCorrect = (userInput === correctAnswer);
+
+    // 锁定：只能提交一次，不可修改
     answered = true;
     input.disabled = true;
     submitBtn.style.display = 'none';
@@ -212,56 +227,53 @@ window.VocabApp.Dictation = (function () {
       correctCount++;
       input.classList.add('correct');
       feedback.className = 'dictation-feedback correct';
-      feedback.textContent = '✓ 正确！';
+      feedback.innerHTML = '✓ 正确！';
     } else {
       wrongCount++;
+      wrongWords.push(word);
       input.classList.add('wrong');
       feedback.className = 'dictation-feedback wrong';
       if (mode === 'cn2en') {
-        feedback.textContent = '✗ 错误！正确答案：' + word.word;
+        feedback.innerHTML = '✗ 错误！正确答案：<strong>' + escapeHtml(word.word) + '</strong>';
       } else {
-        feedback.textContent = '✗ 错误！正确答案：' + word.meaning;
+        feedback.innerHTML = '✗ 错误！正确答案：<strong>' + escapeHtml(word.meaning) + '</strong>';
       }
     }
 
-    updateProgress();
+    // 更新进度条
+    var progressFill = document.querySelector('.dictation-progress-fill');
+    if (progressFill) {
+      var percent = Math.round(((currentIndex + 1) / wordOrder.length) * 100);
+      progressFill.style.width = percent + '%';
+    }
+    var correctEl = document.querySelector('.dictation-progress-info .correct-count');
+    var wrongEl = document.querySelector('.dictation-progress-info .wrong-count');
+    if (correctEl) correctEl.textContent = '✓ ' + correctCount;
+    if (wrongEl) wrongEl.textContent = '✗ ' + wrongCount;
+
+    // 如果是最后一题，改变按钮文字
+    if (currentIndex === wordOrder.length - 1) {
+      nextBtn.textContent = '查看成绩 →';
+    }
+
     nextBtn.focus();
   }
 
-  /**
-   * 下一题
-   */
+  /* ============================================================
+     下一题
+     ============================================================ */
   function nextQuestion() {
     currentIndex++;
     showQuestion();
   }
 
-  /**
-   * 更新进度显示
-   */
-  function updateProgress() {
-    var progress = document.getElementById('dictProgress');
-    var correctEl = document.getElementById('dictCorrect');
-    var wrongEl = document.getElementById('dictWrong');
-    if (progress) {
-      progress.textContent = (currentIndex + 1) + '/' + wordOrder.length;
-    }
-    if (correctEl) {
-      correctEl.textContent = '✓' + correctCount;
-    }
-    if (wrongEl) {
-      wrongEl.textContent = '✗' + wrongCount;
-    }
-  }
-
-  /**
-   * 显示结果
-   */
+  /* ============================================================
+     显示结果（过关/未过关）
+     ============================================================ */
   function showResult() {
-    var content = document.getElementById('dictContent');
     var total = wordOrder.length;
     var score = Math.round((correctCount / total) * 100);
-    var rate = Math.round((correctCount / total) * 100);
+    var passed = score >= PASS_THRESHOLD;
 
     // 保存默写成绩
     VocabApp.Storage.saveDictationScore(currentUnit.unitId, {
@@ -270,48 +282,77 @@ window.VocabApp.Dictation = (function () {
       correct: correctCount,
       wrong: wrongCount,
       total: total,
+      passed: passed,
       date: new Date().toISOString()
     });
 
-    var comment = '';
-    if (rate >= 90) {
-      comment = '太棒了！你已经完全掌握了这些单词！';
-    } else if (rate >= 70) {
-      comment = '不错！继续努力，你会更好！';
-    } else if (rate >= 50) {
-      comment = '还需要多加练习，加油！';
+    var html = '';
+    html += '<div class="dictation-container">';
+    html += '  <div class="dictation-result ' + (passed ? 'passed' : 'failed') + '">';
+    html += '    <div class="dictation-result-icon">' + (passed ? '🎉' : '💪') + '</div>';
+    html += '    <div class="dictation-result-score ' + (passed ? 'pass' : 'fail') + '">' + score + '分</div>';
+    html += '    <div class="dictation-result-status ' + (passed ? 'pass' : 'fail') + '">';
+    html += passed ? '恭喜过关！' : '未过关（需要' + PASS_THRESHOLD + '分）';
+    html += '    </div>';
+    html += '    <div class="dictation-result-text">';
+    html += '      正确 ' + correctCount + ' 题 ｜ 错误 ' + wrongCount + ' 题 ｜ 共 ' + total + ' 题';
+    html += '    </div>';
+
+    if (passed) {
+      if (score === 100) {
+        html += '    <div class="dictation-result-comment">满分！太厉害了，所有单词全部掌握！</div>';
+      } else {
+        html += '    <div class="dictation-result-comment">太棒了，你已过关！继续保持！</div>';
+      }
     } else {
-      comment = '别灰心，多复习几遍一定可以！';
+      html += '    <div class="dictation-result-comment">差一点点就过关了，再练一次一定可以！</div>';
     }
 
-    var html = '';
-    html += '<div class="dictation-result">';
-    html += '  <div class="dictation-result-score">' + score + '分</div>';
-    html += '  <div class="dictation-result-text">';
-    html += '    正确 ' + correctCount + ' 题，错误 ' + wrongCount + ' 题，共 ' + total + ' 题';
-    html += '  </div>';
-    html += '  <div class="dictation-result-text">' + comment + '</div>';
-    html += '  <div class="dictation-controls">';
-    html += '    <button class="dictation-btn primary" id="dictAgain">再来一次</button>';
+    // 错词回顾
+    if (wrongWords.length > 0) {
+      html += '    <div class="dictation-wrong-words">';
+      html += '      <div class="wrong-words-title">📋 错词回顾（' + wrongWords.length + '个）</div>';
+      for (var i = 0; i < wrongWords.length; i++) {
+        var w = wrongWords[i];
+        html += '      <div class="wrong-word-item">';
+        html += '        <span class="wrong-word-en">' + escapeHtml(w.word) + '</span>';
+        html += '        <span class="wrong-word-phonetic">' + escapeHtml(w.phonetic || '') + '</span>';
+        html += '        <span class="wrong-word-cn">' + escapeHtml(w.meaning) + '</span>';
+        html += '        <button class="btn-speak small-speak" data-word="' + escapeHtml(w.word) + '">🔊</button>';
+        html += '      </div>';
+      }
+      html += '    </div>';
+    }
+
+    html += '    <div class="dictation-controls">';
+    if (!passed) {
+      html += '      <button class="dictation-btn primary" id="dictAgain">🔄 再来一次</button>';
+    } else {
+      html += '      <button class="dictation-btn primary" id="dictAgain">📝 再测一次</button>';
+    }
+    html += '    </div>';
     html += '  </div>';
     html += '</div>';
 
-    content.innerHTML = html;
+    containerEl.innerHTML = html;
 
-    var againBtn = document.getElementById('dictAgain');
-    againBtn.addEventListener('click', function () {
-      wordOrder = shuffleArray(currentUnit.words.slice());
-      currentIndex = 0;
-      correctCount = 0;
-      wrongCount = 0;
-      answered = false;
-      showQuestion();
+    // 绑定发音按钮
+    var speakBtns = containerEl.querySelectorAll('.btn-speak');
+    for (var s = 0; s < speakBtns.length; s++) {
+      speakBtns[s].addEventListener('click', function () {
+        VocabApp.speak(this.getAttribute('data-word'));
+      });
+    }
+
+    document.getElementById('dictAgain').addEventListener('click', function () {
+      showStartScreen();
     });
   }
 
-  /**
-   * 打乱数组
-   */
+  /* ============================================================
+     工具函数
+     ============================================================ */
+
   function shuffleArray(arr) {
     var result = arr.slice();
     for (var i = result.length - 1; i > 0; i--) {
@@ -323,9 +364,6 @@ window.VocabApp.Dictation = (function () {
     return result;
   }
 
-  /**
-   * HTML转义
-   */
   function escapeHtml(text) {
     if (!text) return '';
     var div = document.createElement('div');
