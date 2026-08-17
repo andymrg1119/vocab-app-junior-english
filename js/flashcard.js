@@ -41,25 +41,6 @@ window.VocabApp.Flashcard = (function () {
    * 构建HTML结构
    */
   function buildHTML() {
-    var html = '';
-    html += '<div class="flashcard-container">';
-    // 跟读过关进度条
-    var raPassed = 0;
-    var raTotal = (currentUnit && currentUnit.words) ? currentUnit.words.length : 0;
-    if (currentUnit && currentUnit.unitId) {
-      raPassed = VocabApp.Storage.getReadAlongPassedCount(currentUnit.unitId);
-    }
-    var raPercent = raTotal > 0 ? Math.round((raPassed / raTotal) * 100) : 0;
-    html += '  <div class="ra-progress-bar">';
-    html += '    <div class="ra-progress-info">';
-    html += '      <span class="ra-progress-label">🎤 跟读过关</span>';
-    html += '      <span class="ra-progress-count">' + raPassed + ' / ' + raTotal + '</span>';
-    if (raPassed === raTotal && raTotal > 0) {
-      html += '      <span class="ra-progress-done">✓ 全部过关！</span>';
-    }
-    html += '    </div>';
-    html += '    <div class="ra-progress-track"><div class="ra-progress-fill" style="width:' + raPercent + '%"></div></div>';
-    html += '  </div>';
     html += '  <div class="flashcard-wrapper" id="flashcardWrapper">';
     html += '    <div class="flashcard" id="flashcard">';
     html += '      <div class="flashcard-face flashcard-front" id="cardFront">';
@@ -83,9 +64,7 @@ window.VocabApp.Flashcard = (function () {
     html += '  </div>';
     html += '  <div class="flashcard-action-btns">';
     html += '    <button class="speak-btn" id="cardSpeak">🔊 朗读</button>';
-    html += '    <button class="readalong-btn" id="cardReadAlong">🎤 跟读</button>';
     html += '  </div>';
-    html += '  <div class="readalong-result-container" id="readalongResult"></div>';
     html += '  <div class="mastery-btns">';
     html += '    <button class="mastery-btn mastered" id="markMastered">✓ 已掌握</button>';
     html += '    <button class="mastery-btn unmastered" id="markUnmastered">✗ 未掌握</button>';
@@ -102,7 +81,6 @@ window.VocabApp.Flashcard = (function () {
     var prevBtn = document.getElementById('prevCard');
     var nextBtn = document.getElementById('nextCard');
     var speakBtn = document.getElementById('cardSpeak');
-    var readAlongBtn = document.getElementById('cardReadAlong');
     var masteredBtn = document.getElementById('markMastered');
     var unmasteredBtn = document.getElementById('markUnmastered');
 
@@ -127,12 +105,6 @@ window.VocabApp.Flashcard = (function () {
       speakBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         speakCurrent();
-      });
-    }
-    if (readAlongBtn) {
-      readAlongBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        startReadAlong();
       });
     }
     if (masteredBtn) {
@@ -200,17 +172,10 @@ window.VocabApp.Flashcard = (function () {
     document.getElementById('nextCard').disabled =
       (currentIndex === currentUnit.words.length - 1);
 
-    // 清空跟读结果
-    var readalongResult = document.getElementById('readalongResult');
-    if (readalongResult) {
-      readalongResult.innerHTML = '';
-    }
 
     // 更新掌握状态
     updateMasteryButtons(word.word);
 
-    // 更新跟读过关标记
-    updateReadAlongBadge(word.word);
   }
 
   /**
@@ -262,65 +227,10 @@ window.VocabApp.Flashcard = (function () {
   /**
    * 跟读：先播放发音，然后自动识别打分
    */
-  function startReadAlong() {
-    if (!currentUnit || !currentUnit.words) return;
-    var word = currentUnit.words[currentIndex];
-    if (!word) return;
-
-    var resultContainer = document.getElementById('readalongResult');
-    if (!resultContainer) return;
-
-    if (VocabApp.ReadAlong && VocabApp.ReadAlong.start) {
-      VocabApp.ReadAlong.start(word.word, resultContainer, {
-        unitId: currentUnit.unitId,
-        onResult: function (passed, score) {
-          // 跟读完成后，更新进度条
-          setTimeout(function () {
-            // 更新进度条
-            var passedCount = VocabApp.Storage.getReadAlongPassedCount(currentUnit.unitId);
-            var total = currentUnit.words.length;
-            var fillEl = document.querySelector('.ra-progress-fill');
-            var countEl = document.querySelector('.ra-progress-count');
-            var labelEl = document.querySelector('.ra-progress-label');
-            if (fillEl) {
-              fillEl.style.width = Math.round((passedCount / total) * 100) + '%';
-            }
-            if (countEl) {
-              countEl.textContent = passedCount + ' / ' + total;
-            }
-            // 如果全部过关，显示完成提示
-            if (passedCount === total && labelEl) {
-              var doneEl = document.querySelector('.ra-progress-done');
-              if (!doneEl && labelEl.parentNode) {
-                var done = document.createElement('span');
-                done.className = 'ra-progress-done';
-                done.textContent = '✓ 全部过关！';
-                labelEl.parentNode.appendChild(done);
-              }
-            }
-            // 更新当前单词的跟读标记
-            updateReadAlongBadge(word.word);
-          }, 100);
-        }
-      });
-    }
-  }
 
   /**
    * 更新当前单词的跟读过关标记
    */
-  function updateReadAlongBadge(word) {
-    var readAlongBtn = document.getElementById('cardReadAlong');
-    if (!readAlongBtn || !currentUnit) return;
-    var passed = VocabApp.Storage.isReadAlongPassed(currentUnit.unitId, word);
-    if (passed) {
-      readAlongBtn.classList.add('ra-passed');
-      readAlongBtn.textContent = '✅ 已过关';
-    } else {
-      readAlongBtn.classList.remove('ra-passed');
-      readAlongBtn.textContent = '🎤 跟读';
-    }
-  }
 
   /**
    * 标记掌握状态
