@@ -2114,3 +2114,461 @@ body {
     font-size: 13px;
   }
 }
+
+/* ============================================================
+   默写统计样式
+   ============================================================ */
+
+/* 开始页 - 历史摘要 */
+.dictation-start-stats {
+  max-width: 360px;
+  margin: 0 auto 20px;
+  background: #F5F7FA;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.start-stats-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.start-stats-row {
+  display: flex;
+  justify-content: space-around;
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.start-stats-row strong {
+  color: var(--primary-dark);
+  font-size: 15px;
+}
+
+/* 结果页 - 准确率/错误率 */
+.dictation-rate-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dictation-rate-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 10px;
+  border-radius: 10px;
+  gap: 4px;
+}
+
+.dictation-rate-item.correct-rate {
+  background: #E8F5E9;
+  border: 1px solid #A5D6A7;
+}
+
+.dictation-rate-item.error-rate {
+  background: #FFEBEE;
+  border: 1px solid #FFCDD2;
+}
+
+.dictation-rate-item .rate-label {
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.dictation-rate-item .rate-value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.correct-rate .rate-value {
+  color: #2E7D32;
+}
+
+.error-rate .rate-value {
+  color: #C62828;
+}
+
+.dictation-rate-item .rate-detail {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* 统计区域 */
+.dictation-stats-section {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.stats-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* 汇总统计 */
+.stats-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.stats-summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px;
+  background: #F5F7FA;
+  border-radius: 8px;
+  gap: 2px;
+}
+
+.stats-summary-item .stats-label {
+  font-size: 11px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+.stats-summary-item .stats-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.stats-summary-item .stats-value.highlight {
+  color: var(--accent-dark);
+}
+
+.stats-summary-item .stats-value.pass-color {
+  color: #2E7D32;
+}
+
+.stats-summary-item .stats-value.fail-color {
+  color: #C62828;
+}
+
+/* 历史记录列表 */
+.stats-history-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.stats-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stats-history-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.stats-history-item.passed {
+  background: #E8F5E9;
+  border-left: 3px solid #4CAF50;
+}
+
+.stats-history-item.failed {
+  background: #FFEBEE;
+  border-left: 3px solid #F44336;
+}
+
+.stats-history-item .history-date {
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+.stats-history-item .history-mode {
+  background: #E3F2FD;
+  color: var(--primary-dark);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.stats-history-item .history-score {
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.stats-history-item .history-accuracy {
+  color: #2E7D32;
+  font-size: 12px;
+}
+
+.stats-history-item .history-error {
+  color: #C62828;
+  font-size: 12px;
+}
+
+.stats-history-item .history-status {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.stats-history-item.passed .history-status {
+  color: #2E7D32;
+}
+
+.stats-history-item.failed .history-status {
+  color: #C62828;
+}
+
+/* 移动端适配 */
+@media (max-width: 600px) {
+  .dictation-rate-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stats-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-history-item {
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .stats-history-item .history-mode {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+}
+
+/* ============================================================
+   跟读 - 手动录音模式样式
+   ============================================================ */
+
+/* 手动录音准备界面 */
+.readalong-manual {
+  text-align: center;
+  padding: 16px;
+  background: #F5F7FA;
+  border-radius: 10px;
+}
+
+.readalong-manual-tip {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.readalong-manual-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  padding: 10px 16px;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  word-break: break-word;
+}
+
+.readalong-record-btn {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.readalong-record-btn:hover {
+  background: #D32F2F;
+  transform: scale(1.03);
+}
+
+.readalong-record-btn.recording {
+  background: #C62828;
+  animation: recordPulse 1.2s ease-in-out infinite;
+}
+
+.readalong-record-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@keyframes recordPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(198, 40, 40, 0); }
+}
+
+.readalong-manual-hint {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 10px;
+}
+
+/* 录音回放界面 */
+.readalong-playback {
+  padding: 16px;
+  background: #F5F7FA;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.readalong-playback-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 14px;
+}
+
+.readalong-audio-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.readalong-audio-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #fff;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.readalong-audio-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.readalong-play-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.readalong-play-btn:hover {
+  background: var(--primary-dark);
+}
+
+.readalong-audio-player {
+  flex: 1;
+  min-width: 200px;
+  height: 36px;
+}
+
+.readalong-assess-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.readalong-assess-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.readalong-assess-btn {
+  border: none;
+  border-radius: 20px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.readalong-assess-btn.pass {
+  background: #4CAF50;
+  color: #fff;
+}
+
+.readalong-assess-btn.pass:hover {
+  background: #388E3C;
+}
+
+.readalong-assess-btn.retry {
+  background: #FF9800;
+  color: #fff;
+}
+
+.readalong-assess-btn.retry:hover {
+  background: #F57C00;
+}
+
+/* 手动模式详情 */
+.readalong-detail.manual-detail {
+  background: #E3F2FD;
+}
+
+/* 浏览器不支持提示 */
+.readalong-tip {
+  padding: 12px 16px;
+  background: #FFF8E1;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #E65100;
+  line-height: 1.6;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* 移动端适配 */
+@media (max-width: 600px) {
+  .readalong-manual-text {
+    font-size: 17px;
+  }
+
+  .readalong-record-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .readalong-audio-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .readalong-audio-player {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .readalong-assess-btns {
+    flex-direction: column;
+  }
+
+  .readalong-assess-btn {
+    width: 100%;
+  }
+}

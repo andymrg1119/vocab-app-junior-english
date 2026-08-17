@@ -3,6 +3,7 @@
  * 默写功能（重构版）
  * 规则：每题只能提交一次，提交后不可修改，必须全部默写完成，
  * 达到80分才算过关。
+ * 统计：准确率、错误率、历史记录、汇总统计
  * 支持两种模式：中→英（看中文写英文）和英→中（看英文写中文）
  */
 window.VocabApp = window.VocabApp || {};
@@ -23,8 +24,6 @@ window.VocabApp.Dictation = (function () {
 
   /**
    * 渲染默写区域
-   * @param {Object} unit - 单元数据
-   * @param {HTMLElement} container - 容器元素
    */
   function render(unit, container) {
     currentUnit = unit;
@@ -54,6 +53,7 @@ window.VocabApp.Dictation = (function () {
      ============================================================ */
   function showStartScreen() {
     var total = currentUnit.words.length;
+    var statsHtml = renderStartStats();
 
     var html = '';
     html += '<div class="dictation-container">';
@@ -74,6 +74,7 @@ window.VocabApp.Dictation = (function () {
     html += '      <button class="mode-btn active" data-mode="cn2en">中→英（看中文写英文）</button>';
     html += '      <button class="mode-btn" data-mode="en2cn">英→中（看英文写中文）</button>';
     html += '    </div>';
+    html += statsHtml;
     html += '    <button class="dictation-btn primary dictation-start-btn" id="dictStart">🚀 开始默写</button>';
     html += '  </div>';
     html += '</div>';
@@ -98,6 +99,35 @@ window.VocabApp.Dictation = (function () {
     document.getElementById('dictStart').addEventListener('click', function () {
       startDictation();
     });
+  }
+
+  /* ============================================================
+     开始页面 - 历史统计摘要
+     ============================================================ */
+  function renderStartStats() {
+    var allScores = VocabApp.Storage.getDictationScores();
+    var unitScores = allScores[currentUnit.unitId] || [];
+
+    if (unitScores.length === 0) return '';
+
+    var attempts = unitScores.length;
+    var bestScore = 0;
+    var passCount = 0;
+    for (var i = 0; i < unitScores.length; i++) {
+      if (unitScores[i].score > bestScore) bestScore = unitScores[i].score;
+      if (unitScores[i].passed) passCount++;
+    }
+
+    var html = '';
+    html += '<div class="dictation-start-stats">';
+    html += '  <div class="start-stats-title">📊 本课默写记录</div>';
+    html += '  <div class="start-stats-row">';
+    html += '    <span>共默写 <strong>' + attempts + '</strong> 次</span>';
+    html += '    <span>最高分 <strong>' + bestScore + '</strong></span>';
+    html += '    <span>过关 <strong>' + passCount + '/' + attempts + '</strong></span>';
+    html += '  </div>';
+    html += '</div>';
+    return html;
   }
 
   /* ============================================================
@@ -210,14 +240,12 @@ window.VocabApp.Dictation = (function () {
       correctAnswer = word.meaning.trim().toLowerCase();
     }
 
-    // 空答案算错
     if (userInput === '') {
       userInput = '（未作答）';
     }
 
     var isCorrect = (userInput === correctAnswer);
 
-    // 锁定：只能提交一次，不可修改
     answered = true;
     input.disabled = true;
     submitBtn.style.display = 'none';
@@ -240,7 +268,6 @@ window.VocabApp.Dictation = (function () {
       }
     }
 
-    // 更新进度条
     var progressFill = document.querySelector('.dictation-progress-fill');
     if (progressFill) {
       var percent = Math.round(((currentIndex + 1) / wordOrder.length) * 100);
@@ -251,7 +278,6 @@ window.VocabApp.Dictation = (function () {
     if (correctEl) correctEl.textContent = '✓ ' + correctCount;
     if (wrongEl) wrongEl.textContent = '✗ ' + wrongCount;
 
-    // 如果是最后一题，改变按钮文字
     if (currentIndex === wordOrder.length - 1) {
       nextBtn.textContent = '查看成绩 →';
     }
@@ -268,20 +294,24 @@ window.VocabApp.Dictation = (function () {
   }
 
   /* ============================================================
-     显示结果（过关/未过关）
+     显示结果（过关/未过关 + 准确率/错误率 + 历史统计）
      ============================================================ */
   function showResult() {
     var total = wordOrder.length;
     var score = Math.round((correctCount / total) * 100);
+    var accuracyRate = score;
+    var errorRate = Math.round((wrongCount / total) * 100);
     var passed = score >= PASS_THRESHOLD;
 
-    // 保存默写成绩
+    // 保存默写成绩（含准确率和错误率）
     VocabApp.Storage.saveDictationScore(currentUnit.unitId, {
       mode: mode,
       score: score,
       correct: correctCount,
       wrong: wrongCount,
       total: total,
+      accuracyRate: accuracyRate,
+      errorRate: errorRate,
       passed: passed,
       date: new Date().toISOString()
     });
@@ -294,8 +324,19 @@ window.VocabApp.Dictation = (function () {
     html += '    <div class="dictation-result-status ' + (passed ? 'pass' : 'fail') + '">';
     html += passed ? '恭喜过关！' : '未过关（需要' + PASS_THRESHOLD + '分）';
     html += '    </div>';
-    html += '    <div class="dictation-result-text">';
-    html += '      正确 ' + correctCount + ' 题 ｜ 错误 ' + wrongCount + ' 题 ｜ 共 ' + total + ' 题';
+
+    // 准确率和错误率
+    html += '    <div class="dictation-rate-row">';
+    html += '      <div class="dictation-rate-item correct-rate">';
+    html += '        <span class="rate-label">准确率</span>';
+    html += '        <span class="rate-value">' + accuracyRate + '%</span>';
+    html += '        <span class="rate-detail">正确 ' + correctCount + ' / ' + total + '</span>';
+    html += '      </div>';
+    html += '      <div class="dictation-rate-item error-rate">';
+    html += '        <span class="rate-label">错误率</span>';
+    html += '        <span class="rate-value">' + errorRate + '%</span>';
+    html += '        <span class="rate-detail">错误 ' + wrongCount + ' / ' + total + '</span>';
+    html += '      </div>';
     html += '    </div>';
 
     if (passed) {
@@ -324,6 +365,9 @@ window.VocabApp.Dictation = (function () {
       html += '    </div>';
     }
 
+    // 默写统计
+    html += renderDictationStats();
+
     html += '    <div class="dictation-controls">';
     if (!passed) {
       html += '      <button class="dictation-btn primary" id="dictAgain">🔄 再来一次</button>';
@@ -347,6 +391,96 @@ window.VocabApp.Dictation = (function () {
     document.getElementById('dictAgain').addEventListener('click', function () {
       showStartScreen();
     });
+  }
+
+  /* ============================================================
+     默写统计 - 历史记录 + 汇总
+     ============================================================ */
+  function renderDictationStats() {
+    var allScores = VocabApp.Storage.getDictationScores();
+    var unitScores = allScores[currentUnit.unitId] || [];
+
+    if (unitScores.length === 0) return '';
+
+    // 汇总统计
+    var attempts = unitScores.length;
+    var bestScore = 0;
+    var totalScore = 0;
+    var passCount = 0;
+    var totalAccuracy = 0;
+    var totalError = 0;
+
+    for (var i = 0; i < unitScores.length; i++) {
+      var s = unitScores[i];
+      if (s.score > bestScore) bestScore = s.score;
+      totalScore += s.score;
+      if (s.passed) passCount++;
+      totalAccuracy += (s.accuracyRate != null ? s.accuracyRate : s.score);
+      totalError += (s.errorRate != null ? s.errorRate : Math.round((s.wrong / s.total) * 100));
+    }
+
+    var avgScore = Math.round(totalScore / attempts);
+    var avgAccuracy = Math.round(totalAccuracy / attempts);
+    var avgError = Math.round(totalError / attempts);
+    var passRate = Math.round((passCount / attempts) * 100);
+
+    var html = '';
+    html += '<div class="dictation-stats-section">';
+    html += '  <div class="stats-section-title">📊 默写统计</div>';
+
+    // 汇总
+    html += '  <div class="stats-summary">';
+    html += '    <div class="stats-summary-item">';
+    html += '      <span class="stats-label">默写次数</span>';
+    html += '      <span class="stats-value">' + attempts + ' 次</span>';
+    html += '    </div>';
+    html += '    <div class="stats-summary-item">';
+    html += '      <span class="stats-label">最高分</span>';
+    html += '      <span class="stats-value highlight">' + bestScore + ' 分</span>';
+    html += '    </div>';
+    html += '    <div class="stats-summary-item">';
+    html += '      <span class="stats-label">平均分</span>';
+    html += '      <span class="stats-value">' + avgScore + ' 分</span>';
+    html += '    </div>';
+    html += '    <div class="stats-summary-item">';
+    html += '      <span class="stats-label">平均准确率</span>';
+    html += '      <span class="stats-value pass-color">' + avgAccuracy + '%</span>';
+    html += '    </div>';
+    html += '    <div class="stats-summary-item">';
+    html += '      <span class="stats-label">平均错误率</span>';
+    html += '      <span class="stats-value fail-color">' + avgError + '%</span>';
+    html += '    </div>';
+    html += '    <div class="stats-summary-item">';
+    html += '      <span class="stats-label">过关率</span>';
+    html += '      <span class="stats-value">' + passCount + '/' + attempts + ' (' + passRate + '%)</span>';
+    html += '    </div>';
+    html += '  </div>';
+
+    // 历史记录（最近5次）
+    var showCount = Math.min(5, unitScores.length);
+    html += '  <div class="stats-history-title">最近 ' + showCount + ' 次记录</div>';
+    html += '  <div class="stats-history-list">';
+    for (var j = unitScores.length - 1; j >= unitScores.length - showCount; j--) {
+      var record = unitScores[j];
+      var date = new Date(record.date);
+      var dateStr = (date.getMonth() + 1) + '/' + date.getDate() + ' ' +
+        ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
+      var modeStr = record.mode === 'cn2en' ? '中→英' : '英→中';
+      var accRate = record.accuracyRate != null ? record.accuracyRate : record.score;
+      var errRate = record.errorRate != null ? record.errorRate : Math.round((record.wrong / record.total) * 100);
+      html += '    <div class="stats-history-item ' + (record.passed ? 'passed' : 'failed') + '">';
+      html += '      <span class="history-date">' + dateStr + '</span>';
+      html += '      <span class="history-mode">' + modeStr + '</span>';
+      html += '      <span class="history-score">' + record.score + '分</span>';
+      html += '      <span class="history-accuracy">准确率' + accRate + '%</span>';
+      html += '      <span class="history-error">错误率' + errRate + '%</span>';
+      html += '      <span class="history-status">' + (record.passed ? '✓过关' : '✗未过') + '</span>';
+      html += '    </div>';
+    }
+    html += '  </div>';
+    html += '</div>';
+
+    return html;
   }
 
   /* ============================================================

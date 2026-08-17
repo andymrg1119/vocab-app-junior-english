@@ -332,43 +332,52 @@ window.VocabApp = window.VocabApp || {};
 
   /* ============================================================
      跟读评分模块 (ReadAlong)
-     使用 Web Speech API: 先播放发音，再录音识别，对比打分
+     支持: 自动语音识别(Chrome桌面) + 手动录音对比(移动端)
      80分以上为过关
      ============================================================ */
 
   var ReadAlong = {
     /**
-     * 启动跟读流程
-     * @param {string} targetText - 目标文本（英文单词/短语/句子）
-     * @param {HTMLElement} container - 显示结果的容器
+     * 启动跟读流程：先播放发音，再录音
      */
     start: function (targetText, container) {
       var self = this;
 
-      // 检查浏览器支持
-      var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        container.innerHTML =
-          '<div class="readalong-error">⚠️ 当前浏览器不支持语音识别，请使用 Chrome 浏览器</div>';
-        return;
-      }
-
-      // 步骤1：先播放发音
-      container.innerHTML = '<div class="readalong-status speaking"><span class="readalong-pulse"></span>🔊 正在播放发音...</div>';
+      container.innerHTML = '<div class="readalong-status speaking"><span class="readalong-pulse"></span>🔊 正在播放发音，请仔细听...</div>';
 
       speakWithCallback(targetText, function () {
-        // 步骤2：播放完毕，开始录音
-        // 短暂延迟，确保语音合成完全停止
         setTimeout(function () {
-          self._startRecording(targetText, container);
+          self._beginRecordingPhase(targetText, container);
         }, 300);
       });
     },
 
     /**
-     * 开始录音识别
+     * 选择录音模式：自动识别 or 手动录音
      */
-    _startRecording: function (targetText, container) {
+    _beginRecordingPhase: function (targetText, container) {
+      var self = this;
+      var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      var hasGetUserMedia = navigator.mediaDevices && navigator.mediaDevices.getUserMedia;
+
+      if (SpeechRecognition) {
+        // 模式A：浏览器支持语音识别（桌面Chrome）
+        this._autoRecognize(targetText, container);
+      } else if (hasGetUserMedia) {
+        // 模式B：支持录音但不支持识别（手机浏览器）
+        this._showManualReady(targetText, container);
+      } else {
+        // 模式C：都不支持
+        container.innerHTML =
+          '<div class="readalong-error">⚠️ 当前浏览器不支持语音功能</div>' +
+          '<div class="readalong-tip">💡 请使用 Chrome 或 Safari 浏览器打开<br>微信内请点击右上角"···"选择"在浏览器中打开"</div>';
+      }
+    },
+
+    /**
+     * 模式A：自动语音识别
+     */
+    _autoRecognize: function (targetText, container) {
       var self = this;
       var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -376,9 +385,11 @@ window.VocabApp = window.VocabApp || {};
         '<div class="readalong-status recording">' +
         '<span class="readalong-mic-icon">🎤</span>' +
         '<span class="readalong-rec-text">正在听你读...</span>' +
+        '<div class="readalong-wave-container">' +
         '<span class="readalong-wave"></span>' +
         '<span class="readalong-wave"></span>' +
         '<span class="readalong-wave"></span>' +
+        '</div>' +
         '</div>';
 
       var recognition = new SpeechRecognition();
@@ -394,8 +405,6 @@ window.VocabApp = window.VocabApp || {};
         var results = event.results[0];
         var bestScore = 0;
         var bestText = '';
-
-        // 取多个候选中最匹配的
         for (var i = 0; i < results.length; i++) {
           var transcript = results[i].transcript.trim().toLowerCase();
           var score = self._calculateScore(transcript, targetText.toLowerCase());
@@ -404,22 +413,20 @@ window.VocabApp = window.VocabApp || {};
             bestText = transcript;
           }
         }
-
-        self._showResult(targetText, bestText, Math.round(bestScore), container);
+        self._showResult(targetText, bestText, Math.round(bestScore), container, false);
       };
 
       recognition.onerror = function (event) {
         hasResult = true;
-        var errorMsg = '识别失败';
-        if (event.error === 'no-speech') {
-          errorMsg = '没有听到声音，请大声读出来';
-        } else if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-          errorMsg = '请允许使用麦克风权限';
-        } else if (event.error === 'aborted') {
-          errorMsg = '录音被中断，请重试';
-        } else {
-          errorMsg = '识别出错：' + event.error;
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          // 麦克风权限被拒，切换到手动录音模式
+          self._showManualReady(targetText, container);
+          return;
         }
+        var errorMsg = '识别失败';
+        if (event.error === 'no-speech') errorMsg = '没有听到声音，请大声读出来';
+        else if (event.error === 'aborted') errorMsg = '录音被中断，请重试';
+        else errorMsg = '识别出错：' + event.error;
         self._showError(targetText, errorMsg, container);
       };
 
@@ -432,32 +439,181 @@ window.VocabApp = window.VocabApp || {};
       try {
         recognition.start();
       } catch (e) {
-        self._showError(targetText, '录音启动失败，请重试', container);
+        // 识别启动失败，切换到手动录音模式
+        self._showManualReady(targetText, container);
+      }
+    },
+
+    /**
+     * 模式B：手动录音 + 自我评估
+     * 使用 getUserMedia + MediaRecorder 录音，播放后让孩子自己对比
+     */
+    _showManualReady: function (targetText, container) {
+      var self = this;
+
+      container.innerHTML =
+        '<div class="readalong-manual">' +
+        '  <div class="readalong-manual-tip">🎤 请跟读以下内容：</div>' +
+        '  <div class="readalong-manual-text">' + escapeHtml(targetText) + '</div>' +
+        '  <button class="readalong-record-btn" id="readalongRecord">🎤 点击开始录音</button>' +
+        '  <div class="readalong-manual-hint">点击按钮后大声朗读，读完再点击停止</div>' +
+        '</div>';
+
+      var recordBtn = container.querySelector('#readalongRecord');
+      if (!recordBtn) return;
+
+      var recording = false;
+      var mediaRecorder = null;
+      var audioChunks = [];
+      var stream = null;
+      var autoStopTimer = null;
+
+      recordBtn.addEventListener('click', function () {
+        if (!recording) {
+          // 开始录音
+          navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function (s) {
+              stream = s;
+              // 检测支持的音频格式
+              var mimeType = '';
+              var types = ['audio/webm', 'audio/mp4', 'audio/ogg'];
+              for (var i = 0; i < types.length; i++) {
+                if (MediaRecorder.isTypeSupported(types[i])) {
+                  mimeType = types[i];
+                  break;
+                }
+              }
+              mediaRecorder = mimeType
+                ? new MediaRecorder(stream, { mimeType: mimeType })
+                : new MediaRecorder(stream);
+              audioChunks = [];
+
+              mediaRecorder.ondataavailable = function (e) {
+                if (e.data && e.data.size > 0) audioChunks.push(e.data);
+              };
+
+              mediaRecorder.onstop = function () {
+                var blobType = mediaRecorder.mimeType || 'audio/webm';
+                var audioBlob = new Blob(audioChunks, { type: blobType });
+                var audioUrl = URL.createObjectURL(audioBlob);
+                self._showPlayback(targetText, audioUrl, container);
+                if (stream) stream.getTracks().forEach(function (t) { t.stop(); });
+                if (autoStopTimer) { clearTimeout(autoStopTimer); autoStopTimer = null; }
+              };
+
+              mediaRecorder.start();
+              recording = true;
+              recordBtn.textContent = '⏹️ 点击停止录音';
+              recordBtn.classList.add('recording');
+
+              // 15秒后自动停止
+              autoStopTimer = setTimeout(function () {
+                if (recording && mediaRecorder.state === 'recording') {
+                  mediaRecorder.stop();
+                  recording = false;
+                }
+              }, 15000);
+            })
+            .catch(function (err) {
+              var msg = '无法访问麦克风';
+              if (err.name === 'NotAllowedError') {
+                msg = '麦克风权限被拒绝，请在浏览器设置中允许使用麦克风';
+              } else if (err.name === 'NotFoundError') {
+                msg = '未找到麦克风设备';
+              } else if (err.message) {
+                msg = '无法访问麦克风：' + err.message;
+              }
+              self._showError(targetText, msg, container);
+            });
+        } else {
+          // 停止录音
+          if (mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+          }
+          recording = false;
+          recordBtn.textContent = '处理中...';
+          recordBtn.disabled = true;
+        }
+      });
+    },
+
+    /**
+     * 播放录音 + 自我评估
+     */
+    _showPlayback: function (targetText, audioUrl, container) {
+      var self = this;
+
+      container.innerHTML =
+        '<div class="readalong-playback">' +
+        '  <div class="readalong-playback-title">🎧 请听你的录音，对比发音</div>' +
+        '  <div class="readalong-audio-section">' +
+        '    <div class="readalong-audio-row">' +
+        '      <span class="readalong-audio-label">🔊 原文发音：</span>' +
+        '      <button class="readalong-play-btn" id="playOriginal">▶ 播放</button>' +
+        '    </div>' +
+        '    <div class="readalong-audio-row">' +
+        '      <span class="readalong-audio-label">🎤 你的录音：</span>' +
+        '      <audio controls class="readalong-audio-player" src="' + audioUrl + '"></audio>' +
+        '    </div>' +
+        '  </div>' +
+        '  <div class="readalong-assess-title">你觉得读得怎么样？</div>' +
+        '  <div class="readalong-assess-btns">' +
+        '    <button class="readalong-assess-btn pass" id="readalongPass">✓ 读对了（过关）</button>' +
+        '    <button class="readalong-assess-btn retry" id="readalongRetry">🔄 再读一次</button>' +
+        '  </div>' +
+        '</div>';
+
+      var playBtn = container.querySelector('#playOriginal');
+      if (playBtn) {
+        playBtn.addEventListener('click', function () { speak(targetText); });
+      }
+      var passBtn = container.querySelector('#readalongPass');
+      if (passBtn) {
+        passBtn.addEventListener('click', function () {
+          self._showResult(targetText, '', 80, container, true);
+        });
+      }
+      var retryBtn = container.querySelector('#readalongRetry');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', function () {
+          ReadAlong.start(targetText, container);
+        });
       }
     },
 
     /**
      * 显示评分结果
      */
-    _showResult: function (target, transcript, score, container) {
+    _showResult: function (target, transcript, score, container, isManual) {
       var passed = score >= 80;
       var html = '';
       html += '<div class="readalong-result ' + (passed ? 'pass' : 'fail') + '">';
       html += '  <div class="readalong-score-circle ' + (passed ? 'pass' : 'fail') + '">';
-      html += '    <span class="score-num">' + score + '</span>';
-      html += '    <span class="score-unit">分</span>';
+      if (isManual) {
+        html += '    <span class="score-num">✓</span>';
+        html += '    <span class="score-unit">过关</span>';
+      } else {
+        html += '    <span class="score-num">' + score + '</span>';
+        html += '    <span class="score-unit">分</span>';
+      }
       html += '  </div>';
       html += '  <div class="readalong-status-text ' + (passed ? 'pass' : 'fail') + '">';
       html += passed ? '🎉 过关！' : '💪 未过关（需80分）';
       html += '  </div>';
-      html += '  <div class="readalong-detail">';
-      html += '    <div class="readalong-said"><span class="detail-label">你说：</span>' + escapeHtml(transcript || '（未识别）') + '</div>';
-      html += '    <div class="readalong-target"><span class="detail-label">原文：</span>' + escapeHtml(target) + '</div>';
-      html += '  </div>';
+      if (!isManual) {
+        html += '  <div class="readalong-detail">';
+        html += '    <div class="readalong-said"><span class="detail-label">你说：</span>' + escapeHtml(transcript || '（未识别）') + '</div>';
+        html += '    <div class="readalong-target"><span class="detail-label">原文：</span>' + escapeHtml(target) + '</div>';
+        html += '  </div>';
+      } else {
+        html += '  <div class="readalong-detail manual-detail">';
+        html += '    <div class="readalong-target"><span class="detail-label">原文：</span>' + escapeHtml(target) + '</div>';
+        html += '  </div>';
+      }
       if (!passed) {
         html += '  <button class="readalong-retry-btn">🔄 再读一次</button>';
       } else {
-        html += '  <div class="readalong-passed-msg">✨ 发音很棒！</div>';
+        html += '  <div class="readalong-passed-msg">✨ ' + (isManual ? '自我评估过关！' : '发音很棒！') + '</div>';
       }
       html += '</div>';
 
