@@ -1990,6 +1990,27 @@ body {
   background: var(--primary-dark);
 }
 
+/* iOS 开始跟读按钮 */
+.ra-start-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  margin: 10px auto;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  -webkit-tap-highlight-color: transparent;
+}
+.ra-start-btn:active {
+  transform: scale(0.96);
+  background: var(--primary-dark);
+}
+
 /* 过关消息 */
 .ra-passed-msg {
   font-size: 15px;

@@ -401,6 +401,16 @@ window.VocabApp = window.VocabApp || {};
         return;
       }
 
+      // iOS / iPadOS 专用流程：
+      // Safari 要求语音识别必须由用户手势直接触发，
+      // 且 getUserMedia 与 SpeechRecognition 在 iOS 上冲突（getUserMedia 短暂占用后释放，
+      // 再启动识别会报 not-allowed）。因此 iOS 上跳过 getUserMedia 预请求，
+      // 播放发音后显示"开始跟读"按钮，在按钮点击的手势内直接启动识别。
+      if (this._isIOS()) {
+        self._speakThenArmButton(targetText, container, opts);
+        return;
+      }
+
       // 步骤1: 先请求麦克风权限（触发手机权限弹窗）
       container.innerHTML =
         '<div class="ra-status preparing">' +
@@ -431,8 +441,56 @@ window.VocabApp = window.VocabApp || {};
           } else if (err && err.name === 'NotFoundError') {
             msg = '未找到麦克风设备';
           }
+          if (self._isIOS()) {
+            msg += '。iPhone 请检查：设置 → Safari浏览器 → 麦克风 → 设为"允许"';
+          }
           self._showError(targetText, msg, container, opts);
         });
+    },
+
+    /**
+     * 检测是否为 iOS / iPadOS（含 iPadOS 13+ 桌面版 UA 伪装）
+     */
+    _isIOS: function () {
+      var ua = navigator.userAgent || '';
+      var isIOSDevice = /iPad|iPhone|iPod/.test(ua);
+      // iPadOS 13+ 默认伪装成 Mac，通过触点数判断
+      var isIPadOS = /^Mac/.test(navigator.platform || '') && navigator.maxTouchPoints > 1;
+      return isIOSDevice || isIPadOS;
+    },
+
+    /**
+     * iOS 专用流程：播放发音 → 显示"开始跟读"按钮 → 用户点击后在手势内启动识别
+     */
+    _speakThenArmButton: function (targetText, container, opts) {
+      var self = this;
+
+      // 播放英式发音（在用户手势内调用，iOS 允许）
+      container.innerHTML =
+        '<div class="ra-status speaking">' +
+        '<span class="ra-pulse-icon">🔊</span>' +
+        '<span class="ra-status-text">正在播放发音，请仔细听...</span>' +
+        '</div>';
+
+      speakWithCallback(targetText, function () {
+        setTimeout(function () {
+          container.innerHTML =
+            '<div class="ra-listening">' +
+            '  <div class="ra-mic-icon-big">🎤</div>' +
+            '  <div class="ra-listen-text">听完了？点击按钮开始跟读</div>' +
+            '  <button class="ra-start-btn">🎤 开始跟读</button>' +
+            '  <div class="ra-timeout-hint">（点击后朗读，8秒内完成）</div>' +
+            '</div>';
+
+          var startBtn = container.querySelector('.ra-start-btn');
+          if (startBtn) {
+            startBtn.addEventListener('click', function () {
+              // 关键：在用户手势的同步调用栈内启动识别，满足 iOS 权限要求
+              self._recognize(targetText, container, opts);
+            });
+          }
+        }, 400);
+      });
     },
 
     /**
@@ -515,7 +573,12 @@ window.VocabApp = window.VocabApp || {};
         clearTimeout(timeoutId);
         var msg = '识别失败';
         if (event.error === 'no-speech') msg = '没有听到声音，请大声读出来';
-        else if (event.error === 'not-allowed' || event.error === 'service-not-allowed') msg = '麦克风权限被拒绝';
+        else if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          msg = '麦克风权限被拒绝';
+          if (self._isIOS()) {
+            msg = '麦克风权限被拒绝。请检查：① 设置 → 隐私与安全性 → 麦克风 → 打开 Safari 的开关；② 设置 → 通用 → 键盘 → 开启"启用听写"';
+          }
+        }
         else if (event.error === 'network') msg = '网络错误，请检查网络连接';
         else if (event.error === 'audio-capture') msg = '麦克风被其他程序占用';
         else msg = '识别出错：' + event.error;
