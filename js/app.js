@@ -383,6 +383,10 @@ window.VocabApp = window.VocabApp || {};
      80分以上为过关，零按钮操作
      ============================================================ */
 
+  // iOS 用：记录是否已对"本次会话首次识别"做过 getUserMedia 预热
+  // 规避 WebKit bug 317741（TTS 播完后启动识别时麦克风挂起）
+  var _iosMicPrimed = false;
+
   var ReadAlong = {
     /**
      * 启动跟读：先请求麦克风权限，再播放发音，再自动识别
@@ -460,37 +464,35 @@ window.VocabApp = window.VocabApp || {};
     },
 
     /**
-     * iOS 专用流程：播放发音 → 显示"开始跟读"按钮 → 用户点击后在手势内启动识别
+     * iOS 专用流程：让"识别"成为本次会话里第一次使用麦克风
+     * （规避 WebKit bug 317741：iOS 在 TTS 播放完之后再启动识别时麦克风会挂起）
+     * 因此这里不先播发音，而是直接给"开始跟读"按钮；标准发音放到评分后再听。
      */
     _speakThenArmButton: function (targetText, container, opts) {
       var self = this;
 
-      // 播放英式发音（在用户手势内调用，iOS 允许）
       container.innerHTML =
-        '<div class="ra-status speaking">' +
-        '<span class="ra-pulse-icon">🔊</span>' +
-        '<span class="ra-status-text">正在播放发音，请仔细听...</span>' +
+        '<div class="ra-listening">' +
+        '  <div class="ra-mic-icon-big">🎤</div>' +
+        '  <div class="ra-listen-text">点击按钮后，跟着提示大声朗读</div>' +
+        '  <button class="ra-start-btn">🎤 开始跟读</button>' +
+        '  <button class="ra-listen-only-btn" style="margin-top:10px;">🔊 先听发音</button>' +
+        '  <div class="ra-timeout-hint">（开始跟读后，最多 8 秒）</div>' +
         '</div>';
 
-      speakWithCallback(targetText, function () {
-        setTimeout(function () {
-          container.innerHTML =
-            '<div class="ra-listening">' +
-            '  <div class="ra-mic-icon-big">🎤</div>' +
-            '  <div class="ra-listen-text">听完了？点击按钮开始跟读</div>' +
-            '  <button class="ra-start-btn">🎤 开始跟读</button>' +
-            '  <div class="ra-timeout-hint">（点击后朗读，8秒内完成）</div>' +
-            '</div>';
-
-          var startBtn = container.querySelector('.ra-start-btn');
-          if (startBtn) {
-            startBtn.addEventListener('click', function () {
-              // 关键：在用户手势的同步调用栈内启动识别，满足 iOS 权限要求
-              self._recognize(targetText, container, opts);
-            });
-          }
-        }, 400);
-      });
+      var startBtn = container.querySelector('.ra-start-btn');
+      if (startBtn) {
+        startBtn.addEventListener('click', function () {
+          _iosMicPrimed = false; // 每次跟读都重新预热一次
+          self._recognize(targetText, container, opts, 0);
+        });
+      }
+      var listenBtn = container.querySelector('.ra-listen-only-btn');
+      if (listenBtn) {
+        listenBtn.addEventListener('click', function () {
+          speakWithCallback(targetText, function () {});
+        });
+      }
     },
 
     /**
@@ -514,23 +516,28 @@ window.VocabApp = window.VocabApp || {};
     },
 
     /**
-     * 自动语音识别 + 打分
+     * 自动语音识别 + 打分（带 iOS 健壮性重试）
+     * @param {number} attempt - 当前尝试次数（从 0 开始），用于递增重试
      */
-    _recognize: function (targetText, container, opts) {
+    _recognize: function (targetText, container, opts, attempt) {
       var self = this;
       var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      attempt = attempt || 0;
+      var MAX_ATTEMPTS = 4;
 
-      // 显示"正在听"界面
+      // 显示"正在听"界面（重试时显示计数）
       container.innerHTML =
         '<div class="ra-listening">' +
         '  <div class="ra-mic-pulse"></div>' +
         '  <div class="ra-mic-icon-big">🎤</div>' +
-        '  <div class="ra-listen-text">请跟读...</div>' +
+        '  <div class="ra-listen-text">' + (attempt > 0 ? '正在重试识别… (' + attempt + '/' + MAX_ATTEMPTS + ')' : '请跟读...') + '</div>' +
         '  <div class="ra-wave-bar">' +
         '    <span></span><span></span><span></span><span></span><span></span>' +
         '  </div>' +
-        '  <div class="ra-timeout-hint">（8秒后自动结束）</div>' +
+        '  <div class="ra-timeout-hint">（8秒内完成朗读）</div>' +
         '</div>';
+
+      var hasResult = false;
 
       var recognition = new SR();
       recognition.lang = 'en-GB';
@@ -538,12 +545,11 @@ window.VocabApp = window.VocabApp || {};
       recognition.maxAlternatives = 5;
       recognition.continuous = false;
 
-      var hasResult = false;
-
-      // 8秒超时自动停止
+      // 8秒超时自动停止（iOS 常见"挂起"，按 WebKit bug 317741 递增重试）
       var timeoutId = setTimeout(function () {
         if (!hasResult) {
           try { recognition.stop(); } catch (e) {}
+          self._retryOrFail(targetText, container, opts, attempt, MAX_ATTEMPTS, 'timeout');
         }
       }, 8000);
 
@@ -565,22 +571,29 @@ window.VocabApp = window.VocabApp || {};
       };
 
       recognition.onerror = function (event) {
-        if (event.error === 'aborted' || event.error === 'no-speech') {
-          // no-speech: onend will handle it
-          if (event.error === 'aborted') return;
+        if (event.error === 'aborted') return;
+        if (event.error === 'no-speech') {
+          // 没抓到声音 / 静默挂起：重试
+          hasResult = true;
+          clearTimeout(timeoutId);
+          self._retryOrFail(targetText, container, opts, attempt, MAX_ATTEMPTS, 'no-speech');
+          return;
         }
         hasResult = true;
         clearTimeout(timeoutId);
-        var msg = '识别失败';
-        if (event.error === 'no-speech') msg = '没有听到声音，请大声读出来';
-        else if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-          msg = '麦克风权限被拒绝';
-          if (self._isIOS()) {
-            msg = '麦克风权限被拒绝。请检查：① 设置 → 隐私与安全性 → 麦克风 → 打开 Safari 的开关；② 设置 → 通用 → 键盘 → 开启"启用听写"';
-          }
+        // iOS 麦克风偶发失败（not-allowed / audio-capture）：递增重试，可能恢复
+        if ((event.error === 'not-allowed' || event.error === 'service-not-allowed' || event.error === 'audio-capture')
+            && self._isIOS() && attempt < MAX_ATTEMPTS) {
+          self._retryOrFail(targetText, container, opts, attempt, MAX_ATTEMPTS, event.error);
+          return;
         }
-        else if (event.error === 'network') msg = '网络错误，请检查网络连接';
-        else if (event.error === 'audio-capture') msg = '麦克风被其他程序占用';
+        var msg = '识别失败';
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          msg = self._isIOS()
+            ? '麦克风权限被拒绝。请检查：① 设置 → 隐私与安全性 → 麦克风 → 打开 Safari 的开关；② 设置 → 通用 → 键盘 → 开启"启用听写"'
+            : '麦克风权限被拒绝，请在浏览器设置中允许使用麦克风';
+        } else if (event.error === 'network') msg = '网络错误，请检查网络连接（语音识别需要联网）';
+        else if (event.error === 'audio-capture') msg = '麦克风被其他程序占用，请关闭其他用麦应用后重试';
         else msg = '识别出错：' + event.error;
         self._showError(targetText, msg, container, opts);
       };
@@ -588,24 +601,60 @@ window.VocabApp = window.VocabApp || {};
       recognition.onend = function () {
         clearTimeout(timeoutId);
         if (!hasResult) {
-          self._showError(targetText, '没有听到声音，请大声读出来', container, opts);
+          self._retryOrFail(targetText, container, opts, attempt, MAX_ATTEMPTS, 'onend');
         }
       };
 
-      // 启动识别
-      try {
-        recognition.start();
-      } catch (e) {
-        // 如果启动失败（可能上一次还没释放），等200ms重试
-        setTimeout(function () {
-          try {
-            recognition.start();
-          } catch (e2) {
-            clearTimeout(timeoutId);
-            self._showError(targetText, '录音启动失败，请重试', container, opts);
-          }
-        }, 200);
+      // 真正启动识别
+      function launch() {
+        try {
+          recognition.start();
+        } catch (e) {
+          self._retryOrFail(targetText, container, opts, attempt, MAX_ATTEMPTS, 'start-throw');
+        }
       }
+
+      // iOS：首次识别前用 getUserMedia 预热一次（WebKit bug 317741 规避手法之一）
+      if (self._isIOS() && attempt === 0 && !_iosMicPrimed) {
+        _iosMicPrimed = true;
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function (stream) {
+              stream.getTracks().forEach(function (t) { t.stop(); });
+              launch();
+            })
+            .catch(function () { launch(); });
+        } else {
+          launch();
+        }
+      } else {
+        launch();
+      }
+    },
+
+    /**
+     * 识别失败后的递增重试，或彻底失败给出诊断
+     */
+    _retryOrFail: function (targetText, container, opts, attempt, max, reason) {
+      var self = this;
+      if (attempt >= max) {
+        var msg = self._isIOS()
+          ? '跟读识别未能成功启动。iOS 的网页语音识别存在系统级兼容问题（WebKit bug 317741）。建议：① 完全关闭本页面，从 Safari 重新打开再试；② 设置 → Safari → "清除历史记录与网站数据"后重试；③ 改用安卓手机或电脑 Chrome 体验跟读功能。'
+          : '跟读识别未能启动，请重试一次，或检查麦克风权限。';
+        self._showError(targetText, msg, container, opts);
+        return;
+      }
+      var delays = [0, 300, 1000, 2000, 3500];
+      var d = delays[Math.min(attempt + 1, delays.length - 1)] || 3500;
+      container.innerHTML =
+        '<div class="ra-listening">' +
+        '  <div class="ra-mic-icon-big">🔄</div>' +
+        '  <div class="ra-listen-text">正在重试识别… (' + (attempt + 1) + '/' + max + ')</div>' +
+        '  <div class="ra-timeout-hint">（稍候自动重试）</div>' +
+        '</div>';
+      setTimeout(function () {
+        self._recognize(targetText, container, opts, attempt + 1);
+      }, d);
     },
 
     /**
@@ -640,6 +689,8 @@ window.VocabApp = window.VocabApp || {};
       } else {
         html += '  <div class="ra-passed-msg">✨ 发音很棒！</div>';
       }
+      // 识别完成后再放标准发音（iOS 上 TTS 在识别之后是安全的）
+      html += '  <button class="ra-listen-only-btn">🔊 听标准发音</button>';
       html += '</div>';
 
       container.innerHTML = html;
@@ -648,6 +699,12 @@ window.VocabApp = window.VocabApp || {};
       if (retryBtn) {
         retryBtn.addEventListener('click', function () {
           ReadAlong.start(target, container, opts);
+        });
+      }
+      var listenBtn = container.querySelector('.ra-listen-only-btn');
+      if (listenBtn) {
+        listenBtn.addEventListener('click', function () {
+          speakWithCallback(target, function () {});
         });
       }
     },
