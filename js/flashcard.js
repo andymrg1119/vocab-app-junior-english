@@ -19,7 +19,6 @@ window.VocabApp.Flashcard = (function () {
    */
   function render(unit, container) {
     currentUnit = unit;
-    currentIndex = 0;
     isFlipped = false;
 
     if (!unit || !unit.words || unit.words.length === 0) {
@@ -27,6 +26,11 @@ window.VocabApp.Flashcard = (function () {
         '<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">暂无单词数据</div></div>';
       return;
     }
+
+    // 恢复上次学习进度（不会超过最后一个单词）
+    var progress = VocabApp.Storage.getProgress();
+    var savedIndex = progress[unit.unitId] || 0;
+    currentIndex = Math.min(Math.max(0, savedIndex), unit.words.length - 1);
 
     container.innerHTML = buildHTML();
     bindEvents();

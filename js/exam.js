@@ -10,6 +10,7 @@ window.VocabApp.Exam = (function () {
 
   var currentUnit = null;
   var userAnswers = {};
+  var scoreSaved = false; // 防止同一轮答题重复保存成绩
 
   /**
    * 渲染中考真题区域
@@ -19,6 +20,7 @@ window.VocabApp.Exam = (function () {
   function render(unit, container) {
     currentUnit = unit;
     userAnswers = {};
+    scoreSaved = false;
 
     if (!unit || !unit.exams || unit.exams.length === 0) {
       container.innerHTML =
@@ -147,9 +149,31 @@ window.VocabApp.Exam = (function () {
         analysisEl.innerHTML = buildAnalysisHTML(exam, optionLetter, qIndex);
         analysisEl.classList.add('show');
       }
+      // 错题自动加入生词本
+      var wrongWord = findWordInQuestion(exam);
+      if (wrongWord && VocabApp.Storage && VocabApp.Storage.addToWordbook) {
+        VocabApp.Storage.addToWordbook(wrongWord);
+      }
     }
 
     updateScore();
+  }
+
+  /**
+   * 从题目文本和选项中查找本单元单词（用于答错时自动加入生词本）
+   */
+  function findWordInQuestion(exam) {
+    if (!currentUnit || !currentUnit.words || !currentUnit.words.length) return null;
+    var text = (exam.question + ' ' + (exam.options || []).join(' ')).toLowerCase();
+    for (var i = 0; i < currentUnit.words.length; i++) {
+      var w = currentUnit.words[i];
+      if (!w.word) continue;
+      var word = w.word.toLowerCase();
+      // 跳过太短的常见词，避免误收
+      if (word.length < 3) continue;
+      if (text.indexOf(word) >= 0) return w;
+    }
+    return null;
   }
 
   /**
@@ -170,6 +194,12 @@ window.VocabApp.Exam = (function () {
     html += '  <span class="analysis-header-icon">❌</span>';
     html += '  <span class="analysis-header-text">这道题做错了，不要灰心！来看看详细解析</span>';
     html += '</div>';
+
+    // 自动加入生词本提示
+    var autoWord = findWordInQuestion(exam);
+    if (autoWord) {
+      html += '<div class="analysis-auto-add">📌 已自动加入生词本："' + escapeHtml(autoWord.word) + '"</div>';
+    }
 
     // 答案对比
     html += '<div class="analysis-compare">';
@@ -350,11 +380,12 @@ window.VocabApp.Exam = (function () {
       scoreEl.style.display = 'block';
       scoreEl.textContent = '已答 ' + answered + '/' + total + ' 题，正确 ' + correct + ' 题';
 
-      if (answered === total) {
+      if (answered === total && !scoreSaved) {
+        scoreSaved = true;
         var rate = Math.round((correct / total) * 100);
         scoreEl.textContent = '完成全部练习！正确率：' + rate + '%（' + correct + '/' + total + '）';
 
-        // 保存成绩
+        // 保存成绩（每轮只保存一次）
         VocabApp.Storage.saveExamScore(currentUnit.unitId, {
           score: rate,
           correct: correct,

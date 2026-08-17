@@ -71,24 +71,34 @@ window.VocabApp.TextReader = (function () {
 
   /**
    * 高亮关键词
+   * 使用单个正则一次性匹配所有关键词，避免多次replace破坏已生成的span标签
    */
   function highlightKeywords(sentence) {
-    var html = escapeHtml(sentence.en || '');
-    if (sentence.keywords && sentence.keywords.length > 0) {
-      // 按长度降序排列，避免短关键词嵌套在长关键词的span中
-      var sortedKeywords = sentence.keywords.slice().sort(function (a, b) {
-        return b.length - a.length;
-      });
-      for (var i = 0; i < sortedKeywords.length; i++) {
-        var keyword = sortedKeywords[i];
-        var escapedKeyword = escapeHtml(keyword);
-        var escapedKwForRegex = escapeRegExp(escapedKeyword);
-        var kwRegex = new RegExp('(' + escapedKwForRegex + ')', 'gi');
-        html = html.replace(kwRegex,
-          '<span class="keyword" data-keyword="' + escapedKeyword + '" title="点击查看解释">$1</span>');
-      }
+    var en = sentence.en || '';
+    var keywords = sentence.keywords || [];
+    if (keywords.length === 0) return escapeHtml(en);
+
+    // 去重 + 按长度降序（避免短词先匹配影响长词）
+    var unique = [];
+    for (var i = 0; i < keywords.length; i++) {
+      if (unique.indexOf(keywords[i]) === -1) unique.push(keywords[i]);
     }
-    return html;
+    unique.sort(function (a, b) {
+      return b.length - a.length;
+    });
+
+    // 转义正则特殊字符后拼接为交替模式
+    var pattern = unique.map(function (k) {
+      return escapeRegExp(k);
+    }).join('|');
+    var regex = new RegExp('(' + pattern + ')', 'gi');
+
+    // 转义HTML后单次替换：回调中直接生成span，不会再次扫描span内部
+    var html = escapeHtml(en);
+    return html.replace(regex, function (match) {
+      var safe = escapeHtml(match);
+      return '<span class="keyword" data-keyword="' + safe + '" title="点击查看解释">' + safe + '</span>';
+    });
   }
 
   /**

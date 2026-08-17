@@ -259,6 +259,10 @@ window.VocabApp.Dictation = (function () {
     } else {
       wrongCount++;
       wrongWords.push(word);
+      // 自动加入生词本，方便重点复习
+      if (VocabApp.Storage && VocabApp.Storage.addToWordbook) {
+        VocabApp.Storage.addToWordbook(word);
+      }
       input.classList.add('wrong');
       feedback.className = 'dictation-feedback wrong';
       if (mode === 'cn2en') {

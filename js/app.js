@@ -927,11 +927,14 @@ window.VocabApp = window.VocabApp || {};
     }
 
     var html = '<div class="wordlist-container">';
+    html += '<div class="wordlist-search">';
+    html += '  <input type="text" id="wordlistSearch" placeholder="🔍 搜索单词或中文释义..." autocomplete="off">';
+    html += '</div>';
     for (var i = 0; i < unit.words.length; i++) {
       var w = unit.words[i];
       var mastered = Storage.isMastered(w.word);
       var starred = Storage.isInWordbook(w.word);
-      html += '<div class="word-card">';
+      html += '<div class="word-card" data-word="' + escapeHtml(w.word).toLowerCase() + '" data-meaning="' + escapeHtml(w.meaning || '').toLowerCase() + '">';
       html += '  <div class="word-main">';
       html += '    <span class="word-en">' + escapeHtml(w.word) + '</span>';
       html += '    <span class="word-pos">' + escapeHtml(w.pos || '') + '</span>';
@@ -975,6 +978,36 @@ window.VocabApp = window.VocabApp || {};
           Storage.addToWordbook(unit.words[index]);
           this.classList.add('starred');
         }
+      });
+    }
+
+    // 搜索框：输入即时筛选
+    var searchInput = container.querySelector('#wordlistSearch');
+    if (searchInput) {
+      searchInput.addEventListener('input', function () {
+        var keyword = this.value.trim().toLowerCase();
+        var cards = container.querySelectorAll('.word-card');
+        for (var c = 0; c < cards.length; c++) {
+          var card = cards[c];
+          var wText = card.getAttribute('data-word') || '';
+          var mText = card.getAttribute('data-meaning') || '';
+          var match = !keyword || wText.indexOf(keyword) >= 0 || mText.indexOf(keyword) >= 0;
+          card.style.display = match ? '' : 'none';
+        }
+        // 显示/隐藏无结果提示
+        var emptyTip = container.querySelector('#wordlistNoResult');
+        if (!emptyTip) {
+          emptyTip = document.createElement('div');
+          emptyTip.id = 'wordlistNoResult';
+          emptyTip.className = 'wordlist-no-result';
+          emptyTip.textContent = '没有找到匹配的单词';
+          container.insertBefore(emptyTip, container.querySelector('.wordlist-search').nextSibling);
+        }
+        var visible = 0;
+        for (var v = 0; v < cards.length; v++) {
+          if (cards[v].style.display !== 'none') visible++;
+        }
+        emptyTip.style.display = (keyword && visible === 0) ? 'block' : 'none';
       });
     }
   }
