@@ -2,7 +2,7 @@
  * dictation.js
  * 默写功能（重构版）
  * 规则：每题只能提交一次，提交后不可修改，必须全部默写完成，
- * 达到80分才算过关。
+ * 必须全部正确（100分）才算过关。
  * 统计：准确率、错误率、历史记录、汇总统计
  * 支持两种模式：中→英（看中文写英文）和英→中（看英文写中文）
  */
@@ -19,7 +19,7 @@ window.VocabApp.Dictation = (function () {
   var wrongCount = 0;
   var answered = false;
   var wrongWords = [];
-  var PASS_THRESHOLD = 80;
+  var PASS_THRESHOLD = 100;
   var containerEl = null;
 
   /**
@@ -62,13 +62,13 @@ window.VocabApp.Dictation = (function () {
     html += '    <h3 class="dictation-start-title">单词默写</h3>';
     html += '    <div class="dictation-start-info">';
     html += '      <div class="dictation-info-row"><span class="info-label">本课单词</span><span class="info-value">' + total + ' 个</span></div>';
-    html += '      <div class="dictation-info-row"><span class="info-label">过关分数</span><span class="info-value pass-text">' + PASS_THRESHOLD + ' 分</span></div>';
+    html += '      <div class="dictation-info-row"><span class="info-label">过关要求</span><span class="info-value pass-text">全部正确</span></div>';
     html += '      <div class="dictation-info-row"><span class="info-label">当前模式</span><span class="info-value" id="modeDisplay">中→英</span></div>';
     html += '    </div>';
     html += '    <div class="dictation-rules">';
     html += '      <div class="rule-item">⚠️ 每题只能提交<strong>一次</strong>，提交后<strong>不能修改</strong></div>';
     html += '      <div class="rule-item">⚠️ 必须<strong>全部默写完成</strong>才能查看成绩</div>';
-    html += '      <div class="rule-item">⚠️ 达到 <strong>' + PASS_THRESHOLD + ' 分</strong>才算过关</div>';
+    html += '      <div class="rule-item">⚠️ 必须<strong>全部正确</strong>才算过关（错一个就不行）</div>';
     html += '    </div>';
     html += '    <div class="dictation-mode-select">';
     html += '      <button class="mode-btn active" data-mode="cn2en">中→英（看中文写英文）</button>';
@@ -322,7 +322,7 @@ window.VocabApp.Dictation = (function () {
     html += '    <div class="dictation-result-icon">' + (passed ? '🎉' : '💪') + '</div>';
     html += '    <div class="dictation-result-score ' + (passed ? 'pass' : 'fail') + '">' + score + '分</div>';
     html += '    <div class="dictation-result-status ' + (passed ? 'pass' : 'fail') + '">';
-    html += passed ? '恭喜过关！' : '未过关（需要' + PASS_THRESHOLD + '分）';
+    html += passed ? '🎉 恭喜过关！全部正确！' : '未过关（必须全部正确）';
     html += '    </div>';
 
     // 准确率和错误率
@@ -340,13 +340,9 @@ window.VocabApp.Dictation = (function () {
     html += '    </div>';
 
     if (passed) {
-      if (score === 100) {
-        html += '    <div class="dictation-result-comment">满分！太厉害了，所有单词全部掌握！</div>';
-      } else {
-        html += '    <div class="dictation-result-comment">太棒了，你已过关！继续保持！</div>';
-      }
+      html += '    <div class="dictation-result-comment">满分！太厉害了，所有单词全部掌握！</div>';
     } else {
-      html += '    <div class="dictation-result-comment">差一点点就过关了，再练一次一定可以！</div>';
+      html += '    <div class="dictation-result-comment">还差一点，再练一次争取全部正确！</div>';
     }
 
     // 错词回顾
