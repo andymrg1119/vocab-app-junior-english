@@ -1625,7 +1625,8 @@ body {
 }
 
 /* ============================================================
-   跟读功能样式
+   跟读功能样式 (ReadAlong v3 — 自动评分版)
+   类名前缀: ra-
    ============================================================ */
 
 /* 单词卡操作按钮区 */
@@ -1653,6 +1654,15 @@ body {
   background: var(--primary-dark);
 }
 
+/* 跟读过关标记 */
+.readalong-btn.ra-passed {
+  background: var(--accent);
+}
+
+.readalong-btn.ra-passed:hover {
+  background: var(--accent-dark);
+}
+
 /* 跟读结果容器 */
 .readalong-result-container {
   max-width: 500px;
@@ -1660,100 +1670,195 @@ body {
   min-height: 0;
 }
 
-/* 播放状态 */
-.readalong-status.speaking {
+/* ===== 跟读进度条 (单词卡顶部) ===== */
+.ra-progress-bar {
+  background: #F5F7FA;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+
+.ra-progress-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.ra-progress-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.ra-progress-count {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-left: auto;
+}
+
+.ra-progress-done {
+  font-size: 13px;
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+.ra-progress-track {
+  width: 100%;
+  height: 6px;
+  background: #E0E0E0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ra-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* ===== 状态：准备中 / 播放发音 ===== */
+.ra-status {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px;
-  background: #E3F2FD;
+  padding: 18px 14px;
   border-radius: 10px;
   font-size: 15px;
+  animation: raFadeIn 0.3s ease;
+}
+
+.ra-status.preparing {
+  background: #F5F7FA;
+  color: var(--text-light);
+}
+
+.ra-status.speaking {
+  background: #E3F2FD;
   color: var(--primary-dark);
 }
 
-.readalong-pulse {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--primary);
-  animation: pulse 1s ease-in-out infinite;
+.ra-pulse-icon {
+  font-size: 22px;
+  display: inline-block;
+  animation: raPulse 1.2s ease-in-out infinite;
 }
 
-@keyframes pulse {
+@keyframes raPulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.3); }
+  50% { opacity: 0.5; transform: scale(1.2); }
 }
 
-/* 录音状态 */
-.readalong-status.recording {
+@keyframes raFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 状态：正在听 (录音识别中) ===== */
+.ra-listening {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 18px;
-  background: #FFEBEE;
-  border-radius: 10px;
-  font-size: 16px;
-  color: #C62828;
-  font-weight: 500;
+  gap: 10px;
+  padding: 24px 14px;
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+  border-radius: 12px;
+  animation: raFadeIn 0.3s ease;
 }
 
-.readalong-mic-icon {
-  font-size: 24px;
-  animation: micBounce 0.8s ease-in-out infinite;
+.ra-mic-pulse {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 152, 0, 0.2);
+  animation: raMicPulse 1.5s ease-out infinite;
 }
 
-@keyframes micBounce {
+@keyframes raMicPulse {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.ra-mic-icon-big {
+  font-size: 40px;
+  position: relative;
+  z-index: 1;
+  animation: raMicBounce 0.8s ease-in-out infinite;
+}
+
+@keyframes raMicBounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
 }
 
-.readalong-wave {
+.ra-listen-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #E65100;
+}
+
+.ra-wave-bar {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+}
+
+.ra-wave-bar span {
   display: inline-block;
-  width: 3px;
-  height: 16px;
-  background: #C62828;
+  width: 4px;
+  height: 12px;
+  background: #FF9800;
   border-radius: 2px;
-  margin: 0 1px;
-  animation: wave 0.6s ease-in-out infinite;
+  animation: raWave 0.6s ease-in-out infinite;
 }
 
-.readalong-wave:nth-child(3) { animation-delay: 0.1s; }
-.readalong-wave:nth-child(4) { animation-delay: 0.2s; }
-.readalong-wave:nth-child(5) { animation-delay: 0.3s; }
+.ra-wave-bar span:nth-child(2) { animation-delay: 0.1s; }
+.ra-wave-bar span:nth-child(3) { animation-delay: 0.2s; }
+.ra-wave-bar span:nth-child(4) { animation-delay: 0.3s; }
+.ra-wave-bar span:nth-child(5) { animation-delay: 0.4s; }
 
-@keyframes wave {
+@keyframes raWave {
   0%, 100% { height: 8px; }
-  50% { height: 20px; }
+  50% { height: 22px; }
 }
 
-/* 评分结果 */
-.readalong-result {
+.ra-timeout-hint {
+  font-size: 12px;
+  color: #BF360C;
+  opacity: 0.7;
+}
+
+/* ===== 评分结果 ===== */
+.ra-result {
   padding: 20px 16px;
   border-radius: 12px;
   text-align: center;
-  animation: readalongIn 0.4s ease;
+  animation: raResultIn 0.4s ease;
 }
 
-@keyframes readalongIn {
+@keyframes raResultIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
 
-.readalong-result.pass {
+.ra-result.pass {
   background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
   border: 2px solid var(--accent);
 }
 
-.readalong-result.fail {
+.ra-result.fail {
   background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
   border: 2px solid var(--warning);
 }
 
 /* 分数圆圈 */
-.readalong-score-circle {
+.ra-score-circle {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -1765,51 +1870,53 @@ body {
   border: 4px solid;
 }
 
-.readalong-score-circle.pass {
+.ra-score-circle.pass {
   border-color: var(--accent);
   background: #fff;
 }
 
-.readalong-score-circle.fail {
+.ra-score-circle.fail {
   border-color: var(--warning);
   background: #fff;
 }
 
-.readalong-score-circle .score-num {
+.ra-score-circle .score-num {
   font-size: 28px;
   font-weight: 700;
   line-height: 1;
 }
 
-.readalong-score-circle.pass .score-num {
+.ra-score-circle.pass .score-num {
   color: var(--accent-dark);
 }
 
-.readalong-score-circle.fail .score-num {
+.ra-score-circle.fail .score-num {
   color: var(--warning);
 }
 
-.readalong-score-circle .score-unit {
+.ra-score-circle .score-unit {
   font-size: 11px;
   color: var(--text-light);
   margin-top: 2px;
 }
 
-.readalong-status-text {
+/* 结果状态文字 */
+.ra-status-text {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
-.readalong-status-text.pass {
+.ra-status-text.pass {
   color: var(--accent-dark);
 }
 
-.readalong-status-text.fail {
+.ra-status-text.fail {
   color: var(--warning);
 }
 
-.readalong-detail {
+/* 对比详情 */
+.ra-detail {
   background: rgba(255, 255, 255, 0.6);
   border-radius: 8px;
   padding: 10px 14px;
@@ -1817,26 +1924,27 @@ body {
   text-align: left;
 }
 
-.readalong-said,
-.readalong-target {
+.ra-said,
+.ra-target {
   font-size: 14px;
   line-height: 1.8;
 }
 
-.readalong-said {
+.ra-said {
   color: var(--text);
 }
 
-.readalong-target {
+.ra-target {
   color: var(--text-light);
 }
 
-.readalong-detail .detail-label {
+.ra-detail .detail-label {
   font-weight: 600;
   color: var(--primary-dark);
 }
 
-.readalong-retry-btn {
+/* 重试按钮 */
+.ra-retry-btn {
   background: var(--primary);
   color: #fff;
   border: none;
@@ -1848,17 +1956,19 @@ body {
   font-family: inherit;
 }
 
-.readalong-retry-btn:hover {
+.ra-retry-btn:hover {
   background: var(--primary-dark);
 }
 
-.readalong-passed-msg {
+/* 过关消息 */
+.ra-passed-msg {
   font-size: 15px;
   color: var(--accent-dark);
   font-weight: 500;
 }
 
-.readalong-error {
+/* 错误消息 */
+.ra-error-msg {
   padding: 14px;
   background: #FFEBEE;
   border-radius: 10px;
@@ -1866,6 +1976,34 @@ body {
   color: #C62828;
   text-align: center;
   margin-bottom: 10px;
+}
+
+/* 浏览器不支持 */
+.ra-unsupported {
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.ra-unsupported-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.ra-unsupported-msg {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--danger);
+  margin-bottom: 10px;
+}
+
+.ra-unsupported-tip {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+.ra-unsupported-tip strong {
+  color: var(--primary-dark);
 }
 
 /* 短语/句子操作按钮区 */
@@ -1922,12 +2060,12 @@ body {
     max-width: 280px;
   }
 
-  .readalong-score-circle {
+  .ra-score-circle {
     width: 64px;
     height: 64px;
   }
 
-  .readalong-score-circle .score-num {
+  .ra-score-circle .score-num {
     font-size: 22px;
   }
 
