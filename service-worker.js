@@ -2,7 +2,7 @@
  * service-worker.js
  * 用于离线缓存核心资源，让应用在没网时也能打开
  */
-var CACHE = 'vocab-app-v4';
+var CACHE = 'vocab-app-v5';
 var CORE = [
   './',
   './index.html',
