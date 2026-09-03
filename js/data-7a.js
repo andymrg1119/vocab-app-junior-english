@@ -1,7 +1,8 @@
 /**
  * data-7a.js
- * 译林版七年级上册（7A）全部8个单元数据
- * 每个单元包含：words, phrases, sentences, text, grammar, exams
+ * 译林版（2024 新教材）七年级上册（7A）8 个单元完整数据
+ * 每个单元包含：words（完整单词表）、phrases、sentences、text（Reading 原文）、grammar、exams
+ * 发音统一英式 (en-GB)
  */
 window.VocabData['yilin'] = window.VocabData['yilin'] || {};
 window.VocabData['yilin']['7a'] = [
@@ -12,221 +13,303 @@ window.VocabData['yilin']['7a'] = [
   title: 'Unit 1: This is me!',
   topic: '自我介绍',
   words: [
-    { word: 'grade', phonetic: '/ɡreɪd/', pos: 'n.', meaning: '年级', example: 'He is in Grade 7.', exampleCn: '他在七年级。' },
-    { word: 'student', phonetic: '/ˈstjuːdnt/', pos: 'n.', meaning: '学生', example: 'I am a new student.', exampleCn: '我是一名新学生。' },
-    { word: 'reading', phonetic: '/ˈriːdɪŋ/', pos: 'n.', meaning: '阅读', example: 'I love reading.', exampleCn: '我喜欢阅读。' },
-    { word: 'classmate', phonetic: '/ˈklɑːsmeɪt/', pos: 'n.', meaning: '同班同学', example: 'She is my classmate.', exampleCn: '她是我的同班同学。' },
-    { word: 'slim', phonetic: '/slɪm/', pos: 'adj.', meaning: '苗条的', example: 'Sandy is tall and slim.', exampleCn: '桑迪又高又苗条。' },
-    { word: 'short', phonetic: '/ʃɔːt/', pos: 'adj.', meaning: '短的；矮的', example: 'He has short hair.', exampleCn: '他留着短发。' },
-    { word: 'hair', phonetic: '/heə(r)/', pos: 'n.', meaning: '头发', example: 'Her hair is long.', exampleCn: '她的头发很长。' },
-    { word: 'tall', phonetic: '/tɔːl/', pos: 'adj.', meaning: '高的', example: 'My brother is very tall.', exampleCn: '我哥哥很高。' },
-    { word: 'hobby', phonetic: '/ˈhɒbi/', pos: 'n.', meaning: '爱好', example: 'My hobby is swimming.', exampleCn: '我的爱好是游泳。' },
-    { word: 'music', phonetic: '/ˈmjuːzɪk/', pos: 'n.', meaning: '音乐', example: 'She likes music.', exampleCn: '她喜欢音乐。' },
+    { word: 'greet', phonetic: '/ɡriːt/', pos: 'v.', meaning: '和（某人）打招呼', example: 'We greet our teachers every morning.', exampleCn: '我们每天早上向老师问好。' },
+    { word: 'introduce', phonetic: '/ˌɪntrəˈdjuːs/', pos: 'v.', meaning: '介绍', example: 'Let me introduce my new friend.', exampleCn: '让我介绍一下我的新朋友。' },
+    { word: 'each other', phonetic: '/ˌiːtʃ ˈʌðə(r)/', pos: 'pron.', meaning: '互相', example: 'We help each other.', exampleCn: '我们互相帮助。' },
+    { word: 'go by', phonetic: '/ɡəʊ baɪ/', pos: 'v.', meaning: '叫作，被称为', example: 'He goes by the name of Tom.', exampleCn: '大家都叫他汤姆。' },
     { word: 'glad', phonetic: '/ɡlæd/', pos: 'adj.', meaning: '高兴的', example: 'I am glad to meet you.', exampleCn: '很高兴见到你。' },
-    { word: 'everyone', phonetic: '/ˈevriwʌn/', pos: 'pron.', meaning: '每个人', example: 'Everyone is here.', exampleCn: '每个人都在。' },
-    { word: 'come', phonetic: '/kʌm/', pos: 'v.', meaning: '来', example: 'Come here, please.', exampleCn: '请过来。' },
-    { word: 'from', phonetic: '/frɒm/', pos: 'prep.', meaning: '来自', example: 'I come from China.', exampleCn: '我来自中国。' },
-    { word: 'live', phonetic: '/lɪv/', pos: 'v.', meaning: '居住', example: 'I live in Beijing.', exampleCn: '我住在北京。' },
-    { word: 'after', phonetic: '/ˈɑːftə(r)/', pos: 'prep.', meaning: '在...之后', example: 'We play after school.', exampleCn: '我们放学后玩。' },
-    { word: 'school', phonetic: '/skuːl/', pos: 'n.', meaning: '学校', example: 'My school is big.', exampleCn: '我的学校很大。' },
-    { word: 'dance', phonetic: '/dɑːns/', pos: 'v.', meaning: '跳舞', example: 'She can dance well.', exampleCn: '她舞跳得很好。' },
-    { word: 'swim', phonetic: '/swɪm/', pos: 'v.', meaning: '游泳', example: 'He swims every day.', exampleCn: '他每天游泳。' },
-    { word: 'sport', phonetic: '/spɔːt/', pos: 'n.', meaning: '运动', example: 'I like sports.', exampleCn: '我喜欢运动。' }
+    { word: 'same', phonetic: '/seɪm/', pos: 'adj.', meaning: '同一的，相同的', example: 'We are in the same class.', exampleCn: '我们在同一个班。' },
+    { word: 'hobby', phonetic: '/ˈhɒbi/', pos: 'n.', meaning: '业余爱好', example: 'My hobby is reading.', exampleCn: '我的爱好是阅读。' },
+    { word: 'grade', phonetic: '/ɡreɪd/', pos: 'n.', meaning: '年级；等级', example: 'He is in Grade 7.', exampleCn: '他在七年级。' },
+    { word: 'classmate', phonetic: '/ˈklɑːsmeɪt/', pos: 'n.', meaning: '同班同学', example: 'She is my classmate.', exampleCn: '她是我的同班同学。' },
+    { word: 'friendly', phonetic: '/ˈfrendli/', pos: 'adj.', meaning: '友好的', example: 'Our teachers are very friendly.', exampleCn: '我们的老师非常友好。' },
+    { word: 'full', phonetic: '/fʊl/', pos: 'adj.', meaning: '满的', example: 'The room is full of people.', exampleCn: '房间里挤满了人。' },
+    { word: 'be full of', phonetic: '/biː fʊl əv/', pos: 'v.', meaning: '满是……的', example: 'He is always full of energy.', exampleCn: '他总是精力充沛。' },
+    { word: 'energy', phonetic: '/ˈenədʒi/', pos: 'n.', meaning: '精力，活力', example: 'Young people are full of energy.', exampleCn: '年轻人充满活力。' },
+    { word: 'be good at', phonetic: '/biː ɡʊd æt/', pos: 'v.', meaning: '擅长于', example: 'She is good at English.', exampleCn: '她擅长英语。' },
+    { word: 'slim', phonetic: '/slɪm/', pos: 'adj.', meaning: '苗条的', example: 'Sandy is tall and slim.', exampleCn: '桑迪又高又苗条。' },
+    { word: 'polite', phonetic: '/pəˈlaɪt/', pos: 'adj.', meaning: '有礼貌的', example: 'She is always polite to others.', exampleCn: '她对别人总是很有礼貌。' },
+    { word: 'smart', phonetic: '/smɑːt/', pos: 'adj.', meaning: '聪明的；衣着整洁的', example: 'He is a smart boy.', exampleCn: '他是个聪明的男孩。' },
+    { word: 'ready', phonetic: '/ˈredi/', pos: 'adj.', meaning: '准备好的', example: 'Are you ready for class?', exampleCn: '你准备好上课了吗？' },
+    { word: 'be ready to do', phonetic: '/biː ˈredi tə duː/', pos: 'v.', meaning: '愿意（准备好）做某事', example: 'He is always ready to help others.', exampleCn: '他总是乐于助人。' },
+    { word: 'other', phonetic: '/ˈʌðə(r)/', pos: 'adj.', meaning: '另一个，其他的', example: 'Do you have any other questions?', exampleCn: '你还有其他问题吗？' },
+    { word: 'interested', phonetic: '/ˈɪntrəstɪd/', pos: 'adj.', meaning: '感兴趣的', example: 'I am interested in music.', exampleCn: '我对音乐感兴趣。' },
+    { word: 'be interested in', phonetic: '/biː ˈɪntrəstɪd ɪn/', pos: 'v.', meaning: '对……感兴趣', example: 'He is interested in science.', exampleCn: '他对科学感兴趣。' },
+    { word: 'looks', phonetic: '/lʊks/', pos: 'n.', meaning: '外貌，容貌', example: 'She has good looks.', exampleCn: '她长得很好看。' },
+    { word: 'character', phonetic: '/ˈkærəktə(r)/', pos: 'n.', meaning: '性格', example: 'He has a strong character.', exampleCn: '他性格坚强。' },
+    { word: 'both', phonetic: '/bəʊθ/', pos: 'pron.', meaning: '两者都', example: 'Both of them are my friends.', exampleCn: '他们俩都是我的朋友。' },
+    { word: 'enjoy', phonetic: '/ɪnˈdʒɔɪ/', pos: 'v.', meaning: '享受，喜爱', example: 'I enjoy reading books.', exampleCn: '我喜欢读书。' },
+    { word: 'pretty', phonetic: '/ˈprɪti/', pos: 'adj.', meaning: '漂亮的', example: 'What a pretty girl!', exampleCn: '多漂亮的女孩子啊！' },
+    { word: 'shy', phonetic: '/ʃaɪ/', pos: 'adj.', meaning: '腼腆的', example: 'The little girl is very shy.', exampleCn: '这个小女孩很腼腆。' },
+    { word: 'only', phonetic: '/ˈəʊnli/', pos: 'adv.', meaning: '仅仅，只', example: 'I am only twelve years old.', exampleCn: '我只有十二岁。' },
+    { word: 'stay', phonetic: '/steɪ/', pos: 'v.', meaning: '保持；停留', example: 'Please stay here.', exampleCn: '请留在这里。' },
+    { word: 'match', phonetic: '/mætʃ/', pos: 'v.', meaning: '般配，相配', example: 'The tie matches your shirt.', exampleCn: '这条领带和你的衬衫很配。' },
+    { word: 'luck', phonetic: '/lʌk/', pos: 'n.', meaning: '运气，好运', example: 'Good luck to you!', exampleCn: '祝你好运！' },
+    { word: 'good luck', phonetic: '/ˌɡʊd ˈlʌk/', pos: 'n.', meaning: '祝好运', example: 'Good luck with your exam!', exampleCn: '祝你考试顺利！' },
+    { word: 'chess', phonetic: '/tʃes/', pos: 'n.', meaning: '国际象棋', example: 'Can you play chess?', exampleCn: '你会下国际象棋吗？' },
+    { word: 'Chinese chess', phonetic: '/ˌtʃaɪˈniːz ˈtʃes/', pos: 'n.', meaning: '中国象棋', example: 'My grandpa likes Chinese chess.', exampleCn: '我爷爷喜欢下中国象棋。' },
+    { word: 'problem', phonetic: '/ˈprɒbləm/', pos: 'n.', meaning: '问题，难题', example: 'I have a problem with my homework.', exampleCn: '我的作业遇到了一个问题。' },
+    { word: 'weekend', phonetic: '/ˌwiːkˈend/', pos: 'n.', meaning: '周末', example: 'What do you do at the weekend?', exampleCn: '你周末做什么？' },
+    { word: 'at the weekend', phonetic: '/æt ðə ˌwiːkˈend/', pos: 'adv.', meaning: '在周末', example: 'We often play football at the weekend.', exampleCn: '我们周末经常踢足球。' },
+    { word: 'fun', phonetic: '/fʌn/', pos: 'n.', meaning: '乐趣，娱乐', example: 'We have a lot of fun together.', exampleCn: '我们一起玩得很开心。' },
+    { word: 'make friends with', phonetic: '/meɪk frendz wɪð/', pos: 'v.', meaning: '与……交朋友', example: 'I want to make friends with you.', exampleCn: '我想和你交朋友。' }
   ],
   phrases: [
-    { phrase: 'be good at', meaning: '擅长', example: 'She is good at swimming.' },
-    { phrase: 'come from', meaning: '来自', example: 'I come from Nanjing.' },
-    { phrase: 'live in', meaning: '居住在', example: 'He lives in Shanghai.' },
-    { phrase: 'after school', meaning: '放学后', example: 'We play basketball after school.' },
-    { phrase: 'listen to music', meaning: '听音乐', example: 'I like listening to music.' },
-    { phrase: 'wear glasses', meaning: '戴眼镜', example: 'Daniel wears glasses.' }
+    { phrase: 'each other', meaning: '互相', example: 'We help each other.' },
+    { phrase: 'be full of', meaning: '满是……的', example: 'He is always full of energy.' },
+    { phrase: 'be good at', meaning: '擅长于', example: 'She is good at English.' },
+    { phrase: 'be ready to do sth', meaning: '愿意（准备好）做某事', example: 'He is always ready to help others.' },
+    { phrase: 'be interested in', meaning: '对……感兴趣', example: 'He is interested in science.' },
+    { phrase: 'make friends with', meaning: '与……交朋友', example: 'I want to make friends with you.' },
+    { phrase: 'at the weekend', meaning: '在周末', example: 'We play football at the weekend.' }
   ],
   sentences: [
-    { en: 'I am a new student at this school.', cn: '我是这所学校的新生。' },
-    { en: 'She is good at swimming.', cn: '她擅长游泳。' },
-    { en: 'He wears glasses.', cn: '他戴着眼镜。' },
-    { en: 'Welcome to Class 1, Grade 7!', cn: '欢迎来到七年级一班！' },
-    { en: 'I live in Beijing with my family.', cn: '我和家人住在北京。' },
-    { en: 'My hobby is reading.', cn: '我的爱好是阅读。' }
+    { en: 'I am a new student at Sunshine Middle School.', cn: '我是阳光中学的一名新生。' },
+    { en: 'He is always full of energy.', cn: '他总是精力充沛。' },
+    { en: 'She is very polite.', cn: '她非常有礼貌。' },
+    { en: 'He is smart and always ready to help others.', cn: '他很聪明，总是乐于助人。' },
+    { en: 'He is interested in science.', cn: '他对科学感兴趣。' },
+    { en: 'I want to make friends with you.', cn: '我想和你交朋友。' }
   ],
   text: {
-    title: 'Welcome to Class 1, Grade 7',
+    title: 'Welcome to Class 1, Grade 7!',
+    intro: 'Millie 正在介绍自己和她的新同学，让我们一起认识他们。',
     paragraphs: [
       {
         sentences: [
-          { en: 'Millie is a new student at Sunshine Middle School.', cn: '米莉是阳光中学的一名新生。', keywords: ['new student', 'Sunshine Middle School'] },
-          { en: 'She is 12 years old.', cn: '她12岁了。', keywords: ['years old'] },
-          { en: 'She has short hair.', cn: '她留着短发。', keywords: ['short hair'] },
-          { en: 'She loves reading.', cn: '她喜欢阅读。', keywords: ['loves reading'] },
-          { en: 'Simon is tall.', cn: '西蒙很高。', keywords: ['tall'] },
-          { en: 'He likes sports and he is good at football.', cn: '他喜欢运动，擅长足球。', keywords: ['good at', 'football'] },
-          { en: 'Sandy is tall and slim.', cn: '桑迪又高又苗条。', keywords: ['tall and slim'] },
-          { en: 'She has long black hair.', cn: '她有一头黑色的长发。', keywords: ['long black hair'] },
-          { en: 'Daniel is from Nanjing.', cn: '丹尼尔来自南京。', keywords: ['from'] },
-          { en: 'He wears glasses.', cn: '他戴着眼镜。', keywords: ['wears glasses'] }
+          { en: 'Hi! I\'m Millie, a new student at Sunshine Middle School.', cn: '嗨！我是米莉，阳光中学的一名新生。', keywords: ['new student'] },
+          { en: 'I\'m in Class 1, Grade 7.', cn: '我在七年级一班。', keywords: ['Class 1, Grade 7'] },
+          { en: 'I\'m 12 years old.', cn: '我今年 12 岁。', keywords: ['12 years old'] },
+          { en: 'I love reading.', cn: '我喜欢阅读。', keywords: ['love reading'] },
+          { en: 'Here are my new classmates.', cn: '这些是我的新同学。', keywords: ['classmates'] },
+          { en: 'They\'re very friendly.', cn: '他们都很友好。', keywords: ['friendly'] },
+          { en: 'Let\'s meet them.', cn: '让我们来认识一下他们。', keywords: ['meet'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'This is Simon.', cn: '这是西蒙。', keywords: ['Simon'] },
+          { en: 'He is tall.', cn: '他个子很高。', keywords: ['tall'] },
+          { en: 'He is always full of energy.', cn: '他总是精力充沛。', keywords: ['full of energy'] },
+          { en: 'He is good at sport.', cn: '他擅长运动。', keywords: ['good at'] },
+          { en: 'He often plays football after school.', cn: '他经常在放学后踢足球。', keywords: ['plays football', 'after school'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'This is Sandy.', cn: '这是桑迪。', keywords: ['Sandy'] },
+          { en: 'She is tall and slim.', cn: '她身材高挑、苗条。', keywords: ['tall and slim'] },
+          { en: 'She has long hair.', cn: '她留着一头长发。', keywords: ['long hair'] },
+          { en: 'She is very polite.', cn: '她很有礼貌。', keywords: ['polite'] },
+          { en: 'She likes music and she can play the piano well.', cn: '她喜欢音乐，而且钢琴弹得很好。', keywords: ['music', 'piano'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'This is Daniel.', cn: '这是丹尼尔。', keywords: ['Daniel'] },
+          { en: 'He is not tall.', cn: '他个子不高。', keywords: ['not tall'] },
+          { en: 'He wears glasses.', cn: '他戴眼镜。', keywords: ['wears glasses'] },
+          { en: 'He is smart and always ready to help others.', cn: '他很聪明，总是乐于助人。', keywords: ['smart', 'ready to help'] },
+          { en: 'He is interested in science.', cn: '他对科学感兴趣。', keywords: ['interested in', 'science'] }
         ]
       }
+    ],
+    questions: [
+      { q: 'Who is always full of energy?', a: 'Simon is always full of energy.' },
+      { q: 'What is Sandy good at?', a: 'Sandy likes music and she can play the piano well.' },
+      { q: 'What is Daniel interested in?', a: 'Daniel is interested in science.' }
     ]
   },
   grammar: {
-    title: 'be动词的用法（am / is / are）',
+    title: 'be 动词的一般现在时（am / is / are）',
     points: [
       {
-        rule: 'be动词有三种形式：am, is, are',
-        detail: 'I 搭配 am；he/she/it 搭配 is；we/you/they 搭配 are。缩写形式：I\'m, he\'s, she\'s, it\'s, we\'re, you\'re, they\'re。',
-        examples: ['I am a student.', 'She is my friend.', 'They are my classmates.']
+        rule: 'be 动词的三种形式',
+        detail: 'I 用 am；he / she / it 用 is；we / you / they 用 are。例如：I am tall. He is smart. They are friendly.',
+        examples: ['I am a new student.', 'He is tall.', 'They are very friendly.']
       },
       {
-        rule: 'be动词的否定和疑问',
-        detail: '否定在be动词后加not；疑问句把be动词提到主语前面。',
-        examples: ['I am not tall.', 'Is she a student? Yes, she is.', 'Are they your friends? No, they aren\'t.']
+        rule: 'be 动词的否定与疑问',
+        detail: '否定在 be 后加 not；疑问把 be 提到主语前。例如：He is not tall. Is she polite?',
+        examples: ['He is not tall.', 'Is she polite? Yes, she is.', 'Are they your classmates?']
       }
     ]
   },
   exams: [
     {
-      question: '—___ you a student? —Yes, I ___.',
+      question: '—___ you a new student here? —Yes, I ___.',
       options: ['A. Are; am', 'B. Is; am', 'C. Are; is', 'D. Am; are'],
       answer: 'A',
-      explanation: '主语you搭配are，回答中I搭配am。'
+      explanation: '主语 you 用 are，回答中 I 用 am。'
     },
     {
-      question: 'My sister ___ tall and slim.',
-      options: ['A. am', 'B. is', 'C. are', 'D. be'],
+      question: 'He is always full ___ energy.',
+      options: ['A. in', 'B. of', 'C. on', 'D. at'],
       answer: 'B',
-      explanation: '主语my sister是第三人称单数，be动词用is。'
+      explanation: 'be full of 是固定搭配，意为“充满……”。'
     },
     {
-      question: '—Is he your classmate? —___.',
-      options: ['A. Yes, he is', 'B. Yes, he isn\'t', 'C. No, he is', 'D. No, he aren\'t'],
-      answer: 'A',
-      explanation: '肯定回答用Yes, he is；否定回答用No, he isn\'t。'
-    },
-    {
-      question: 'She is good ___ swimming.',
-      options: ['A. in', 'B. at', 'C. on', 'D. for'],
+      question: 'Daniel is ___ in science.',
+      options: ['A. interesting', 'B. interested', 'C. interest', 'D. interests'],
       answer: 'B',
-      explanation: 'be good at是固定搭配，表示"擅长..."。'
+      explanation: 'be interested in 表示“对……感兴趣”，主语是人。'
     },
     {
-      question: 'Daniel ___ glasses.',
-      options: ['A. wear', 'B. wears', 'C. wearing', 'D. is wear'],
+      question: 'She is good ___ playing the piano.',
+      options: ['A. in', 'B. at', 'C. for', 'D. with'],
       answer: 'B',
-      explanation: '主语Daniel是第三人称单数，动词wear加s。'
+      explanation: 'be good at 是固定搭配，表示“擅长……”。'
     }
   ]
 },
 
-/* ======================== Unit 2: Let's play sports! ======================== */
+/* ======================== Unit 2: Hobbies ======================== */
 {
   unitId: '7a-u2',
-  title: 'Unit 2: Let\'s play sports!',
-  topic: '运动',
+  title: 'Unit 2: Hobbies',
+  topic: '爱好',
   words: [
-    { word: 'walking', phonetic: '/ˈwɔːkɪŋ/', pos: 'n.', meaning: '散步', example: 'I go walking every morning.', exampleCn: '我每天早上散步。' },
-    { word: 'really', phonetic: '/ˈrɪəli/', pos: 'adv.', meaning: '确实；真正地', example: 'She is really good at sports.', exampleCn: '她确实擅长运动。' },
-    { word: 'time', phonetic: '/taɪm/', pos: 'n.', meaning: '时间；次', example: 'What time is it?', exampleCn: '几点了？' },
-    { word: 'tennis', phonetic: '/ˈtenɪs/', pos: 'n.', meaning: '网球', example: 'He plays tennis well.', exampleCn: '他网球打得很好。' },
+    { word: 'jogging', phonetic: '/ˈdʒɒɡɪŋ/', pos: 'n.', meaning: '慢跑（尤指锻炼）', example: 'Jogging is good for your health.', exampleCn: '慢跑对健康有好处。' },
+    { word: 'painting', phonetic: '/ˈpeɪntɪŋ/', pos: 'n.', meaning: '绘画（作品）', example: 'I like painting very much.', exampleCn: '我非常喜欢画画。' },
+    { word: 'paper-cutting', phonetic: '/ˈpeɪpə ˌkʌtɪŋ/', pos: 'n.', meaning: '剪纸', example: 'Paper-cutting is a Chinese art.', exampleCn: '剪纸是一门中国艺术。' },
+    { word: 'all kinds of', phonetic: '/ɔːl kaɪndz əv/', pos: 'adj.', meaning: '各种各样的', example: 'There are all kinds of books here.', exampleCn: '这里有各种各样的书。' },
+    { word: 'fit', phonetic: '/fɪt/', pos: 'adj.', meaning: '健康的', example: 'I exercise every day to keep fit.', exampleCn: '我每天锻炼以保持健康。' },
+    { word: 'around', phonetic: '/əˈraʊnd/', pos: 'prep.', meaning: '环绕；在……周围', example: 'Science is all around us.', exampleCn: '科学就在我们身边。' },
+    { word: 'change', phonetic: '/tʃeɪndʒ/', pos: 'v.', meaning: '改变，变化', example: 'Science changes our lives.', exampleCn: '科学改变我们的生活。' },
+    { word: 'life', phonetic: '/laɪf/', pos: 'n.', meaning: '个人生活；生命', example: 'I live a happy life.', exampleCn: '我过着快乐的生活。' },
+    { word: 'museum', phonetic: '/mjuˈziːəm/', pos: 'n.', meaning: '博物馆', example: 'We visit the science museum.', exampleCn: '我们参观科学博物馆。' },
+    { word: 'thing', phonetic: '/θɪŋ/', pos: 'n.', meaning: '东西', example: 'I learn how things work.', exampleCn: '我了解东西是如何运转的。' },
+    { word: 'fun', phonetic: '/fʌn/', pos: 'n.', meaning: '乐趣', example: 'It is great fun for me.', exampleCn: '这对我来说非常有趣。' },
+    { word: 'apart', phonetic: '/əˈpɑːt/', pos: 'adv.', meaning: '分开', example: 'He likes to take things apart.', exampleCn: '他喜欢把东西拆开。' },
+    { word: 'take ... apart', phonetic: '/teɪk əˈpɑːt/', pos: 'v.', meaning: '拆卸，拆开（机器等）', example: 'He takes the clock apart.', exampleCn: '他把钟拆开。' },
+    { word: 'fix', phonetic: '/fɪks/', pos: 'v.', meaning: '修理，安装', example: 'He can help fix things.', exampleCn: '他能帮忙修理东西。' },
+    { word: 'endless', phonetic: '/ˈendləs/', pos: 'adj.', meaning: '无穷无尽的', example: 'He has endless questions.', exampleCn: '他有问不完的问题。' },
+    { word: 'scientist', phonetic: '/ˈsaɪəntɪst/', pos: 'n.', meaning: '科学家', example: 'He wants to be a scientist.', exampleCn: '他想成为一名科学家。' },
+    { word: 'dream', phonetic: '/driːm/', pos: 'n.', meaning: '梦想；梦', example: 'His dream is to be a scientist.', exampleCn: '他的梦想是成为科学家。' },
+    { word: 'true', phonetic: '/truː/', pos: 'adj.', meaning: '真正的；成真的', example: 'I hope his dream comes true.', exampleCn: '我希望他的梦想成真。' },
+    { word: 'come true', phonetic: '/kʌm truː/', pos: 'v.', meaning: '实现，成为现实', example: 'His dream can come true.', exampleCn: '他的梦想能实现。' },
+    { word: 'paint', phonetic: '/peɪnt/', pos: 'v.', meaning: '用颜料画；涂油漆', example: 'She likes to paint pictures.', exampleCn: '她喜欢画画。' },
+    { word: 'club', phonetic: '/klʌb/', pos: 'n.', meaning: '俱乐部', example: 'I join the art club.', exampleCn: '我加入了美术社团。' },
+    { word: 'member', phonetic: '/ˈmembə(r)/', pos: 'n.', meaning: '成员', example: 'He is a member of the club.', exampleCn: '他是俱乐部的成员。' },
+    { word: 'geography', phonetic: '/dʒiˈɒɡrəfi/', pos: 'n.', meaning: '地理学', example: 'I like geography very much.', exampleCn: '我非常喜欢地理。' },
+    { word: 'p.m.', phonetic: '/ˌpiː ˈem/', pos: 'abbr.', meaning: '下午', example: 'We meet at 3 p.m.', exampleCn: '我们下午三点见面。' },
     { word: 'volleyball', phonetic: '/ˈvɒlibɔːl/', pos: 'n.', meaning: '排球', example: 'We play volleyball after school.', exampleCn: '我们放学后打排球。' },
-    { word: 'enjoy', phonetic: '/ɪnˈdʒɔɪ/', pos: 'v.', meaning: '享受；喜欢', example: 'I enjoy reading books.', exampleCn: '我喜欢读书。' },
-    { word: 'player', phonetic: '/ˈpleɪə(r)/', pos: 'n.', meaning: '运动员', example: 'He is a great player.', exampleCn: '他是一名伟大的运动员。' },
-    { word: 'member', phonetic: '/ˈmembə(r)/', pos: 'n.', meaning: '成员', example: 'She is a member of the club.', exampleCn: '她是俱乐部的成员。' },
-    { word: 'club', phonetic: '/klʌb/', pos: 'n.', meaning: '俱乐部', example: 'I join the football club.', exampleCn: '我加入了足球俱乐部。' },
-    { word: 'free', phonetic: '/friː/', pos: 'adj.', meaning: '空闲的；免费的', example: 'Are you free this weekend?', exampleCn: '你这周末有空吗？' },
-    { word: 'hope', phonetic: '/həʊp/', pos: 'v.', meaning: '希望', example: 'I hope to see you again.', exampleCn: '我希望能再见到你。' },
-    { word: 'dream', phonetic: '/driːm/', pos: 'n.', meaning: '梦想', example: 'My dream is to be a doctor.', exampleCn: '我的梦想是当一名医生。' },
-    { word: 'true', phonetic: '/truː/', pos: 'adj.', meaning: '真实的；真的', example: 'Is the story true?', exampleCn: '这个故事是真的吗？' },
-    { word: 'many', phonetic: '/ˈmeni/', pos: 'adj.', meaning: '许多的', example: 'I have many friends.', exampleCn: '我有很多朋友。' },
-    { word: 'fun', phonetic: '/fʌn/', pos: 'n.', meaning: '乐趣', example: 'We have fun together.', exampleCn: '我们一起玩得很开心。' },
-    { word: 'team', phonetic: '/tiːm/', pos: 'n.', meaning: '队伍', example: 'Our team won the game.', exampleCn: '我们队赢了比赛。' },
-    { word: 'match', phonetic: '/mætʃ/', pos: 'n.', meaning: '比赛', example: 'There is a football match today.', exampleCn: '今天有一场足球比赛。' },
-    { word: 'watch', phonetic: '/wɒtʃ/', pos: 'v.', meaning: '观看', example: 'I watch TV every evening.', exampleCn: '我每天晚上看电视。' },
-    { word: 'hero', phonetic: '/ˈhɪərəʊ/', pos: 'n.', meaning: '英雄；偶像', example: 'He is my hero.', exampleCn: '他是我的偶像。' },
-    { word: 'lot', phonetic: '/lɒt/', pos: 'n.', meaning: '许多', example: 'I read a lot of books.', exampleCn: '我读了很多书。' }
+    { word: 'each', phonetic: '/iːtʃ/', pos: 'det.', meaning: '每个，各自', example: 'Each student has a book.', exampleCn: '每个学生都有一本书。' },
+    { word: 'once', phonetic: '/wʌns/', pos: 'adv.', meaning: '一次', example: 'I go swimming once a week.', exampleCn: '我每周游泳一次。' },
+    { word: 'join', phonetic: '/dʒɔɪn/', pos: 'v.', meaning: '加入；与……一道去', example: 'I want to join the club.', exampleCn: '我想加入俱乐部。' },
+    { word: 'meeting', phonetic: '/ˈmiːtɪŋ/', pos: 'n.', meaning: '会面；会议', example: 'We have a meeting this afternoon.', exampleCn: '我们今天下午开会。' },
+    { word: 'sound', phonetic: '/saʊnd/', pos: 'v.', meaning: '听起来', example: 'That sounds great!', exampleCn: '那听起来太棒了！' },
+    { word: 'plan', phonetic: '/plæn/', pos: 'n.', meaning: '计划', example: 'What is your plan for the weekend?', exampleCn: '你周末有什么计划？' },
+    { word: 'questionnaire', phonetic: '/ˌkwestʃəˈneə(r)/', pos: 'n.', meaning: '调查问卷', example: 'Please fill in the questionnaire.', exampleCn: '请填写这份问卷。' },
+    { word: 'role', phonetic: '/rəʊl/', pos: 'n.', meaning: '角色', example: 'He plays an important role.', exampleCn: '他扮演重要角色。' },
+    { word: 'model', phonetic: '/ˈmɒdl/', pos: 'n.', meaning: '模范；模特', example: 'She is a role model for us.', exampleCn: '她是我们的榜样。' },
+    { word: 'role model', phonetic: '/ˈrəʊl ˌmɒdl/', pos: 'n.', meaning: '楷模，行为榜样', example: 'He is my role model.', exampleCn: '他是我的榜样。' },
+    { word: 'design', phonetic: '/dɪˈzaɪn/', pos: 'v.', meaning: '设计', example: 'She designs beautiful clothes.', exampleCn: '她设计漂亮的衣服。' },
+    { word: 'skill', phonetic: '/skɪl/', pos: 'n.', meaning: '技能', example: 'Painting is a useful skill.', exampleCn: '绘画是一项有用的技能。' },
+    { word: 'artist', phonetic: '/ˈɑːtɪst/', pos: 'n.', meaning: '艺术家，画家', example: 'He wants to be an artist.', exampleCn: '他想成为一名艺术家。' },
+    { word: 'master', phonetic: '/ˈmɑːstə(r)/', pos: 'n.', meaning: '能手，大师', example: 'He is a master of paper-cutting.', exampleCn: '他是剪纸大师。' },
+    { word: 'work', phonetic: '/wɜːk/', pos: 'n.', meaning: '作品；著作', example: 'I like his works.', exampleCn: '我喜欢他的作品。' },
+    { word: 'become', phonetic: '/bɪˈkʌm/', pos: 'v.', meaning: '成为', example: 'She wants to become a doctor.', exampleCn: '她想成为一名医生。' },
+    { word: 'designer', phonetic: '/dɪˈzaɪnə(r)/', pos: 'n.', meaning: '设计师', example: 'She is a fashion designer.', exampleCn: '她是一名时装设计师。' },
+    { word: 'would', phonetic: '/wʊd/', pos: 'modal v.', meaning: '想（表示意愿）', example: 'I would like some tea.', exampleCn: '我想喝点茶。' },
+    { word: 'would like', phonetic: '/wʊd laɪk/', pos: 'v.', meaning: '愿意，想要', example: 'I would like to join the club.', exampleCn: '我想加入俱乐部。' },
+    { word: 'future', phonetic: '/ˈfjuːtʃə(r)/', pos: 'n.', meaning: '未来', example: 'I hope to be a doctor in the future.', exampleCn: '我希望将来成为一名医生。' },
+    { word: 'in the future', phonetic: '/ɪn ðə ˈfjuːtʃə(r)/', pos: 'adv.', meaning: '在未来', example: 'He will be a scientist in the future.', exampleCn: '他将来会成为一名科学家。' },
+    { word: 'hope', phonetic: '/həʊp/', pos: 'v.', meaning: '希望', example: 'I hope his dream comes true.', exampleCn: '我希望他的梦想成真。' }
   ],
   phrases: [
-    { phrase: 'play sports', meaning: '做运动', example: 'Let\'s play sports after school.' },
-    { phrase: 'be good at', meaning: '擅长', example: 'He is good at playing tennis.' },
-    { phrase: 'enjoy doing', meaning: '喜欢做某事', example: 'I enjoy playing football.' },
-    { phrase: 'a member of', meaning: '...的成员', example: 'She is a member of the team.' },
-    { phrase: 'come true', meaning: '实现', example: 'I hope my dream will come true.' },
-    { phrase: 'a lot of', meaning: '许多', example: 'He has a lot of friends.' },
-    { phrase: 'watch matches', meaning: '看比赛', example: 'We watch football matches on TV.' }
+    { phrase: 'all kinds of', meaning: '各种各样的', example: 'He sees all kinds of things.' },
+    { phrase: 'keep fit', meaning: '保持健康', example: 'I exercise to keep fit.' },
+    { phrase: 'take ... apart', meaning: '拆卸，拆开', example: 'He likes to take things apart.' },
+    { phrase: 'come true', meaning: '实现，成为现实', example: 'I am sure his dream can come true.' },
+    { phrase: 'role model', meaning: '楷模，行为榜样', example: 'He is my role model.' },
+    { phrase: 'would like', meaning: '想要', example: 'I would like to join the club.' },
+    { phrase: 'in the future', meaning: '在未来', example: 'He wants to be a scientist in the future.' }
   ],
   sentences: [
-    { en: 'I enjoy playing football after school.', cn: '我喜欢放学后踢足球。' },
-    { en: 'He is a member of the football club.', cn: '他是足球俱乐部的成员。' },
-    { en: 'My dream is to be a football player.', cn: '我的梦想是成为一名足球运动员。' },
-    { en: 'I hope his dream comes true.', cn: '我希望他的梦想成真。' },
-    { en: 'Li Hua is my favourite football star.', cn: '李华是我最喜欢的足球明星。' },
-    { en: 'He looks strong and plays football well.', cn: '他看起来很强壮，足球踢得好。' }
+    { en: 'He is a fan of science.', cn: '他是一个科学迷。' },
+    { en: 'Science is all around us.', cn: '科学无处不在。' },
+    { en: 'Science changes our lives!', cn: '科学改变我们的生活！' },
+    { en: 'He likes to take things apart and learn how they work.', cn: '他喜欢把东西拆开，研究它们的工作原理。' },
+    { en: 'He wants to be a scientist one day.', cn: '他希望有一天能成为一名科学家。' },
+    { en: 'I am sure his dream can come true.', cn: '我相信他一定能梦想成真。' }
   ],
   text: {
-    title: 'My favourite football player',
+    title: 'A fan of science',
+    intro: 'Daniel 是一个科学迷，让我们看看他为什么这么热爱科学。',
     paragraphs: [
       {
         sentences: [
-          { en: 'I love sports and I like football very much.', cn: '我热爱运动，非常喜欢足球。', keywords: ['sports', 'football'] },
-          { en: 'Li Hua is my favourite football star.', cn: '李华是我最喜欢的足球明星。', keywords: ['favourite', 'star'] },
-          { en: 'Li Hua is a member of Huanghe Football Club.', cn: '李华是黄河足球俱乐部的成员。', keywords: ['member', 'Club'] },
-          { en: 'He looks strong and plays football very well.', cn: '他看起来很强壮，足球踢得很好。', keywords: ['strong', 'plays football'] },
-          { en: 'Many people like him.', cn: '很多人喜欢他。', keywords: ['Many people'] },
-          { en: 'Li Hua plays football every day.', cn: '李华每天踢足球。', keywords: ['every day'] },
-          { en: 'In his free time, he studies English.', cn: '在空闲时间，他学习英语。', keywords: ['free time'] },
-          { en: 'He also enjoys listening to music.', cn: '他也喜欢听音乐。', keywords: ['enjoys', 'listening to music'] },
-          { en: 'It makes him happy.', cn: '这让他很快乐。', keywords: ['makes him happy'] },
-          { en: 'Li Hua has a dream.', cn: '李华有一个梦想。', keywords: ['dream'] },
-          { en: 'He wants to play in the next World Cup.', cn: '他想在下届世界杯上比赛。', keywords: ['next World Cup'] },
-          { en: 'I hope his dream comes true.', cn: '我希望他的梦想成真。', keywords: ['comes true'] }
+          { en: 'Daniel is one of my new friends.', cn: '丹尼尔是我的新朋友之一。', keywords: ['new friends'] },
+          { en: 'He is a fan of science.', cn: '他是一个科学迷。', keywords: ['a fan of science'] },
+          { en: 'He thinks science is very cool.', cn: '他认为科学很酷。', keywords: ['science', 'cool'] },
+          { en: 'It is all around us.', cn: '科学无处不在。', keywords: ['all around us'] },
+          { en: 'Science changes our lives!', cn: '是科学改变了我们的生活！', keywords: ['changes', 'lives'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'Daniel often visits science museums.', cn: '丹尼尔经常参观科学博物馆。', keywords: ['science museums'] },
+          { en: 'He gets to see all kinds of things and learns a lot.', cn: '他有机会见到各种各样的事物，学到许多知识。', keywords: ['all kinds of'] },
+          { en: 'It is great fun for him.', cn: '这对他来说非常有趣。', keywords: ['great fun'] },
+          { en: 'At home, he likes to take things apart and learn how they work.', cn: '在家时，他喜欢把东西拆开，研究它们的工作原理。', keywords: ['take things apart', 'work'] },
+          { en: 'Now he can help fix things around the house!', cn: '现在，他可以帮忙修理家里的东西了！', keywords: ['fix'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'In his free time, Daniel reads many science books.', cn: '闲暇时，丹尼尔会阅读很多科学类书籍。', keywords: ['free time', 'science books'] },
+          { en: 'He also goes on the internet to find answers to his endless questions.', cn: '他还会上网为自己无穷无尽的问题寻找答案。', keywords: ['the internet', 'endless'] },
+          { en: 'He wants to be a scientist one day.', cn: '他希望有一天能成为一名科学家。', keywords: ['scientist'] },
+          { en: 'I am sure his dream can come true.', cn: '我相信他一定能梦想成真。', keywords: ['dream', 'come true'] }
         ]
       }
+    ],
+    questions: [
+      { q: 'Why does Daniel think science is cool?', a: 'Because it is all around us and it changes our lives.' },
+      { q: 'What does Daniel like to do at home?', a: 'He likes to take things apart and learn how they work.' },
+      { q: 'What does Daniel want to be one day?', a: 'He wants to be a scientist.' }
     ]
   },
   grammar: {
-    title: '一般现在时',
+    title: '一般现在时（实义动词）',
     points: [
       {
-        rule: '一般现在时表示经常性或习惯性的动作',
-        detail: '主语是第三人称单数（he/she/it）时，动词要加-s或-es。其他人称用动词原形。',
-        examples: ['I play football every day.', 'He plays football every day.', 'She watches TV on Sundays.']
+        rule: '主语为第三人称单数时，动词加 -s / -es',
+        detail: 'he / she / it 作主语时，实义动词词尾要变化：一般加 -s（likes），以 s/x/ch/sh/o 结尾加 -es（watches, goes）。',
+        examples: ['He likes science.', 'She goes to the museum.', 'Daniel reads many books.']
       },
       {
-        rule: '动词第三人称单数变化规则',
-        detail: '一般情况加-s；以s, x, sh, ch, o结尾加-es；辅音字母+y结尾，变y为i再加-es。',
-        examples: ['like → likes', 'watch → watches', 'study → studies', 'go → goes']
+        rule: '动词 -ing 形式作名词或表示爱好',
+        detail: '表示爱好可用 like / love / enjoy + doing sth。动名词 swimming、jogging、painting 可作名词。',
+        examples: ['I like reading.', 'He enjoys painting.', 'Jogging is good for health.']
       }
     ]
   },
   exams: [
     {
-      question: 'My brother ___ football every day.',
-      options: ['A. play', 'B. plays', 'C. playing', 'D. to play'],
+      question: 'Daniel ___ science is very cool.',
+      options: ['A. think', 'B. thinks', 'C. thinking', 'D. to think'],
       answer: 'B',
-      explanation: '主语my brother是第三人称单数，动词play加s。'
+      explanation: '主语 Daniel 是第三人称单数，动词 think 加 s。'
     },
     {
-      question: 'She enjoys ___ to music.',
-      options: ['A. listen', 'B. listens', 'C. listening', 'D. to listen'],
-      answer: 'C',
-      explanation: 'enjoy后面接动词-ing形式，enjoy doing sth。'
-    },
-    {
-      question: 'He is a member ___ the football club.',
-      options: ['A. in', 'B. on', 'C. of', 'D. at'],
-      answer: 'C',
-      explanation: 'a member of...表示"...的成员"，固定搭配。'
-    },
-    {
-      question: 'I hope his dream ___ true.',
-      options: ['A. come', 'B. comes', 'C. coming', 'D. to come'],
-      answer: 'B',
-      explanation: '主语his dream是第三人称单数，动词come加s。'
-    },
-    {
-      question: '—___ does Li Hua do in his free time? —He studies English.',
-      options: ['A. What', 'B. How', 'C. Where', 'D. When'],
+      question: 'He likes to take things ___ and learn how they work.',
+      options: ['A. apart', 'B. away', 'C. off', 'D. out'],
       answer: 'A',
-      explanation: '提问做什么（动作），用疑问词What。'
+      explanation: 'take ... apart 意为“拆卸，拆开”。'
+    },
+    {
+      question: 'I am sure his dream can ___.',
+      options: ['A. come true', 'B. come on', 'C. come in', 'D. come out'],
+      answer: 'A',
+      explanation: 'come true 表示“梦想实现”。'
+    },
+    {
+      question: 'He wants to be a scientist ___ the future.',
+      options: ['A. in', 'B. on', 'C. at', 'D. for'],
+      answer: 'A',
+      explanation: 'in the future 表示“在未来”。'
     }
   ]
 },
@@ -235,677 +318,1000 @@ window.VocabData['yilin']['7a'] = [
 {
   unitId: '7a-u3',
   title: 'Unit 3: Welcome to our school!',
-  topic: '学校生活',
+  topic: '学校',
   words: [
-    { word: 'subject', phonetic: '/ˈsʌbdʒɪkt/', pos: 'n.', meaning: '科目', example: 'My favourite subject is English.', exampleCn: '我最喜欢的科目是英语。' },
-    { word: 'biology', phonetic: '/baɪˈɒlədʒi/', pos: 'n.', meaning: '生物', example: 'We have biology on Monday.', exampleCn: '我们周一有生物课。' },
-    { word: 'history', phonetic: '/ˈhɪstri/', pos: 'n.', meaning: '历史', example: 'I like history very much.', exampleCn: '我很喜欢历史。' },
-    { word: 'meeting', phonetic: '/ˈmiːtɪŋ/', pos: 'n.', meaning: '会议；集会', example: 'We have a class meeting on Friday.', exampleCn: '我们周五有班会。' },
-    { word: 'geography', phonetic: '/dʒiˈɒɡrəfi/', pos: 'n.', meaning: '地理', example: 'Geography is interesting.', exampleCn: '地理很有趣。' },
-    { word: 'date', phonetic: '/deɪt/', pos: 'n.', meaning: '日期', example: 'What is the date today?', exampleCn: '今天几号？' },
-    { word: "o'clock", phonetic: '/əˈklɒk/', pos: 'adv.', meaning: '...点钟', example: 'It is eight o\'clock.', exampleCn: '八点钟了。' },
-    { word: 'open', phonetic: '/ˈəʊpən/', pos: 'adj.', meaning: '开放的', example: 'The library is open now.', exampleCn: '图书馆现在开放了。' },
-    { word: 'parent', phonetic: '/ˈpeərənt/', pos: 'n.', meaning: '父母', example: 'My parents come to school.', exampleCn: '我的父母来学校。' },
-    { word: 'building', phonetic: '/ˈbɪldɪŋ/', pos: 'n.', meaning: '建筑物', example: 'Our school has many buildings.', exampleCn: '我们学校有很多建筑。' },
-    { word: 'ground', phonetic: '/ɡraʊnd/', pos: 'n.', meaning: '地面', example: 'We play on the playground.', exampleCn: '我们在操场上玩。' },
-    { word: 'hall', phonetic: '/hɔːl/', pos: 'n.', meaning: '大厅', example: 'The school hall is big.', exampleCn: '学校大厅很大。' },
-    { word: 'modern', phonetic: '/ˈmɒdn/', pos: 'adj.', meaning: '现代化的', example: 'Our school is modern.', exampleCn: '我们学校很现代化。' },
-    { word: 'bright', phonetic: '/braɪt/', pos: 'adj.', meaning: '明亮的', example: 'Our classroom is bright.', exampleCn: '我们的教室很明亮。' },
-    { word: 'show', phonetic: '/ʃəʊ/', pos: 'v.', meaning: '带领；展示', example: 'Let me show you around.', exampleCn: '让我带你参观。' },
-    { word: 'around', phonetic: '/əˈraʊnd/', pos: 'prep.', meaning: '在...周围', example: 'I will show you around the school.', exampleCn: '我将带你参观学校。' },
-    { word: 'front', phonetic: '/frʌnt/', pos: 'n.', meaning: '前面', example: 'There is a tree in front of the building.', exampleCn: '楼前有一棵树。' },
-    { word: 'library', phonetic: '/ˈlaɪbrəri/', pos: 'n.', meaning: '图书馆', example: 'The library is on the second floor.', exampleCn: '图书馆在二楼。' }
+    { word: 'gym', phonetic: '/dʒɪm/', pos: 'n.', meaning: '体育馆', example: 'We play basketball in the gym.', exampleCn: '我们在体育馆打篮球。' },
+    { word: 'building', phonetic: '/ˈbɪldɪŋ/', pos: 'n.', meaning: '大楼，建筑物', example: 'Our classroom building is big.', exampleCn: '我们的教学楼很大。' },
+    { word: 'field', phonetic: '/fiːld/', pos: 'n.', meaning: '田地；领域', example: 'We play on the sports field.', exampleCn: '我们在运动场上玩。' },
+    { word: 'sports field', phonetic: '/ˈspɔːts fiːld/', pos: 'n.', meaning: '体育场，运动场', example: 'We have a great sports field.', exampleCn: '我们有一个很棒的运动场。' },
+    { word: 'dining', phonetic: '/ˈdaɪnɪŋ/', pos: 'n.', meaning: '吃饭', example: 'We have lunch in the dining hall.', exampleCn: '我们在餐厅吃午饭。' },
+    { word: 'hall', phonetic: '/hɔːl/', pos: 'n.', meaning: '礼堂，大厅', example: 'The school hall is large.', exampleCn: '学校礼堂很大。' },
+    { word: 'dining hall', phonetic: '/ˈdaɪnɪŋ hɔːl/', pos: 'n.', meaning: '食堂，餐厅', example: 'The dining hall is clean.', exampleCn: '食堂很干净。' },
+    { word: 'lab', phonetic: '/læb/', pos: 'n.', meaning: '实验室', example: 'We do experiments in the lab.', exampleCn: '我们在实验室做实验。' },
+    { word: 'part', phonetic: '/pɑːt/', pos: 'n.', meaning: '部分', example: 'This is a part of our school.', exampleCn: '这是我们学校的一部分。' },
+    { word: 'modern', phonetic: '/ˈmɒdn/', pos: 'adj.', meaning: '现代化的，现代的', example: 'We have a modern library.', exampleCn: '我们有一个现代化的图书馆。' },
+    { word: 'as well', phonetic: '/æz wel/', pos: 'adv.', meaning: '也', example: 'We have a lab as well.', exampleCn: '我们也有一个实验室。' },
+    { word: 'bright', phonetic: '/braɪt/', pos: 'adj.', meaning: '明亮的', example: 'Our classroom is clean and bright.', exampleCn: '我们的教室又干净又明亮。' },
+    { word: 'everyone', phonetic: '/ˈevriwʌn/', pos: 'pron.', meaning: '每个人', example: 'Everyone likes our school.', exampleCn: '每个人都喜欢我们的学校。' },
+    { word: 'perfect', phonetic: '/ˈpɜːfɪkt/', pos: 'adj.', meaning: '完美的', example: 'They are perfect places to study.', exampleCn: '它们是学习的绝佳场所。' },
+    { word: 'spend', phonetic: '/spend/', pos: 'v.', meaning: '度过，花（时间、钱）', example: 'Students enjoy spending time here.', exampleCn: '同学们喜欢在这里消磨时间。' },
+    { word: 'chat', phonetic: '/tʃæt/', pos: 'v.', meaning: '闲聊', example: 'We chat with our teachers.', exampleCn: '我们和老师聊天。' },
+    { word: 'exciting', phonetic: '/ɪkˈsaɪtɪŋ/', pos: 'adj.', meaning: '令人激动的', example: 'The match is very exciting.', exampleCn: '这场比赛非常精彩。' },
+    { word: 'take place', phonetic: '/teɪk pleɪs/', pos: 'v.', meaning: '发生', example: 'Sports matches take place here.', exampleCn: '体育比赛在这里举行。' },
+    { word: 'noticeboard', phonetic: '/ˈnəʊtɪsbɔːd/', pos: 'n.', meaning: '布告板，告示牌', example: 'Look at the noticeboards near the gate.', exampleCn: '看看校门附近的布告板。' },
+    { word: 'gate', phonetic: '/ɡeɪt/', pos: 'n.', meaning: '大门', example: 'The school gate is big.', exampleCn: '学校大门很大。' },
+    { word: 'news', phonetic: '/njuːz/', pos: 'n.', meaning: '新闻', example: 'We can read school news here.', exampleCn: '我们能在这里看到学校新闻。' },
+    { word: 'board', phonetic: '/bɔːd/', pos: 'n.', meaning: '布告牌；木板', example: 'There is a notice on the board.', exampleCn: '布告牌上有一个通知。' },
+    { word: 'like', phonetic: '/laɪk/', pos: 'prep.', meaning: '例如；像', example: 'They show works like paintings.', exampleCn: '他们展示绘画之类的作品。' },
+    { word: 'more', phonetic: '/mɔː(r)/', pos: 'adv.', meaning: '更，更多', example: 'You will find more great places.', exampleCn: '你会发现更多好地方。' },
+    { word: 'trust', phonetic: '/trʌst/', pos: 'v.', meaning: '相信', example: 'Trust me!', exampleCn: '相信我！' },
+    { word: 'really', phonetic: '/ˈrɪəli/', pos: 'adv.', meaning: '很，十分；真正地', example: 'Our school is really nice.', exampleCn: '我们学校真的很好。' },
+    { word: 'soon', phonetic: '/suːn/', pos: 'adv.', meaning: '很快，马上', example: 'See you soon!', exampleCn: '回头见！' },
+    { word: 'teach', phonetic: '/tiːtʃ/', pos: 'v.', meaning: '教（课程），讲授', example: 'Miss Li teaches us English.', exampleCn: '李老师教我们英语。' },
+    { word: 'team', phonetic: '/tiːm/', pos: 'n.', meaning: '队；组', example: 'I am in the school volleyball team.', exampleCn: '我是学校排球队的一员。' },
+    { word: 'form teacher', phonetic: '/ˈfɔːm ˌtiːtʃə(r)/', pos: 'n.', meaning: '班主任', example: 'Our form teacher is very kind.', exampleCn: '我们的班主任非常和蔼。' },
+    { word: 'show', phonetic: '/ʃəʊ/', pos: 'n.', meaning: '演出；展览', example: 'We have a school show every year.', exampleCn: '我们每年都有学校演出。' },
+    { word: 'grey', phonetic: '/ɡreɪ/', pos: 'adj.', meaning: '灰色的', example: 'The building is grey.', exampleCn: '这栋楼是灰色的。' },
+    { word: 'different', phonetic: '/ˈdɪfrənt/', pos: 'adj.', meaning: '不同的', example: 'We have different subjects.', exampleCn: '我们有不同的科目。' },
+    { word: 'thousand', phonetic: '/ˈθaʊznd/', pos: 'num.', meaning: '一千；数以千计的', example: 'There are thousands of books.', exampleCn: '有成千上万本书。' },
+    { word: 'fact', phonetic: '/fækt/', pos: 'n.', meaning: '事实', example: 'In fact, our school is beautiful.', exampleCn: '事实上，我们学校很美。' },
+    { word: 'in fact', phonetic: '/ɪn fækt/', pos: 'adv.', meaning: '确切地说；事实上', example: 'In fact, I like our school very much.', exampleCn: '事实上，我非常喜欢我们学校。' },
+    { word: 'borrow', phonetic: '/ˈbɒrəʊ/', pos: 'v.', meaning: '借', example: 'I borrow books from the library.', exampleCn: '我从图书馆借书。' },
+    { word: 'newspaper', phonetic: '/ˈnjuːzpeɪpə(r)/', pos: 'n.', meaning: '报纸', example: 'My father reads the newspaper.', exampleCn: '我爸爸读报纸。' },
+    { word: 'magazine', phonetic: '/ˌmæɡəˈziːn/', pos: 'n.', meaning: '杂志', example: 'She likes reading magazines.', exampleCn: '她喜欢读杂志。' },
+    { word: 'else', phonetic: '/els/', pos: 'adj.', meaning: '其他的，另外的', example: 'What else can you see?', exampleCn: '你还能看到什么？' },
+    { word: 'care', phonetic: '/keə(r)/', pos: 'v.', meaning: '关心', example: 'Our teachers care about us.', exampleCn: '我们的老师关心我们。' },
+    { word: 'care about', phonetic: '/keər əˈbaʊt/', pos: 'v.', meaning: '关心', example: 'She cares about her students.', exampleCn: '她关心她的学生。' },
+    { word: 'event', phonetic: '/ɪˈvent/', pos: 'n.', meaning: '事件；活动', example: 'We have many events at school.', exampleCn: '我们学校有很多活动。' },
+    { word: 'together', phonetic: '/təˈɡeðə(r)/', pos: 'adv.', meaning: '一起', example: 'We study together.', exampleCn: '我们一起学习。' },
+    { word: 'quite', phonetic: '/kwaɪt/', pos: 'adv.', meaning: '相当；非常', example: 'Our school is quite big.', exampleCn: '我们学校相当大。' },
+    { word: 'large', phonetic: '/lɑːdʒ/', pos: 'adj.', meaning: '大的', example: 'We have a large library.', exampleCn: '我们有一个大图书馆。' },
+    { word: 'special', phonetic: '/ˈspeʃl/', pos: 'adj.', meaning: '特别的，特殊的', example: 'Today is a special day.', exampleCn: '今天是特别的一天。' }
   ],
   phrases: [
-    { phrase: 'show sb. around', meaning: '带某人参观', example: 'Let me show you around our school.' },
-    { phrase: 'in front of', meaning: '在...前面', example: 'There is a garden in front of the building.' },
-    { phrase: 'on the ground floor', meaning: '在一楼', example: 'The hall is on the ground floor.' },
-    { phrase: 'have a meeting', meaning: '开会', example: 'We have a meeting on Monday.' },
-    { phrase: 'look modern', meaning: '看起来很现代', example: 'The building looks modern.' },
-    { phrase: 'be good at', meaning: '擅长', example: 'She is good at history.' }
+    { phrase: 'sports field', meaning: '体育场，运动场', example: 'We have a great sports field.' },
+    { phrase: 'dining hall', meaning: '食堂，餐厅', example: 'We have lunch in the dining hall.' },
+    { phrase: 'as well', meaning: '也', example: 'We have a lab as well.' },
+    { phrase: 'take place', meaning: '发生，举行', example: 'Sports matches take place here.' },
+    { phrase: 'in fact', meaning: '事实上', example: 'In fact, our school is beautiful.' },
+    { phrase: 'care about', meaning: '关心', example: 'Our teachers care about us.' },
+    { phrase: 'form teacher', meaning: '班主任', example: 'Our form teacher is kind.' }
   ],
   sentences: [
     { en: 'Welcome to our school!', cn: '欢迎来到我们学校！' },
-    { en: 'Let me show you around.', cn: '让我带你参观一下。' },
-    { en: 'Our school looks beautiful.', cn: '我们学校看起来很美。' },
-    { en: 'The library is open every day.', cn: '图书馆每天开放。' },
-    { en: 'We have a parents\' meeting today.', cn: '我们今天有家长会。' },
-    { en: 'The classrooms are bright and clean.', cn: '教室明亮干净。' }
+    { en: 'They\'re the perfect places for us to study.', cn: '它们是供我们学习的绝佳场所。' },
+    { en: 'Our school has lots of green spaces.', cn: '我们学校有很多绿地。' },
+    { en: 'Lots of exciting sports matches take place on it.', cn: '许多精彩的体育比赛都在这里举行。' },
+    { en: 'They\'re role models for us.', cn: '他们是我们的榜样。' },
+    { en: 'Come and enjoy your school life here.', cn: '来这里享受校园生活吧。' }
   ],
   text: {
-    title: 'Open Day at Sunshine Middle School',
+    title: 'Our wonderful school',
+    intro: '九年级的 Jack Liu 在介绍阳光中学，欢迎来到我们学校！',
     paragraphs: [
       {
         sentences: [
-          { en: 'Today is the Open Day at Sunshine Middle School.', cn: '今天是阳光中学的开放日。', keywords: ['Open Day', 'Sunshine Middle School'] },
-          { en: 'Millie is showing her mother around the school.', cn: '米莉正带她妈妈参观学校。', keywords: ['showing', 'around'] },
-          { en: 'The school looks beautiful.', cn: '学校看起来很美。', keywords: ['looks beautiful'] },
-          { en: 'The playground is so big.', cn: '操场好大啊。', keywords: ['playground', 'big'] },
-          { en: 'There are 18 classrooms in the classroom building.', cn: '教学楼里有18间教室。', keywords: ['classrooms', 'building'] },
-          { en: 'Our classrooms are on the ground floor.', cn: '我们的教室在一楼。', keywords: ['ground floor'] },
-          { en: 'They are big and bright.', cn: '它们又大又明亮。', keywords: ['big and bright'] },
-          { en: 'That is our new library.', cn: '那是我们的新图书馆。', keywords: ['new library'] },
-          { en: 'It looks modern.', cn: '它看起来很现代化。', keywords: ['looks modern'] },
-          { en: 'The school hall is over there.', cn: '学校大厅在那边。', keywords: ['school hall', 'over there'] },
-          { en: 'We have meetings there.', cn: '我们在那里开会。', keywords: ['meetings'] },
-          { en: 'Our school is really nice.', cn: '我们的学校真的很棒。', keywords: ['really nice'] }
+          { en: 'Hello, everyone!', cn: '大家好！', keywords: ['everyone'] },
+          { en: 'I\'m Jack Liu from Grade 9.', cn: '我是九年级的刘杰。', keywords: ['Grade 9'] },
+          { en: 'Welcome to our school!', cn: '欢迎来到我们学校！', keywords: ['Welcome'] },
+          { en: 'Here are our classroom buildings and our modern library.', cn: '这是我们现代化的图书馆和教学楼。', keywords: ['classroom buildings', 'modern library'] },
+          { en: 'They\'re the perfect places for us to study.', cn: '它们是供我们学习的绝佳场所。', keywords: ['perfect places'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'Our school has lots of green spaces.', cn: '我们学校有很多绿地。', keywords: ['green spaces'] },
+          { en: 'Students enjoy spending time here.', cn: '同学们都很喜欢在这里消磨时间。', keywords: ['spending time'] },
+          { en: 'Sometimes we chat with teachers about our problems here too.', cn: '有时我们也会在这里和老师谈论问题。', keywords: ['chat with teachers', 'problems'] },
+          { en: 'We have a great sports field.', cn: '我们有一个很棒的运动场。', keywords: ['sports field'] },
+          { en: 'Can you see the students running there?', cn: '你能看见学生在那儿跑步吗？', keywords: ['running'] },
+          { en: 'Lots of exciting sports matches take place on it.', cn: '许多精彩的体育比赛都在这里举行。', keywords: ['sports matches', 'take place'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'Look at the school noticeboards near the gate.', cn: '看看校门附近的布告板。', keywords: ['noticeboards', 'gate'] },
+          { en: 'Here we can read about school news and stories of star students and teachers.', cn: '在布告板上，我们可以看到学校新闻，以及优秀学生和老师的故事。', keywords: ['school news', 'star students'] },
+          { en: 'They\'re role models for us.', cn: '他们是我们的榜样。', keywords: ['role models'] },
+          { en: 'The boards also show students\' works, like paintings and photos.', cn: '布告板上还会展示学生的作品，像绘画作品和摄影作品。', keywords: ['works', 'paintings', 'photos'] },
+          { en: 'Come and enjoy your school life here.', cn: '来这里享受校园生活吧。', keywords: ['school life'] },
+          { en: 'You\'ll find more great places. Trust me!', cn: '相信我，你会发现更多好地方！', keywords: ['Trust me'] }
         ]
       }
+    ],
+    questions: [
+      { q: 'Who is Jack Liu?', a: 'He is a student from Grade 9.' },
+      { q: 'Why are green spaces important?', a: 'Because students enjoy spending time there and can chat with teachers about their problems.' },
+      { q: 'What can we read on the noticeboards?', a: 'We can read school news and stories of star students and teachers.' }
     ]
   },
   grammar: {
-    title: '一般现在时（第三人称单数）',
+    title: 'there be 句型与方位介词',
     points: [
       {
-        rule: '第三人称单数作主语时动词变化',
-        detail: '当主语是he/she/it或单数名词时，谓语动词要用第三人称单数形式（加-s或-es）。',
-        examples: ['She likes English.', 'He goes to school at 7.', 'The library opens at 8.']
+        rule: 'there be 句型表示“某处有某物”',
+        detail: 'there is + 单数/不可数名词；there are + 复数名词。例如：There is a library. There are lots of green spaces.',
+        examples: ['There is a modern library in our school.', 'There are lots of green spaces.', 'There is a great sports field.']
       },
       {
-        rule: '一般现在时的否定和疑问',
-        detail: '第三人称单数否定用doesn\'t + 动词原形；疑问句用Does + 主语 + 动词原形。',
-        examples: ['He doesn\'t like math.', 'Does she play tennis? Yes, she does.', 'Does it open on Sunday?']
+        rule: '方位介词 in / on / near / at',
+        detail: 'in 在……里；on 在……上；near 在……附近；at 在……处。例如：near the gate（在门口附近）。',
+        examples: ['The noticeboards are near the gate.', 'The books are in the library.', 'The photos are on the board.']
       }
     ]
   },
   exams: [
     {
-      question: 'My mother ___ me to school every day.',
+      question: 'There ___ lots of green spaces in our school.',
+      options: ['A. is', 'B. are', 'C. be', 'D. am'],
+      answer: 'B',
+      explanation: 'green spaces 是复数，用 there are。'
+    },
+    {
+      question: 'Lots of sports matches ___ place on the field.',
       options: ['A. take', 'B. takes', 'C. taking', 'D. to take'],
-      answer: 'B',
-      explanation: '主语my mother是第三人称单数，动词take加s。'
-    },
-    {
-      question: '—___ the library open on Sunday? —Yes, it ___.',
-      options: ['A. Does; does', 'B. Is; is', 'C. Do; do', 'D. Does; is'],
       answer: 'A',
-      explanation: '实义动词open的疑问句用Does提问，回答用does。'
+      explanation: '主语 matches 是复数，动词用原形 take。take place 意为“举行”。'
     },
     {
-      question: 'There ___ a library and two classrooms on the ground floor.',
-      options: ['A. is', 'B. are', 'C. have', 'D. has'],
+      question: 'The noticeboards are ___ the gate.',
+      options: ['A. near', 'B. on', 'C. in', 'D. at'],
       answer: 'A',
-      explanation: 'There be结构遵循就近原则，a library是单数，用is。'
+      explanation: 'near 表示“在……附近”。'
     },
     {
-      question: 'Let me show you ___ our school.',
-      options: ['A. in', 'B. on', 'C. around', 'D. at'],
-      answer: 'C',
-      explanation: 'show sb. around表示"带某人参观"，固定搭配。'
-    },
-    {
-      question: 'Our classroom is ___ the ground floor.',
-      options: ['A. in', 'B. on', 'C. at', 'D. of'],
-      answer: 'B',
-      explanation: '表示"在几楼"用介词on。'
+      question: 'They\'re role models ___ us.',
+      options: ['A. for', 'B. to', 'C. of', 'D. with'],
+      answer: 'A',
+      explanation: 'role models for sb 表示“某人的榜样”。'
     }
   ]
 },
 
-/* ======================== Unit 4: My day ======================== */
+/* ======================== Unit 4: School days ======================== */
 {
   unitId: '7a-u4',
-  title: 'Unit 4: My day',
-  topic: '日常生活',
+  title: 'Unit 4: School days',
+  topic: '校园生活',
   words: [
-    { word: 'wake', phonetic: '/weɪk/', pos: 'v.', meaning: '醒来', example: 'I wake up at six.', exampleCn: '我六点醒来。' },
-    { word: 'sleep', phonetic: '/sliːp/', pos: 'v.', meaning: '睡觉', example: 'I sleep eight hours.', exampleCn: '我睡八小时。' },
-    { word: 'just', phonetic: '/dʒʌst/', pos: 'adv.', meaning: '只是；正好', example: 'I just want to sleep.', exampleCn: '我只是想睡觉。' },
-    { word: 'activity', phonetic: '/ækˈtɪvəti/', pos: 'n.', meaning: '活动', example: 'We do after-school activities.', exampleCn: '我们做课外活动。' },
-    { word: 'homework', phonetic: '/ˈhəʊmwɜːk/', pos: 'n.', meaning: '家庭作业', example: 'I do my homework every day.', exampleCn: '我每天做作业。' },
-    { word: 'rest', phonetic: '/rest/', pos: 'n.', meaning: '休息', example: 'Let\'s have a rest.', exampleCn: '让我们休息一下。' },
-    { word: 'breakfast', phonetic: '/ˈbrekfəst/', pos: 'n.', meaning: '早餐', example: 'I have breakfast at seven.', exampleCn: '我七点吃早饭。' },
-    { word: 'lunch', phonetic: '/lʌntʃ/', pos: 'n.', meaning: '午餐', example: 'We have lunch at school.', exampleCn: '我们在学校吃午饭。' },
-    { word: 'dinner', phonetic: '/ˈdɪnə(r)/', pos: 'n.', meaning: '晚餐', example: 'I have dinner with my family.', exampleCn: '我和家人一起吃晚饭。' },
-    { word: 'need', phonetic: '/niːd/', pos: 'v.', meaning: '需要', example: 'I need some help.', exampleCn: '我需要一些帮助。' },
-    { word: 'keep', phonetic: '/kiːp/', pos: 'v.', meaning: '保持', example: 'Keep quiet, please.', exampleCn: '请保持安静。' },
-    { word: 'week', phonetic: '/wiːk/', pos: 'n.', meaning: '周', example: 'There are seven days in a week.', exampleCn: '一周有七天。' },
-    { word: 'weekend', phonetic: '/ˌwiːkˈend/', pos: 'n.', meaning: '周末', example: 'I play football at weekends.', exampleCn: '我在周末踢足球。' },
-    { word: 'always', phonetic: '/ˈɔːlweɪz/', pos: 'adv.', meaning: '总是', example: 'I always get up early.', exampleCn: '我总是起得早。' },
-    { word: 'usually', phonetic: '/ˈjuːʒuəli/', pos: 'adv.', meaning: '通常', example: 'I usually go to school by bus.', exampleCn: '我通常坐公交上学。' },
-    { word: 'often', phonetic: '/ˈɒfn/', pos: 'adv.', meaning: '经常', example: 'I often read books.', exampleCn: '我经常看书。' },
-    { word: 'sometimes', phonetic: '/ˈsʌmtaɪmz/', pos: 'adv.', meaning: '有时', example: 'Sometimes I walk home.', exampleCn: '有时我走路回家。' },
-    { word: 'seldom', phonetic: '/ˈseldəm/', pos: 'adv.', meaning: '很少', example: 'I seldom eat fast food.', exampleCn: '我很少吃快餐。' },
-    { word: 'never', phonetic: '/ˈnevə(r)/', pos: 'adv.', meaning: '从不', example: 'I never stay up late.', exampleCn: '我从不熬夜。' },
-    { word: 'start', phonetic: '/stɑːt/', pos: 'v.', meaning: '开始', example: 'Classes start at eight.', exampleCn: '八点开始上课。' }
+    { word: 'a.m.', phonetic: '/ˌeɪ ˈem/', pos: 'abbr.', meaning: '上午', example: 'School starts at 8 a.m.', exampleCn: '学校上午八点上课。' },
+    { word: 'get up', phonetic: '/ɡet ʌp/', pos: 'v.', meaning: '起床', example: 'I get up at six every day.', exampleCn: '我每天六点起床。' },
+    { word: 'activity', phonetic: '/ækˈtɪvəti/', pos: 'n.', meaning: '活动', example: 'We have many after-school activities.', exampleCn: '我们有很多课后活动。' },
+    { word: 'housework', phonetic: '/ˈhaʊswɜːk/', pos: 'n.', meaning: '家务劳动', example: 'I help my mother do housework.', exampleCn: '我帮妈妈做家务。' },
+    { word: 'homework', phonetic: '/ˈhəʊmwɜːk/', pos: 'n.', meaning: '家庭作业', example: 'I do my homework after school.', exampleCn: '我放学后做作业。' },
+    { word: 'weekday', phonetic: '/ˈwiːkdeɪ/', pos: 'n.', meaning: '工作日', example: 'I go to school on weekdays.', exampleCn: '我工作日上学。' },
+    { word: 'on weekdays', phonetic: '/ɒn ˈwiːkdeɪz/', pos: 'adv.', meaning: '在工作日', example: 'We have classes on weekdays.', exampleCn: '我们工作日上课。' },
+    { word: 'usually', phonetic: '/ˈjuːʒuəli/', pos: 'adv.', meaning: '通常', example: 'I usually get up at six.', exampleCn: '我通常六点起床。' },
+    { word: 'jog', phonetic: '/dʒɒɡ/', pos: 'v.', meaning: '慢跑', example: 'I jog every morning.', exampleCn: '我每天早上慢跑。' },
+    { word: 'a little', phonetic: '/ə ˈlɪtl/', pos: 'adv.', meaning: '一点，少量', example: 'I can speak a little English.', exampleCn: '我会说一点英语。' },
+    { word: 'myself', phonetic: '/maɪˈself/', pos: 'pron.', meaning: '我自己', example: 'I do it by myself.', exampleCn: '我自己做这件事。' },
+    { word: 'enjoy oneself', phonetic: '/ɪnˈdʒɔɪ wʌnˈself/', pos: 'v.', meaning: '玩得开心', example: 'We enjoy ourselves at the party.', exampleCn: '我们在聚会上玩得很开心。' },
+    { word: 'first', phonetic: '/fɜːst/', pos: 'adv.', meaning: '首先', example: 'We do morning exercises first.', exampleCn: '我们先做早操。' },
+    { word: 'term', phonetic: '/tɜːm/', pos: 'n.', meaning: '学期；期', example: 'This is my first term.', exampleCn: '这是我的第一个学期。' },
+    { word: 'start', phonetic: '/stɑːt/', pos: 'v.', meaning: '（使）开始', example: 'School starts at eight.', exampleCn: '学校八点开始上课。' },
+    { word: 'writer', phonetic: '/ˈraɪtə(r)/', pos: 'n.', meaning: '作家', example: 'He is a famous writer.', exampleCn: '他是一位著名作家。' },
+    { word: 'language', phonetic: '/ˈlæŋɡwɪdʒ/', pos: 'n.', meaning: '语言', example: 'Chinese is a beautiful language.', exampleCn: '中文是一门美丽的语言。' },
+    { word: 'amazing', phonetic: '/əˈmeɪzɪŋ/', pos: 'adj.', meaning: '令人大为惊奇的', example: 'The Chinese language is amazing.', exampleCn: '中文真的很神奇。' },
+    { word: 'biology', phonetic: '/baɪˈɒlədʒi/', pos: 'n.', meaning: '生物学', example: 'We have Biology on Tuesdays.', exampleCn: '我们周二上生物课。' },
+    { word: 'living', phonetic: '/ˈlɪvɪŋ/', pos: 'adj.', meaning: '活着的', example: 'We study many living things.', exampleCn: '我们研究许多生物。' },
+    { word: 'nature', phonetic: '/ˈneɪtʃə(r)/', pos: 'n.', meaning: '大自然，天性', example: 'We learn about nature.', exampleCn: '我们了解大自然。' },
+    { word: 'practise', phonetic: '/ˈpræktɪs/', pos: 'v.', meaning: '训练，练习', example: 'We practise volleyball on Fridays.', exampleCn: '我们周五练习排球。' },
+    { word: 'trip', phonetic: '/trɪp/', pos: 'n.', meaning: '旅行', example: 'We have a field trip each term.', exampleCn: '我们每学期有一次郊游。' },
+    { word: 'field trip', phonetic: '/ˈfiːld trɪp/', pos: 'n.', meaning: '野外考察，实地考察', example: 'Tomorrow we will go on a field trip.', exampleCn: '明天我们去郊游。' },
+    { word: 'leave', phonetic: '/liːv/', pos: 'v.', meaning: '离开；使保留', example: 'We leave for the farm tomorrow.', exampleCn: '我们明天动身去农场。' },
+    { word: 'leave for', phonetic: '/liːv fɔː(r)/', pos: 'v.', meaning: '动身去，到……地方去', example: 'We will leave for a farm.', exampleCn: '我们将动身去一个农场。' },
+    { word: 'pick', phonetic: '/pɪk/', pos: 'v.', meaning: '采，摘；挑选', example: 'We pick apples on the farm.', exampleCn: '我们在农场摘苹果。' },
+    { word: 'of course', phonetic: '/əv kɔːs/', pos: 'adv.', meaning: '当然', example: 'Of course, I will help you.', exampleCn: '当然，我会帮你。' },
+    { word: 'seldom', phonetic: '/ˈseldəm/', pos: 'adv.', meaning: '很少', example: 'I seldom stay up late.', exampleCn: '我很少熬夜。' },
+    { word: 'tennis', phonetic: '/ˈtenɪs/', pos: 'n.', meaning: '网球', example: 'He plays tennis well.', exampleCn: '他网球打得很好。' },
+    { word: 'roller skate', phonetic: '/ˈrəʊlə skeɪt/', pos: 'v.', meaning: '滑旱冰', example: 'I can roller skate.', exampleCn: '我会滑旱冰。' },
+    { word: 'grow', phonetic: '/ɡrəʊ/', pos: 'v.', meaning: '（使）生长，发育', example: 'Plants grow in spring.', exampleCn: '植物在春天生长。' },
+    { word: 'tour', phonetic: '/tʊə(r)/', pos: 'n.', meaning: '参观；旅行', example: 'We have a school tour.', exampleCn: '我们参观学校。' },
+    { word: 'website', phonetic: '/ˈwebsaɪt/', pos: 'n.', meaning: '网站', example: 'You can find it on the website.', exampleCn: '你可以在网站上找到它。' },
+    { word: 'video', phonetic: '/ˈvɪdiəʊ/', pos: 'n.', meaning: '视频', example: 'We watch a video in class.', exampleCn: '我们在课堂上看视频。' },
+    { word: 'outside', phonetic: '/ˌaʊtˈsaɪd/', pos: 'adv.', meaning: '在外面', example: 'We play outside.', exampleCn: '我们在外面玩。' },
+    { word: 'peace', phonetic: '/piːs/', pos: 'n.', meaning: '平静；和平', example: 'I love the peace of the countryside.', exampleCn: '我喜欢乡村的宁静。' },
+    { word: 'quiet', phonetic: '/ˈkwaɪət/', pos: 'n.', meaning: '宁静，平静', example: 'I enjoy the quiet of the library.', exampleCn: '我喜欢图书馆的宁静。' },
+    { word: 'teamwork', phonetic: '/ˈtiːmwɜːk/', pos: 'n.', meaning: '团队合作', example: 'Teamwork is important.', exampleCn: '团队合作很重要。' },
+    { word: 'better', phonetic: '/ˈbetə(r)/', pos: 'adj.', meaning: '更好的', example: 'I hope to do better.', exampleCn: '我希望做得更好。' },
+    { word: 'tiring', phonetic: '/ˈtaɪərɪŋ/', pos: 'adj.', meaning: '累人的', example: 'The trip is a little tiring.', exampleCn: '这次旅行有点累。' },
+    { word: 'duty', phonetic: '/ˈdjuːti/', pos: 'n.', meaning: '职责，任务；责任', example: 'It is our duty to study hard.', exampleCn: '努力学习是我们的责任。' },
+    { word: 'area', phonetic: '/ˈeəriə/', pos: 'n.', meaning: '区域；领域', example: 'This is a quiet area.', exampleCn: '这是一个安静的区域。' },
+    { word: 'take part in', phonetic: '/teɪk pɑːt ɪn/', pos: 'v.', meaning: '参加', example: 'I take part in the school activities.', exampleCn: '我参加学校活动。' },
+    { word: 'through', phonetic: '/θruː/', pos: 'prep.', meaning: '以，凭借；通过', example: 'We learn through reading.', exampleCn: '我们通过阅读学习。' },
+    { word: 'group', phonetic: '/ɡruːp/', pos: 'n.', meaning: '组，群，批', example: 'We work in groups.', exampleCn: '我们分组合作。' },
+    { word: 'turn', phonetic: '/tɜːn/', pos: 'n.', meaning: '（依次轮到的）机会', example: 'It is my turn now.', exampleCn: '现在轮到我了。' },
+    { word: 'take turns', phonetic: '/teɪk tɜːnz/', pos: 'v.', meaning: '轮流', example: 'We take turns to clean the classroom.', exampleCn: '我们轮流打扫教室。' },
+    { word: 'empty', phonetic: '/ˈempti/', pos: 'v.', meaning: '倒空；adj. 空的', example: 'Please empty the bin.', exampleCn: '请把垃圾桶倒空。' },
+    { word: 'bin', phonetic: '/bɪn/', pos: 'n.', meaning: '垃圾桶', example: 'Throw it into the bin.', exampleCn: '把它扔进垃圾桶。' },
+    { word: 'take care of', phonetic: '/teɪk keər əv/', pos: 'v.', meaning: '照顾', example: 'We should take care of our school.', exampleCn: '我们应该爱护我们的学校。' },
+    { word: 'something', phonetic: '/ˈsʌmθɪŋ/', pos: 'pron.', meaning: '某事，某物', example: 'I have something to tell you.', exampleCn: '我有事要告诉你。' }
   ],
   phrases: [
-    { phrase: 'wake up', meaning: '醒来', example: 'I wake up at 6:30 every morning.' },
-    { phrase: 'have breakfast', meaning: '吃早饭', example: 'I have breakfast at home.' },
-    { phrase: 'do homework', meaning: '做作业', example: 'I do my homework after dinner.' },
-    { phrase: 'have a rest', meaning: '休息一下', example: 'Let\'s have a rest.' },
-    { phrase: 'at weekends', meaning: '在周末', example: 'I go shopping at weekends.' },
-    { phrase: 'have fun', meaning: '玩得开心', example: 'We have fun at the party.' },
-    { phrase: 'get up', meaning: '起床', example: 'I get up at six o\'clock.' }
+    { phrase: 'get up', meaning: '起床', example: 'I get up at six every day.' },
+    { phrase: 'on weekdays', meaning: '在工作日', example: 'We have classes on weekdays.' },
+    { phrase: 'enjoy oneself', meaning: '玩得开心', example: 'We enjoy ourselves at school.' },
+    { phrase: 'field trip', meaning: '野外考察，实地考察', example: 'We have a field trip each term.' },
+    { phrase: 'leave for', meaning: '动身去', example: 'We will leave for a farm.' },
+    { phrase: 'take part in', meaning: '参加', example: 'I take part in many activities.' },
+    { phrase: 'take care of', meaning: '照顾', example: 'We take care of our school.' }
   ],
   sentences: [
-    { en: 'I usually get up at six.', cn: '我通常六点起床。' },
-    { en: 'I always have breakfast at home.', cn: '我总是在家吃早饭。' },
-    { en: 'Classes start at eight o\'clock.', cn: '八点开始上课。' },
-    { en: 'I do my homework after dinner.', cn: '我晚饭后做作业。' },
-    { en: 'I never go to bed late.', cn: '我从不晚睡。' },
-    { en: 'We have great fun at weekends.', cn: '我们周末玩得很开心。' }
+    { en: 'This is my first term at Sunshine Middle School.', cn: '这是我在阳光中学的第一个学期。' },
+    { en: 'School starts at 8 in the morning.', cn: '学校在早上八点开始上课。' },
+    { en: 'I like Chinese best!', cn: '我最喜欢语文课！' },
+    { en: 'The Chinese language is really amazing.', cn: '中文真的很神奇。' },
+    { en: 'We have a field trip each term.', cn: '我们每学期有一次郊游。' },
+    { en: 'Hope to hear from you soon.', cn: '希望尽快收到你的回信。' }
   ],
   text: {
-    title: 'Millie\'s daily life',
+    title: 'My school days',
+    intro: 'Millie 给网友 Tommy 写了一封邮件，介绍她的校园生活。',
     paragraphs: [
       {
         sentences: [
-          { en: 'Millie gets up at 6:30 every morning.', cn: '米莉每天早上6:30起床。', keywords: ['gets up'] },
-          { en: 'She has breakfast at 7:00.', cn: '她7:00吃早饭。', keywords: ['has breakfast'] },
-          { en: 'Then she goes to school.', cn: '然后她去上学。', keywords: ['goes to school'] },
-          { en: 'Classes start at 8:00.', cn: '8:00开始上课。', keywords: ['Classes start'] },
-          { en: 'She has lunch at school.', cn: '她在学校吃午饭。', keywords: ['has lunch'] },
-          { en: 'After school, she does after-school activities.', cn: '放学后，她参加课外活动。', keywords: ['after-school activities'] },
-          { en: 'She goes to the Reading Club on Tuesday and Thursday.', cn: '她周二和周四去阅读俱乐部。', keywords: ['Reading Club'] },
-          { en: 'She always plays volleyball with her friends.', cn: '她总是和朋友们打排球。', keywords: ['always', 'volleyball'] },
-          { en: 'She does her homework after dinner.', cn: '她晚饭后做作业。', keywords: ['does her homework'] },
-          { en: 'She goes to bed at 9:30.', cn: '她9:30睡觉。', keywords: ['goes to bed'] }
+          { en: 'Dear Tommy,', cn: '亲爱的汤米，', keywords: [] },
+          { en: 'I feel great!', cn: '我感觉很好！', keywords: ['great'] },
+          { en: 'This is my first term at Sunshine Middle School.', cn: '这是我在阳光中学的第一个学期。', keywords: ['first term'] },
+          { en: 'School starts at 8 in the morning.', cn: '学校在早上八点开始上课。', keywords: ['starts'] },
+          { en: 'Usually we do morning exercises first.', cn: '通常我们会先做早操。', keywords: ['morning exercises'] },
+          { en: 'Then our lessons begin at 8:15.', cn: '然后在 8:15 开始上课。', keywords: ['lessons begin'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'I like Chinese best!', cn: '我最喜欢语文课！', keywords: ['Chinese best'] },
+          { en: 'We read the works of many famous writers.', cn: '在课堂上，我们会阅读许多著名作家的作品。', keywords: ['works', 'writers'] },
+          { en: 'The Chinese language is really amazing.', cn: '中文真的很神奇。', keywords: ['amazing'] },
+          { en: 'We have Biology classes on Tuesdays and Thursdays.', cn: '我们周二和周四上生物课。', keywords: ['Biology'] },
+          { en: 'We study many living things and learn about nature.', cn: '课上我们研究许多生物，了解大自然。', keywords: ['living things', 'nature'] },
+          { en: 'It is really interesting!', cn: '这真的很有趣！', keywords: ['interesting'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'After-school activities are great fun too!', cn: '课后活动也非常有趣！', keywords: ['After-school activities'] },
+          { en: 'I am in the school volleyball team, and we practise on Friday afternoons.', cn: '我是学校排球队的队员，我们在周五下午进行训练。', keywords: ['volleyball team', 'practise'] },
+          { en: 'We have a field trip each term.', cn: '我们每个学期都有一次郊游。', keywords: ['field trip'] },
+          { en: 'Tomorrow morning we will leave for a farm to pick apples there.', cn: '明天早上，我们将去一个农场采摘苹果。', keywords: ['leave for', 'pick apples'] },
+          { en: 'What is your school life like?', cn: '你的学校生活是怎样的？', keywords: ['school life'] },
+          { en: 'Hope to hear from you soon.', cn: '希望尽快收到你的回信。', keywords: ['hear from you'] },
+          { en: 'Best wishes, Wang Xinyue', cn: '祝好，王欣悦', keywords: [] }
         ]
       }
+    ],
+    questions: [
+      { q: 'What time does school start in the morning?', a: 'School starts at 8 in the morning.' },
+      { q: 'Which subject does Millie like best?', a: 'She likes Chinese best.' },
+      { q: 'What will Millie do tomorrow morning?', a: 'She will leave for a farm to pick apples.' }
     ]
   },
   grammar: {
-    title: '频度副词',
+    title: '一般现在时与频度副词',
     points: [
       {
-        rule: '频度副词表示动作发生的频率',
-        detail: 'always（总是）> usually（通常）> often（经常）> sometimes（有时）> seldom（很少）> never（从不）。频度副词通常放在be动词之后，实义动词之前。',
-        examples: ['She is always happy.', 'I usually get up at six.', 'He never eats breakfast.']
+        rule: '频度副词 usually / often / seldom 的位置',
+        detail: '频度副词通常放在实义动词前、be 动词后。例如：We usually do morning exercises. I am always full of energy.',
+        examples: ['We usually do morning exercises first.', 'I seldom stay up late.', 'She is always happy.']
       },
       {
-        rule: '频度副词的位置',
-        detail: '在be动词后：She is always late. 在实义动词前：She always gets up early. 在助动词和实义动词之间：I will always love you.',
-        examples: ['He is often late for school.', 'We sometimes go shopping.', 'She doesn\'t always agree.']
+        rule: '一般将来时 will + 动词原形',
+        detail: '表示将来要发生的动作，用 will + 动词原形。例如：We will leave for a farm.',
+        examples: ['We will leave for a farm tomorrow.', 'I will help you.', 'He will come back soon.']
       }
     ]
   },
   exams: [
     {
-      question: 'I ___ get up at six, but ___ I get up at seven.',
-      options: ['A. usually; sometimes', 'B. sometimes; usually', 'C. never; always', 'D. always; never'],
-      answer: 'A',
-      explanation: '句意为"我通常六点起床，但有时七点起床"，usually比sometimes频率高。'
-    },
-    {
-      question: 'She ___ late for school. She is a good student.',
-      options: ['A. always', 'B. usually', 'C. often', 'D. never'],
-      answer: 'D',
-      explanation: '后句说"她是个好学生"，说明她从不迟到，用never。'
-    },
-    {
-      question: 'He ___ his homework after dinner.',
-      options: ['A. do', 'B. does', 'C. doing', 'D. to do'],
+      question: 'School ___ at 8 in the morning.',
+      options: ['A. start', 'B. starts', 'C. starting', 'D. to start'],
       answer: 'B',
-      explanation: '主语he是第三人称单数，动词do变does。'
+      explanation: 'School 是第三人称单数，动词加 s。'
     },
     {
-      question: 'I have fun ___ my friends at weekends.',
-      options: ['A. with', 'B. in', 'C. on', 'D. at'],
+      question: 'We usually ___ morning exercises first.',
+      options: ['A. do', 'B. does', 'C. doing', 'D. did'],
       answer: 'A',
-      explanation: 'have fun with sb.表示"和某人一起玩得开心"。'
+      explanation: '主语 we 是复数，动词用原形 do。'
     },
     {
-      question: 'Tom ___ goes to the park. He doesn\'t like going out.',
-      options: ['A. always', 'B. usually', 'C. often', 'D. seldom'],
-      answer: 'D',
-      explanation: '后句说"他不喜欢出门"，说明很少去公园，用seldom。'
+      question: 'Tomorrow we will leave ___ a farm.',
+      options: ['A. for', 'B. to', 'C. at', 'D. in'],
+      answer: 'A',
+      explanation: 'leave for 表示“动身去某地”。'
+    },
+    {
+      question: 'I am ___ the school volleyball team.',
+      options: ['A. in', 'B. on', 'C. at', 'D. of'],
+      answer: 'A',
+      explanation: 'be in the team 表示“是队里的一员”。'
     }
   ]
 },
 
-/* ======================== Unit 5: Let's celebrate! ======================== */
+/* ======================== Unit 5: A healthy lifestyle ======================== */
 {
   unitId: '7a-u5',
-  title: 'Unit 5: Let\'s celebrate!',
-  topic: '节日',
+  title: 'Unit 5: A healthy lifestyle',
+  topic: '健康的生活方式',
   words: [
-    { word: 'celebrate', phonetic: '/ˈselɪbreɪt/', pos: 'v.', meaning: '庆祝', example: 'We celebrate Christmas in December.', exampleCn: '我们在十二月庆祝圣诞节。' },
-    { word: 'festival', phonetic: '/ˈfestɪvl/', pos: 'n.', meaning: '节日', example: 'Spring Festival is my favourite festival.', exampleCn: '春节是我最喜欢的节日。' },
-    { word: 'Christmas', phonetic: '/ˈkrɪsməs/', pos: 'n.', meaning: '圣诞节', example: 'Christmas is on December 25th.', exampleCn: '圣诞节在12月25日。' },
-    { word: 'holiday', phonetic: '/ˈhɒlədeɪ/', pos: 'n.', meaning: '假日', example: 'We have a long holiday in summer.', exampleCn: '我们夏天有长假。' },
-    { word: 'paint', phonetic: '/peɪnt/', pos: 'v.', meaning: '涂；画', example: 'We paint our faces.', exampleCn: '我们涂面。' },
-    { word: 'inside', phonetic: '/ɪnˈsaɪd/', pos: 'adv.', meaning: '在...里面', example: 'The pumpkin is empty inside.', exampleCn: '南瓜里面是空的。' },
-    { word: 'treat', phonetic: '/triːt/', pos: 'n.', meaning: '款待', example: 'We give them a treat.', exampleCn: '我们款待他们。' },
-    { word: 'pumpkin', phonetic: '/ˈpʌmpkɪn/', pos: 'n.', meaning: '南瓜', example: 'We make pumpkin lanterns.', exampleCn: '我们做南瓜灯。' },
-    { word: 'ghost', phonetic: '/ɡəʊst/', pos: 'n.', meaning: '鬼', example: 'He dresses up as a ghost.', exampleCn: '他打扮成鬼。' },
-    { word: 'special', phonetic: '/ˈspeʃl/', pos: 'adj.', meaning: '特别的', example: 'It is a special day.', exampleCn: '这是特别的一天。' },
-    { word: 'question', phonetic: '/ˈkwestʃən/', pos: 'n.', meaning: '问题', example: 'Can I ask you a question?', exampleCn: '我能问你一个问题吗？' },
-    { word: 'seem', phonetic: '/siːm/', pos: 'v.', meaning: '似乎', example: 'It seems interesting.', exampleCn: '似乎很有趣。' },
-    { word: 'mask', phonetic: '/mɑːsk/', pos: 'n.', meaning: '面具', example: 'He wears a mask.', exampleCn: '他戴着面具。' },
-    { word: 'costume', phonetic: '/ˈkɒstjuːm/', pos: 'n.', meaning: '服装', example: 'She has a beautiful costume.', exampleCn: '她有一套漂亮的服装。' },
-    { word: 'lantern', phonetic: '/ˈlæntən/', pos: 'n.', meaning: '灯笼', example: 'We make pumpkin lanterns.', exampleCn: '我们做南瓜灯。' },
-    { word: 'candy', phonetic: '/ˈkændi/', pos: 'n.', meaning: '糖果', example: 'Children love candy.', exampleCn: '孩子们喜欢糖果。' },
-    { word: 'knock', phonetic: '/nɒk/', pos: 'v.', meaning: '敲', example: 'We knock on the door.', exampleCn: '我们敲门。' },
-    { word: 'shout', phonetic: '/ʃaʊt/', pos: 'v.', meaning: '喊叫', example: 'They shout "trick or treat".', exampleCn: '他们喊"不给糖就捣蛋"。' }
+    { word: 'lifestyle', phonetic: '/ˈlaɪfstaɪl/', pos: 'n.', meaning: '生活方式', example: 'We should have a healthy lifestyle.', exampleCn: '我们应该有健康的生活方式。' },
+    { word: 'cucumber', phonetic: '/ˈkjuːkʌmbə(r)/', pos: 'n.', meaning: '黄瓜', example: 'I eat a cucumber every day.', exampleCn: '我每天吃一根黄瓜。' },
+    { word: 'lemon', phonetic: '/ˈlemən/', pos: 'n.', meaning: '柠檬', example: 'Add a lemon to the water.', exampleCn: '往水里加个柠檬。' },
+    { word: 'watermelon', phonetic: '/ˈwɔːtəmelən/', pos: 'n.', meaning: '西瓜', example: 'We bought a big watermelon.', exampleCn: '我们买了一个大西瓜。' },
+    { word: 'pepper', phonetic: '/ˈpepə(r)/', pos: 'n.', meaning: '甜椒；胡椒粉', example: 'My mom cooks fish with black pepper.', exampleCn: '我妈妈用黑胡椒做鱼。' },
+    { word: 'chocolate', phonetic: '/ˈtʃɒklət/', pos: 'n.', meaning: '巧克力', example: 'Eating too much chocolate is bad for our teeth.', exampleCn: '吃太多巧克力对牙齿不好。' },
+    { word: 'beef', phonetic: '/biːf/', pos: 'n.', meaning: '牛肉', example: 'I have beef and rice for lunch.', exampleCn: '我午餐吃牛肉和米饭。' },
+    { word: 'carrot', phonetic: '/ˈkærət/', pos: 'n.', meaning: '胡萝卜', example: 'Carrots are good for our eyes.', exampleCn: '胡萝卜对我们的眼睛有益。' },
+    { word: 'pork', phonetic: '/pɔːk/', pos: 'n.', meaning: '猪肉', example: 'Do you like pork or chicken?', exampleCn: '你喜欢猪肉还是鸡肉？' },
+    { word: 'sweet', phonetic: '/swiːt/', pos: 'n.', meaning: '糖果，甜食；甜的，可爱的', example: 'She often eats sweets after meals.', exampleCn: '她经常饭后吃糖果。' },
+    { word: 'snack', phonetic: '/snæk/', pos: 'n.', meaning: '点心，小吃', example: 'We can take some snacks for the school trip.', exampleCn: '我们可以为学校旅行带些小吃。' },
+    { word: 'health', phonetic: '/helθ/', pos: 'n.', meaning: '健康', example: 'Doing exercise is good for our health.', exampleCn: '做运动对我们的健康有益。' },
+    { word: 'delicious', phonetic: '/dɪˈlɪʃəs/', pos: 'adj.', meaning: '美味的', example: 'The fish is very delicious.', exampleCn: '这条鱼非常美味。' },
+    { word: 'important', phonetic: '/ɪmˈpɔːtnt/', pos: 'adj.', meaning: '重要的', example: 'Breakfast is an important meal.', exampleCn: '早餐是很重要的一餐。' },
+    { word: 'diet', phonetic: '/ˈdaɪət/', pos: 'n.', meaning: '日常饮食', example: 'A balanced diet helps us keep fit.', exampleCn: '均衡饮食帮助我们保持健康。' },
+    { word: 'without', phonetic: '/wɪˈðaʊt/', pos: 'prep.', meaning: '没有', example: 'I never go to school without breakfast.', exampleCn: '我从不不吃早饭上学。' },
+    { word: 'pancake', phonetic: '/ˈpænkeɪk/', pos: 'n.', meaning: '烙饼，薄饼', example: 'My dad makes pancakes on weekends.', exampleCn: '我爸爸周末做薄饼。' },
+    { word: 'tofu', phonetic: '/ˈtəʊfuː/', pos: 'n.', meaning: '豆腐', example: 'Tofu is rich in protein.', exampleCn: '豆腐富含蛋白质。' },
+    { word: 'sugar', phonetic: '/ˈʃʊɡə(r)/', pos: 'n.', meaning: '食糖', example: 'Please put some sugar in my milk.', exampleCn: '请往我的牛奶里放些糖。' },
+    { word: 'tooth', phonetic: '/tuːθ/', pos: 'n.', meaning: '牙，齿（复数 teeth）', example: 'We must brush our teeth twice a day.', exampleCn: '我们必须每天刷两次牙。' },
+    { word: 'homebody', phonetic: '/ˈhəʊmbɒdi/', pos: 'n.', meaning: '喜欢待在家里的人', example: 'My brother is a homebody.', exampleCn: '我哥哥是个喜欢待在家里的人。' },
+    { word: 'mutton', phonetic: '/ˈmʌtn/', pos: 'n.', meaning: '羊肉', example: 'Mutton is warm and good for winter.', exampleCn: '羊肉性温，适合冬天吃。' },
+    { word: 'have a sweet tooth', phonetic: '/ˌhæv ə swiːt ˈtuːθ/', pos: 'v.', meaning: '爱吃甜食', example: 'She has a sweet tooth.', exampleCn: '她爱吃甜食。' },
+    { word: 'stay up', phonetic: '/ˌsteɪ ˈʌp/', pos: 'v.', meaning: '熬夜', example: 'Sometimes I stay up late.', exampleCn: '有时我熬夜。' },
+    { word: 'unhealthy', phonetic: '/ʌnˈhelθi/', pos: 'adj.', meaning: '不健康的', example: 'My lifestyle is unhealthy.', exampleCn: '我的生活方式不健康。' },
+    { word: 'less', phonetic: '/les/', pos: 'det. & pron.', meaning: '较少的，更少的', example: 'I plan to eat less sugar.', exampleCn: '我计划少吃糖。' },
+    { word: 'need', phonetic: '/niːd/', pos: 'vt.', meaning: '需要', example: 'I need to get enough sleep.', exampleCn: '我需要充足的睡眠。' },
+    { word: 'enough', phonetic: '/ɪˈnʌf/', pos: 'det. & adv.', meaning: '足够（的）；足够地', example: 'I get enough sleep every night.', exampleCn: '我每晚睡眠充足。' },
+    { word: 'cheese', phonetic: '/tʃiːz/', pos: 'n.', meaning: '奶酪', example: 'I like to put cheese on my sandwiches.', exampleCn: '我喜欢在三明治上放奶酪。' },
+    { word: 'piece', phonetic: '/piːs/', pos: 'n.', meaning: '一块（片）；篇', example: 'I want a piece of cake.', exampleCn: '我想吃一块蛋糕。' },
+    { word: 'bowl', phonetic: '/bəʊl/', pos: 'n.', meaning: '一碗（的量）；碗', example: 'Pass me a bowl, please.', exampleCn: '请递给我一个碗。' },
+    { word: 'salt', phonetic: '/sɔːlt/', pos: 'n.', meaning: '盐', example: 'Don\'t eat too much salt.', exampleCn: '别吃太多盐。' },
+    { word: 'packet', phonetic: '/ˈpækɪt/', pos: 'n.', meaning: '小袋；小包装纸袋', example: 'I bought a packet of chips.', exampleCn: '我买了一小袋薯片。' },
+    { word: 'kilo', phonetic: '/ˈkiːləʊ/', pos: 'n.', meaning: '千克，公斤', example: 'This box of oranges is five kilos.', exampleCn: '这箱橙子五公斤。' },
+    { word: 'carton', phonetic: '/ˈkɑːtn/', pos: 'n.', meaning: '硬纸盒，塑料盒', example: 'There are two cartons of milk in the fridge.', exampleCn: '冰箱里有两盒牛奶。' },
+    { word: 'bottle', phonetic: '/ˈbɒtl/', pos: 'n.', meaning: '一瓶（的量）；瓶子', example: 'Can you buy a bottle of orange juice?', exampleCn: '你能帮我买一瓶橙汁吗？' },
+    { word: 'strawberry', phonetic: '/ˈstrɔːbəri/', pos: 'n.', meaning: '草莓', example: 'Strawberries are my favourite fruit.', exampleCn: '草莓是我最喜欢的水果。' },
+    { word: 'maybe', phonetic: '/ˈmeɪbi/', pos: 'adv.', meaning: '也许，大概', example: 'Maybe he is at home.', exampleCn: '也许他在家。' },
+    { word: 'than', phonetic: '/ðæn/', pos: 'prep. & conj.', meaning: '比', example: 'I am taller than my sister.', exampleCn: '我比我妹妹高。' },
+    { word: 'almost', phonetic: '/ˈɔːlməʊst/', pos: 'adv.', meaning: '几乎', example: 'I do sport almost every day.', exampleCn: '我几乎每天都做运动。' },
+    { word: 'chip', phonetic: '/tʃɪp/', pos: 'n.', meaning: '炸薯条；炸薯片', example: 'We shouldn\'t eat too many chips.', exampleCn: '我们不该吃太多薯条。' },
+    { word: 'smartphone', phonetic: '/ˈsmɑːtfəʊn/', pos: 'n.', meaning: '智能手机', example: 'Many students use smartphones to learn English.', exampleCn: '很多学生用智能手机学英语。' },
+    { word: 'tablet', phonetic: '/ˈtæblət/', pos: 'n.', meaning: '平板电脑', example: 'My teacher asks us to use tablets in class.', exampleCn: '老师让我们在课上用平板电脑。' },
+    { word: 'score', phonetic: '/skɔː(r)/', pos: 'n.', meaning: '分数，成绩；比分', example: 'I got a good score in the exam.', exampleCn: '我考试取得了好成绩。' },
+    { word: 'point', phonetic: '/pɔɪnt/', pos: 'n.', meaning: '得分；要点；观点；地点', example: 'That is a good point.', exampleCn: '那是个好观点。' },
+    { word: 'meal', phonetic: '/miːl/', pos: 'n.', meaning: '一顿饭；一餐所吃的食物', example: 'Breakfast is an important meal.', exampleCn: '早餐是很重要的一餐。' },
+    { word: 'porridge', phonetic: '/ˈpɒrɪdʒ/', pos: 'n.', meaning: '粥，麦片粥', example: 'I have porridge for breakfast.', exampleCn: '我早餐喝粥。' },
+    { word: 'whole', phonetic: '/həʊl/', pos: 'adj.', meaning: '全部的，整个的', example: 'It gives us energy for the whole morning.', exampleCn: '它为我们提供整个上午的能量。' },
+    { word: 'miss', phonetic: '/mɪs/', pos: 'vt.', meaning: '错过', example: 'Don\'t miss breakfast.', exampleCn: '别错过早餐。' },
+    { word: 'rest', phonetic: '/rest/', pos: 'n.', meaning: '休息时间', example: 'We need enough exercise and rest.', exampleCn: '我们需要充足的锻炼和休息。' },
+    { word: 'pie', phonetic: '/paɪ/', pos: 'n.', meaning: '馅饼', example: 'My mom bakes an apple pie.', exampleCn: '我妈妈烤了一个苹果派。' },
+    { word: 'yogurt', phonetic: '/ˈjɒɡət/', pos: 'n.', meaning: '酸奶', example: 'I have a yogurt between meals.', exampleCn: '我在两餐之间喝一个酸奶。' },
+    { word: 'most', phonetic: '/məʊst/', pos: 'det. & adv.', meaning: '大多数；最大，最多', example: 'Most people like fruit.', exampleCn: '大多数人喜欢水果。' }
   ],
   phrases: [
-    { phrase: 'dress up', meaning: '装扮', example: 'Children dress up at Halloween.' },
-    { phrase: 'trick or treat', meaning: '不给糖就捣蛋', example: 'Children say "trick or treat".' },
-    { phrase: 'make lanterns', meaning: '做灯笼', example: 'We make pumpkin lanterns for Halloween.' },
-    { phrase: 'knock on', meaning: '敲（门）', example: 'They knock on people\'s doors.' },
-    { phrase: 'give sb. a treat', meaning: '款待某人', example: 'People give them a treat.' },
-    { phrase: 'play a trick on', meaning: '捉弄某人', example: 'They play a trick on the neighbours.' }
+    { phrase: 'be good for', meaning: '对……有益', example: 'Fish is good for our health.' },
+    { phrase: 'be bad for', meaning: '对……有害', example: 'Too much sugar is bad for our teeth.' },
+    { phrase: 'keep fit / healthy', meaning: '保持健康', example: 'Sport helps me keep fit.' },
+    { phrase: 'stay up late', meaning: '熬夜', example: 'Don\'t stay up late at night.' },
+    { phrase: 'have a sweet tooth', meaning: '爱吃甜食', example: 'She has a sweet tooth.' },
+    { phrase: 'say no to', meaning: '拒绝', example: 'It is hard to say no to cakes.' },
+    { phrase: 'get enough sleep', meaning: '获得足够的睡眠', example: 'I need to get enough sleep.' },
+    { phrase: 'a healthy diet', meaning: '健康的饮食', example: 'I have a healthy diet.' },
+    { phrase: 'be full of energy', meaning: '精力充沛', example: 'I am always full of energy.' },
+    { phrase: 'less than / more than', meaning: '少于 / 多于', example: 'I eat less sugar than before.' }
   ],
   sentences: [
-    { en: 'Halloween is on October 31st.', cn: '万圣节在10月31日。' },
-    { en: 'Children dress up at Halloween.', cn: '孩子们在万圣节装扮自己。' },
-    { en: 'We make pumpkin lanterns.', cn: '我们做南瓜灯。' },
-    { en: 'They knock on doors and shout "trick or treat".', cn: '他们敲门喊"不给糖就捣蛋"。' },
-    { en: 'People give them candy as a treat.', cn: '人们给他们糖果作为款待。' },
-    { en: 'We celebrate the festival every year.', cn: '我们每年庆祝这个节日。' }
+    { en: 'A life without health is like a river without water.', cn: '没有健康的生活就像没有水的河流。' },
+    { en: 'It\'s healthy for us to have milk and eggs often.', cn: '经常喝牛奶和吃鸡蛋对我们来说是健康的。' },
+    { en: 'Fish is good for our health.', cn: '鱼对我们的健康有好处。' },
+    { en: 'I get nine hours of sleep every night, so I am always full of energy.', cn: '我每天晚上睡九个小时，所以总是精力充沛。' },
+    { en: 'Too much sugar is bad for our teeth.', cn: '太多的糖对我们的牙齿有害。' },
+    { en: 'Breakfast gives us energy for the whole morning.', cn: '早餐为我们提供整个上午的能量。' }
   ],
   text: {
-    title: 'Halloween',
+    title: 'Lifestyle: healthy or not?',
+    intro: '两位同学在学校网站上发帖介绍自己的生活方式。读一读，判断哪种生活方式更健康。',
     paragraphs: [
       {
         sentences: [
-          { en: 'Halloween is on October 31st.', cn: '万圣节在10月31日。', keywords: ['Halloween', 'October 31st'] },
-          { en: 'It is a special festival in the West.', cn: '它是西方的一个特别的节日。', keywords: ['special', 'festival'] },
-          { en: 'People celebrate it in many ways.', cn: '人们用很多方式庆祝它。', keywords: ['celebrate'] },
-          { en: 'Children dress up at Halloween.', cn: '孩子们在万圣节装扮自己。', keywords: ['dress up'] },
-          { en: 'They wear special costumes with masks.', cn: '他们穿特别的服装戴面具。', keywords: ['costumes', 'masks'] },
-          { en: 'Sometimes they paint their faces.', cn: '有时他们涂面。', keywords: ['paint their faces'] },
-          { en: 'People make pumpkin lanterns.', cn: '人们做南瓜灯。', keywords: ['pumpkin lanterns'] },
-          { en: 'Children knock on doors and shout "trick or treat".', cn: '孩子们敲门喊"不给糖就捣蛋"。', keywords: ['knock on', 'trick or treat'] },
-          { en: 'If they do not give them a treat, the children play a trick on them.', cn: '如果他们不款待，孩子们就捉弄他们。', keywords: ['play a trick on'] },
-          { en: 'They always have a party on the evening of October 31st.', cn: '他们总是在10月31日晚上开派对。', keywords: ['party'] },
-          { en: 'They eat a lot of special Halloween chocolates and candies.', cn: '他们吃很多特别的万圣节巧克力和糖果。', keywords: ['chocolates', 'candies'] },
-          { en: 'It is a wonderful festival.', cn: '它是一个精彩的节日。', keywords: ['wonderful'] }
+          { en: 'I love dancing. I dance for half an hour every day.', cn: '我喜欢跳舞。我每天跳舞半个小时。', keywords: ['dancing', 'half an hour'] },
+          { en: 'I get nine hours of sleep every night, so I am always full of energy.', cn: '我每天晚上睡九个小时，所以总是精力充沛。', keywords: ['nine hours', 'full of energy'] },
+          { en: 'I also have a healthy diet. It is important for me to keep fit.', cn: '我也有健康的饮食。保持健康对我来说很重要。', keywords: ['healthy diet', 'keep fit'] },
+          { en: 'I never go to school without breakfast. I often have a pancake and some milk.', cn: '我从不不吃早饭上学。我经常吃一个薄饼和一些牛奶。', keywords: ['without breakfast', 'pancake'] },
+          { en: 'For lunch, I like fish, meat and tofu.', cn: '午餐我喜欢鱼、肉和豆腐。', keywords: ['fish, meat and tofu'] },
+          { en: 'I also eat lots of fruit and vegetables every day.', cn: '我每天也吃很多水果和蔬菜。', keywords: ['fruit and vegetables'] },
+          { en: 'I seldom eat cakes or sweets. Too much sugar is bad for our teeth.', cn: '我很少吃蛋糕或糖。太多的糖对我们的牙齿有害。', keywords: ['seldom', 'bad for our teeth'] }
         ]
-      }
-    ]
-  },
-  grammar: {
-    title: '特殊疑问句',
-    points: [
-      {
-        rule: '特殊疑问句以疑问词开头',
-        detail: '常用疑问词：what（什么）, who（谁）, where（哪里）, when（何时）, why（为什么）, how（怎样）, which（哪个）。',
-        examples: ['What is your name?', 'Where do you live?', 'When is your birthday?']
       },
       {
-        rule: 'how引导的特殊疑问句',
-        detail: 'How old...?（多大年纪）, How much...?（多少钱）, How many...?（多少个）, How about...?（...怎么样）。',
-        examples: ['How old are you?', 'How much is the book?', 'How many students are there?']
-      }
-    ]
-  },
-  exams: [
-    {
-      question: '—___ is Halloween? —It\'s on October 31st.',
-      options: ['A. What', 'B. When', 'C. Where', 'D. Who'],
-      answer: 'B',
-      explanation: '提问日期"什么时候"，用疑问词When。'
-    },
-    {
-      question: '—___ do you celebrate the festival? —We have a party.',
-      options: ['A. What', 'B. How', 'C. Where', 'D. When'],
-      answer: 'B',
-      explanation: '提问"如何庆祝"，用疑问词How。'
-    },
-    {
-      question: 'Children knock ___ doors at Halloween.',
-      options: ['A. in', 'B. on', 'C. at', 'D. to'],
-      answer: 'B',
-      explanation: 'knock on the door是固定搭配，表示"敲门"。'
-    },
-    {
-      question: 'She dresses up ___ a ghost.',
-      options: ['A. in', 'B. as', 'C. for', 'D. like'],
-      answer: 'B',
-      explanation: 'dress up as...表示"装扮成..."，固定搭配。'
-    },
-    {
-      question: '—___ pumpkin lanterns do you make? —Five.',
-      options: ['A. How much', 'B. How many', 'C. How old', 'D. How about'],
-      answer: 'B',
-      explanation: 'pumpkin lanterns是可数名词复数，提问数量用How many。'
-    }
-  ]
-},
-
-/* ======================== Unit 6: Food and lifestyle ======================== */
-{
-  unitId: '7a-u6',
-  title: 'Unit 6: Food and lifestyle',
-  topic: '饮食',
-  words: [
-    { word: 'hamburger', phonetic: '/ˈhæmbɜːɡə(r)/', pos: 'n.', meaning: '汉堡包', example: 'I like hamburgers.', exampleCn: '我喜欢汉堡包。' },
-    { word: 'vegetable', phonetic: '/ˈvedʒtəbl/', pos: 'n.', meaning: '蔬菜', example: 'We should eat more vegetables.', exampleCn: '我们应该多吃蔬菜。' },
-    { word: 'carrot', phonetic: '/ˈkærət/', pos: 'n.', meaning: '胡萝卜', example: 'Rabbits like carrots.', exampleCn: '兔子喜欢胡萝卜。' },
-    { word: 'watermelon', phonetic: '/ˈwɔːtəmelən/', pos: 'n.', meaning: '西瓜', example: 'Watermelon is sweet.', exampleCn: '西瓜很甜。' },
-    { word: 'lemon', phonetic: '/ˈlemən/', pos: 'n.', meaning: '柠檬', example: 'Lemons are sour.', exampleCn: '柠檬是酸的。' },
-    { word: 'beef', phonetic: '/biːf/', pos: 'n.', meaning: '牛肉', example: 'I like beef noodles.', exampleCn: '我喜欢牛肉面。' },
-    { word: 'pork', phonetic: '/pɔːk/', pos: 'n.', meaning: '猪肉', example: 'He doesn\'t eat pork.', exampleCn: '他不吃猪肉。' },
-    { word: 'sugar', phonetic: '/ˈʃʊɡə(r)/', pos: 'n.', meaning: '糖', example: 'Don\'t eat too much sugar.', exampleCn: '不要吃太多糖。' },
-    { word: 'health', phonetic: '/helθ/', pos: 'n.', meaning: '健康', example: 'Health is important.', exampleCn: '健康很重要。' },
-    { word: 'fit', phonetic: '/fɪt/', pos: 'adj.', meaning: '健康的', example: 'He is very fit.', exampleCn: '他很健康。' },
-    { word: 'keep', phonetic: '/kiːp/', pos: 'v.', meaning: '保持', example: 'Keep healthy!', exampleCn: '保持健康！' },
-    { word: 'plan', phonetic: '/plæn/', pos: 'n.', meaning: '计划', example: 'I have a diet plan.', exampleCn: '我有一个饮食计划。' },
-    { word: 'lifestyle', phonetic: '/ˈlaɪfstaɪl/', pos: 'n.', meaning: '生活方式', example: 'She has a healthy lifestyle.', exampleCn: '她有健康的生活方式。' },
-    { word: 'exercise', phonetic: '/ˈeksəsaɪz/', pos: 'n.', meaning: '锻炼', example: 'We need to do exercise every day.', exampleCn: '我们每天需要锻炼。' },
-    { word: 'hungry', phonetic: '/ˈhʌŋɡri/', pos: 'adj.', meaning: '饥饿的', example: 'I am very hungry.', exampleCn: '我很饿。' },
-    { word: 'change', phonetic: '/tʃeɪndʒ/', pos: 'v.', meaning: '改变', example: 'I want to change my lifestyle.', exampleCn: '我想改变我的生活方式。' },
-    { word: 'fruit', phonetic: '/fruːt/', pos: 'n.', meaning: '水果', example: 'I eat fruit every day.', exampleCn: '我每天吃水果。' },
-    { word: 'milk', phonetic: '/mɪlk/', pos: 'n.', meaning: '牛奶', example: 'I drink milk every morning.', exampleCn: '我每天早上喝牛奶。' },
-    { word: 'meal', phonetic: '/miːl/', pos: 'n.', meaning: '一餐', example: 'We have three meals a day.', exampleCn: '我们一天吃三顿饭。' },
-    { word: 'sweet', phonetic: '/swiːt/', pos: 'adj.', meaning: '甜的', example: 'The cake is sweet.', exampleCn: '蛋糕很甜。' }
-  ],
-  phrases: [
-    { phrase: 'keep healthy', meaning: '保持健康', example: 'We should keep healthy.' },
-    { phrase: 'be good for', meaning: '对...有好处', example: 'Milk is good for you.' },
-    { phrase: 'be bad for', meaning: '对...有坏处', example: 'Too much sugar is bad for your teeth.' },
-    { phrase: 'a lot of', meaning: '许多', example: 'She eats a lot of fruit.' },
-    { phrase: 'do exercise', meaning: '做锻炼', example: 'You need to do exercise every day.' },
-    { phrase: 'change one\'s lifestyle', meaning: '改变生活方式', example: 'He changes his lifestyle.' }
-  ],
-  sentences: [
-    { en: 'An apple a day keeps the doctor away.', cn: '一天一苹果，医生远离我。' },
-    { en: 'She has a healthy lifestyle.', cn: '她有健康的生活方式。' },
-    { en: 'Vegetables are good for us.', cn: '蔬菜对我们有好处。' },
-    { en: 'I need to change my diet.', cn: '我需要改变我的饮食。' },
-    { en: 'Too much sugar is bad for your health.', cn: '太多糖对你的健康有害。' },
-    { en: 'He does exercise every morning.', cn: '他每天早上锻炼。' }
-  ],
-  text: {
-    title: 'Kitty\'s and Daniel\'s lifestyles',
-    paragraphs: [
-      {
         sentences: [
-          { en: 'Kitty is a 12-year-old girl.', cn: '基蒂是一个12岁的女孩。', keywords: ['12-year-old'] },
-          { en: 'She wants to be a dancer.', cn: '她想成为一名舞者。', keywords: ['dancer'] },
-          { en: 'She dances for two hours every day.', cn: '她每天跳舞两小时。', keywords: ['two hours'] },
-          { en: 'She thinks she needs lots of energy to dance.', cn: '她认为跳舞需要很多能量。', keywords: ['energy'] },
-          { en: 'It is important for a dancer to be healthy.', cn: '对舞者来说健康很重要。', keywords: ['important', 'healthy'] },
-          { en: 'She seldom eats sweet snacks.', cn: '她很少吃甜食。', keywords: ['seldom', 'sweet snacks'] },
-          { en: 'She always has an apple, a banana for breakfast.', cn: '她早餐总吃一个苹果、一根香蕉。', keywords: ['breakfast'] },
-          { en: 'She usually has meat and vegetables for dinner.', cn: '她晚饭通常吃肉和蔬菜。', keywords: ['meat', 'vegetables'] },
-          { en: 'Daniel is a 12-year-old boy.', cn: '丹尼尔是一个12岁的男孩。', keywords: ['12-year-old'] },
-          { en: 'He likes studying and he is a top student.', cn: '他喜欢学习，是一名优等生。', keywords: ['top student'] },
-          { en: 'But he does not have a healthy diet.', cn: '但他没有健康的饮食。', keywords: ['healthy diet'] },
-          { en: 'He loves hamburgers and cola.', cn: '他喜欢汉堡包和可乐。', keywords: ['hamburgers', 'cola'] },
-          { en: 'He plans to change his lifestyle now.', cn: '他现在计划改变生活方式。', keywords: ['plans', 'change'] },
-          { en: 'He plans to eat more fruit and vegetables.', cn: '他计划多吃水果和蔬菜。', keywords: ['more fruit', 'vegetables'] },
-          { en: 'He plans to go swimming every week.', cn: '他计划每周去游泳。', keywords: ['go swimming'] }
+          { en: 'I am a homebody. I don\'t exercise very often.', cn: '我是个喜欢待在家里的人。我不常锻炼。', keywords: ['homebody', 'exercise'] },
+          { en: 'I love beef and mutton, but I don\'t eat a lot of vegetables.', cn: '我喜欢牛肉和羊肉，但我不怎么吃蔬菜。', keywords: ['beef and mutton', 'vegetables'] },
+          { en: 'I have a sweet tooth and it is hard for me to say no to cakes.', cn: '我爱吃甜食，很难对蛋糕说不。', keywords: ['sweet tooth', 'say no to'] },
+          { en: 'Sometimes I stay up late.', cn: '有时我熬夜。', keywords: ['stay up late'] },
+          { en: 'My lifestyle is unhealthy. I want to change it.', cn: '我的生活方式不健康。我想改变它。', keywords: ['unhealthy', 'change'] },
+          { en: 'I plan to eat more fruit and vegetables and less sugar.', cn: '我计划多吃水果和蔬菜，少吃糖。', keywords: ['more fruit', 'less sugar'] },
+          { en: 'I need to get enough sleep. Sport is good for my health too.', cn: '我需要充足的睡眠。运动对我的健康也有好处。', keywords: ['enough sleep', 'good for'] },
+          { en: 'I plan to go swimming every week.', cn: '我计划每周去游泳。', keywords: ['go swimming'] }
         ]
       }
+    ],
+    questions: [
+      { q: 'How much sleep does the healthy student get every night?', a: 'The healthy student gets nine hours of sleep every night.' },
+      { q: 'Why does the healthy student seldom eat cakes or sweets?', a: 'Because too much sugar is bad for our teeth.' },
+      { q: 'What does the homebody plan to do to become healthier?', a: 'He plans to eat more fruit and vegetables, eat less sugar, get enough sleep and go swimming every week.' }
     ]
   },
   grammar: {
     title: '可数名词与不可数名词',
     points: [
       {
-        rule: '可数名词有单复数形式',
-        detail: '可数名词可以用数字计数，有单数和复数形式。如：an apple → two apples, a banana → three bananas。',
-        examples: ['I have two apples.', 'There are five carrots.', 'She eats three bananas.']
+        rule: '可数名词的单复数',
+        detail: '可数名词有单复数。单数前加 a/an；复数有规则变化（book→books、tomato→tomatoes）和不规则变化（tooth→teeth、child→children）。',
+        examples: ['a carrot → two carrots', 'a tomato → two tomatoes', 'a tooth → two teeth']
       },
       {
-        rule: '不可数名词没有复数形式',
-        detail: '不可数名词不能直接用数字计数，没有复数形式。如：milk, water, sugar, rice, beef, pork, bread。表示数量时用 a glass of, a piece of 等。',
-        examples: ['I drink a glass of milk.', 'There is some sugar.', 'I need two pieces of bread.']
+        rule: '不可数名词',
+        detail: '不可数名词没有复数，如 milk、rice、sugar、salt。表示数量时用“数词 + 量词 + of + 不可数名词”。',
+        examples: ['a glass of water', 'a bowl of soup', 'two bags of rice', 'three cartons of milk']
       }
     ]
   },
   exams: [
     {
-      question: 'I would like ___ apple and ___ milk.',
-      options: ['A. a; a', 'B. an; a', 'C. an; /', 'D. a; /'],
-      answer: 'C',
-      explanation: 'apple是元音开头用an；milk是不可数名词，不加冠词。'
-    },
-    {
-      question: 'There ___ some water in the glass.',
-      options: ['A. is', 'B. are', 'C. have', 'D. has'],
+      question: 'There ___ some milk in the glass.',
+      options: ['A. is', 'B. are', 'C. am', 'D. be'],
       answer: 'A',
-      explanation: 'water是不可数名词，be动词用is。'
+      explanation: 'milk 是不可数名词，be 动词用 is。'
     },
     {
-      question: 'Too much sugar is bad ___ your health.',
+      question: 'We should brush our ___ twice a day.',
+      options: ['A. tooth', 'B. tooths', 'C. teeth', 'D. teethes'],
+      answer: 'C',
+      explanation: 'tooth 的复数是不规则变化 teeth。'
+    },
+    {
+      question: 'A life without health is like a river ___ water.',
+      options: ['A. in', 'B. with', 'C. without', 'D. at'],
+      answer: 'C',
+      explanation: 'without 表示“没有”。'
+    },
+    {
+      question: 'Too much sugar is bad ___ our teeth.',
       options: ['A. for', 'B. at', 'C. in', 'D. on'],
       answer: 'A',
-      explanation: 'be bad for...表示"对...有害"，固定搭配。'
-    },
-    {
-      question: 'She wants to keep ___.',
-      options: ['A. health', 'B. healthy', 'C. healthily', 'D. healthier'],
-      answer: 'B',
-      explanation: 'keep后面接形容词，表示"保持某种状态"，用healthy。'
-    },
-    {
-      question: 'I usually have ___ for breakfast.',
-      options: ['A. two bread', 'B. two breads', 'C. two pieces of bread', 'D. two piece of bread'],
-      answer: 'C',
-      explanation: 'bread是不可数名词，表示数量用two pieces of bread。'
+      explanation: 'be bad for 是固定搭配，意为“对……有害”。'
     }
   ]
 },
 
-/* ======================== Unit 7: Shopping ======================== */
+/* ======================== Unit 6: My clothes, my style ======================== */
+{
+  unitId: '7a-u6',
+  title: 'Unit 6: My clothes, my style',
+  topic: '我的衣服，我的风格',
+  words: [
+    { word: 'clothes', phonetic: '/kləʊðz/', pos: 'n.', meaning: '衣服（复数）', example: 'I bought some new clothes for the summer.', exampleCn: '我为夏天买了一些新衣服。' },
+    { word: 'style', phonetic: '/staɪl/', pos: 'n.', meaning: '样式；方式，作风', example: 'Her style is very modern.', exampleCn: '她的风格非常现代。' },
+    { word: 'blouse', phonetic: '/blaʊz/', pos: 'n.', meaning: '女士衬衫', example: 'She is wearing a white blouse.', exampleCn: '她穿着一件白色女士衬衫。' },
+    { word: 'shirt', phonetic: '/ʃɜːt/', pos: 'n.', meaning: '（男士）衬衫', example: 'A blue tie goes well with your shirt.', exampleCn: '一条蓝色领带和你的衬衫很配。' },
+    { word: 'jacket', phonetic: '/ˈdʒækɪt/', pos: 'n.', meaning: '夹克衫', example: 'He wore a leather jacket.', exampleCn: '他穿着一件皮夹克。' },
+    { word: 'jeans', phonetic: '/dʒiːnz/', pos: 'n.', meaning: '牛仔裤', example: 'These jeans are comfortable.', exampleCn: '这些牛仔裤很舒服。' },
+    { word: 'trousers', phonetic: '/ˈtraʊzəz/', pos: 'n.', meaning: '裤子', example: 'I need to buy a pair of trousers.', exampleCn: '我需要买一条裤子。' },
+    { word: 'shorts', phonetic: '/ʃɔːts/', pos: 'n.', meaning: '短裤', example: 'He wears shorts in summer.', exampleCn: '他夏天穿短裤。' },
+    { word: 'scarf', phonetic: '/skɑːf/', pos: 'n.', meaning: '围巾（复数 scarfs/scarves）', example: 'She wears a red scarf.', exampleCn: '她围着一条红围巾。' },
+    { word: 'tie', phonetic: '/taɪ/', pos: 'n.', meaning: '领带', example: 'He wears a tie to work.', exampleCn: '他戴领带上班。' },
+    { word: 'T-shirt', phonetic: '/ˈtiːʃɜːt/', pos: 'n.', meaning: 'T恤衫', example: 'I like to wear a T-shirt in summer.', exampleCn: '我夏天喜欢穿T恤。' },
+    { word: 'calm', phonetic: '/kɑːm/', pos: 'adj.', meaning: '镇静的，沉着的', example: 'Blue makes me feel calm.', exampleCn: '蓝色让我感到平静。' },
+    { word: 'fashion', phonetic: '/ˈfæʃn/', pos: 'n.', meaning: '时装业；流行', example: 'She is interested in the latest fashion.', exampleCn: '她对最新时尚感兴趣。' },
+    { word: 'choose', phonetic: '/tʃuːz/', pos: 'v.', meaning: '选择（chose, chosen）', example: 'I want to choose a new pair of shoes.', exampleCn: '我想选一双新鞋子。' },
+    { word: 'could', phonetic: '/kʊd/', pos: 'modal v.', meaning: '（礼貌地请求）能，可以', example: 'Could you give us some advice?', exampleCn: '你能给我们一些建议吗？' },
+    { word: 'advice', phonetic: '/ədˈvaɪs/', pos: 'n.', meaning: '建议（不可数）', example: 'Thanks for your advice.', exampleCn: '谢谢你的建议。' },
+    { word: 'depend', phonetic: '/dɪˈpend/', pos: 'v.', meaning: '取决于，依靠', example: 'Our success depends on hard work.', exampleCn: '我们的成功取决于努力。' },
+    { word: 'depend on', phonetic: '/dɪˈpend ɒn/', pos: 'v.', meaning: '取决于；依靠', example: 'It depends on the colour of our skin.', exampleCn: '这取决于我们的肤色。' },
+    { word: 'skin', phonetic: '/skɪn/', pos: 'n.', meaning: '皮肤', example: 'The colour of our skin is different.', exampleCn: '我们的肤色不同。' },
+    { word: 'such as', phonetic: '/ˈsʌtʃ əz/', pos: 'prep.', meaning: '例如；诸如', example: 'Some fruits, such as apples and bananas, are common.', exampleCn: '一些水果，比如苹果和香蕉，很常见。' },
+    { word: 'purple', phonetic: '/ˈpɜːpl/', pos: 'n. & adj.', meaning: '紫色（的）', example: 'Purple is a cool colour.', exampleCn: '紫色是一种冷色。' },
+    { word: 'similar', phonetic: '/ˈsɪmələ(r)/', pos: 'adj.', meaning: '相似的', example: 'My dress is similar to yours.', exampleCn: '我的连衣裙和你的相似。' },
+    { word: 'example', phonetic: '/ɪɡˈzɑːmpl/', pos: 'n.', meaning: '例子，榜样', example: 'Give me an example, please.', exampleCn: '请给我举个例子。' },
+    { word: 'for example', phonetic: '/fər ɪɡˈzɑːmpl/', pos: 'adv.', meaning: '例如', example: 'For example, Tom likes basketball.', exampleCn: '例如，汤姆喜欢篮球。' },
+    { word: 'dark', phonetic: '/dɑːk/', pos: 'adj.', meaning: '深色的；黑暗的', example: 'Wear dark blue jeans with a light blue blouse.', exampleCn: '穿深蓝色牛仔裤搭配浅蓝色衬衫。' },
+    { word: 'mix', phonetic: '/mɪks/', pos: 'v. & n.', meaning: '混合', example: 'Can we mix warm and cool colours?', exampleCn: '我们能混合暖色和冷色吗？' },
+    { word: 'stand out', phonetic: '/ˌstænd ˈaʊt/', pos: 'v.', meaning: '突出，显眼', example: 'Warm and cool colours make each other stand out.', exampleCn: '暖色和冷色互相衬托。' },
+    { word: 'match', phonetic: '/mætʃ/', pos: 'v.', meaning: '般配，相配', example: 'The tie matches your shirt.', exampleCn: '这条领带和你的衬衫很配。' },
+    { word: 'suitable', phonetic: '/ˈsuːtəbl/', pos: 'adj.', meaning: '适合的，适宜的', example: 'This coat is suitable for winter.', exampleCn: '这件外套适合冬天穿。' },
+    { word: 'formal', phonetic: '/ˈfɔːml/', pos: 'adj.', meaning: '适合正式场合的，庄重的', example: 'You need to wear formal clothes for the meeting.', exampleCn: '你需要穿正式服装参加会议。' },
+    { word: 'suit', phonetic: '/suːt/', pos: 'n.', meaning: '套装，西服', example: 'He wears a suit to the interview.', exampleCn: '他穿西装去面试。' },
+    { word: 'casual', phonetic: '/ˈkæʒuəl/', pos: 'adj.', meaning: '非正式的，随便的', example: 'We dress casually on weekends.', exampleCn: '我们周末穿着休闲。' },
+    { word: 'comfortable', phonetic: '/ˈkʌmftəbl/', pos: 'adj.', meaning: '舒适的', example: 'These shoes are very comfortable.', exampleCn: '这双鞋很舒适。' },
+    { word: 'interview', phonetic: '/ˈɪntəvjuː/', pos: 'n.', meaning: '采访，访谈；面试', example: 'Here is the interview script.', exampleCn: '下面是采访稿。' },
+    { word: 'primary', phonetic: '/ˈpraɪməri/', pos: 'adj.', meaning: '初等教育的，小学的', example: 'She is a primary school student.', exampleCn: '她是一名小学生。' },
+    { word: 'smart', phonetic: '/smɑːt/', pos: 'adj.', meaning: '衣冠楚楚的，衣着讲究的', example: 'He looks smart in the suit.', exampleCn: '他穿西装看起来很精神。' },
+    { word: 'traditional', phonetic: '/trəˈdɪʃənl/', pos: 'adj.', meaning: '传统的', example: 'The qipao is a traditional dress.', exampleCn: '旗袍是一种传统服装。' },
+    { word: 'popular', phonetic: '/ˈpɒpjələ(r)/', pos: 'adj.', meaning: '广受欢迎的，流行的', example: 'Hanfu is very popular now.', exampleCn: '汉服现在很受欢迎。' },
+    { word: 'type', phonetic: '/taɪp/', pos: 'n.', meaning: '类型，种类', example: 'There are many types of clothes.', exampleCn: '有很多种衣服。' },
+    { word: 'festival', phonetic: '/ˈfestɪvl/', pos: 'n.', meaning: '节日', example: 'People wear traditional clothes at festivals.', exampleCn: '人们在节日穿传统服装。' },
+    { word: 'wedding', phonetic: '/ˈwedɪŋ/', pos: 'n.', meaning: '婚礼', example: 'She wore a beautiful dress at the wedding.', exampleCn: '她在婚礼上穿了一件漂亮的连衣裙。' },
+    { word: 'culture', phonetic: '/ˈkʌltʃə(r)/', pos: 'n.', meaning: '文化', example: 'Clothes show the culture behind them.', exampleCn: '衣服展现了其背后的文化。' },
+    { word: 'history', phonetic: '/ˈhɪstrɪ/', pos: 'n.', meaning: '历史', example: 'China has a long history.', exampleCn: '中国历史悠久。' },
+    { word: 'loose', phonetic: '/luːs/', pos: 'adj.', meaning: '宽松的', example: 'Hanfu is usually loose and comfortable.', exampleCn: '汉服通常宽松舒适。' },
+    { word: 'belt', phonetic: '/belt/', pos: 'n.', meaning: '腰带，皮带', example: 'He wears a black belt.', exampleCn: '他系着一条黑腰带。' },
+    { word: 'close-fitting', phonetic: '/ˌkləʊs ˈfɪtɪŋ/', pos: 'adj.', meaning: '紧身的', example: 'The close-fitting dress is beautiful.', exampleCn: '这条紧身连衣裙很漂亮。' },
+    { word: 'be made of', phonetic: '/biː meɪd əv/', pos: 'v.', meaning: '由……制成', example: 'The qipao is made of silk.', exampleCn: '旗袍由丝绸制成。' },
+    { word: 'silk', phonetic: '/sɪlk/', pos: 'n.', meaning: '丝绸', example: 'Silk feels smooth and soft.', exampleCn: '丝绸摸起来顺滑柔软。' },
+    { word: 'feel', phonetic: '/fiːl/', pos: 'linking v.', meaning: '摸起来感觉……，手感像……', example: 'The cloth feels soft.', exampleCn: '这块布摸起来很柔软。' },
+    { word: 'smooth', phonetic: '/smuːð/', pos: 'adj.', meaning: '光滑的', example: 'The silk feels smooth.', exampleCn: '丝绸摸起来光滑。' },
+    { word: 'soft', phonetic: '/sɒft/', pos: 'adj.', meaning: '软的，柔软的', example: 'Cotton clothes are soft.', exampleCn: '棉布衣服很柔软。' },
+    { word: 'cotton', phonetic: '/ˈkɒtn/', pos: 'n.', meaning: '棉织物，棉花', example: 'This T-shirt is made of cotton.', exampleCn: '这件T恤是棉的。' },
+    { word: 'agree', phonetic: '/əˈɡriː/', pos: 'v.', meaning: '同意', example: 'I agree with you.', exampleCn: '我同意你的看法。' },
+    { word: 'feature', phonetic: '/ˈfiːtʃə(r)/', pos: 'n.', meaning: '特点，特色', example: 'Every type of clothes has its features.', exampleCn: '每种衣服都有它的特点。' },
+    { word: 'material', phonetic: '/məˈtɪəriəl/', pos: 'n.', meaning: '材料，原料', example: 'The pants are made of natural materials.', exampleCn: '这条裤子由天然材料制成。' },
+    { word: 'leather', phonetic: '/ˈleðə(r)/', pos: 'n.', meaning: '皮革', example: 'The shoes are made of leather.', exampleCn: '这双鞋是皮革做的。' },
+    { word: 'size', phonetic: '/saɪz/', pos: 'n.', meaning: '尺寸', example: 'What size do you wear?', exampleCn: '你穿多大号的？' }
+  ],
+  phrases: [
+    { phrase: 'depend on', meaning: '取决于；依靠', example: 'It depends on the colour of our skin.' },
+    { phrase: 'such as', meaning: '例如', example: 'Cool colours, such as green, blue and purple.' },
+    { phrase: 'for example', meaning: '例如', example: 'For example, wear dark blue jeans with a light blue blouse.' },
+    { phrase: 'stand out', meaning: '突出，显眼', example: 'Warm and cool colours make each other stand out.' },
+    { phrase: 'go well with', meaning: '与……很相配', example: 'A blue tie goes well with your shirt.' },
+    { phrase: 'be made of', meaning: '由……制成', example: 'The qipao is made of silk.' },
+    { phrase: 'in fashion', meaning: '流行的', example: 'This style is in fashion.' },
+    { phrase: 'out of fashion', meaning: '过时的', example: 'That dress is out of fashion.' },
+    { phrase: 'be similar to', meaning: '与……相似', example: 'My dress is similar to yours.' },
+    { phrase: 'a piece of advice', meaning: '一条建议', example: 'Could you give me a piece of advice?' }
+  ],
+  sentences: [
+    { en: 'My clothes show my style.', cn: '我的衣服展现我的风格。' },
+    { en: 'It depends on the colour of our skin.', cn: '这取决于我们的肤色。' },
+    { en: 'Some people look good in warm colours, like yellow, red and orange.', cn: '有些人穿暖色好看，比如黄色、红色和橙色。' },
+    { en: 'Warm and cool colours make each other stand out.', cn: '暖色和冷色互相衬托。' },
+    { en: 'Black, white and grey go well with any colour.', cn: '黑色、白色和灰色与任何颜色都相配。' },
+    { en: 'The qipao is usually made of silk and feels smooth and soft.', cn: '旗袍通常由丝绸制成，摸起来顺滑柔软。' }
+  ],
+  text: {
+    title: 'Choosing the right colour',
+    intro: '阳光中学邀请时装设计师李女士来指导学生如何选择合适的服装颜色。下面是采访稿。',
+    paragraphs: [
+      {
+        sentences: [
+          { en: 'Good morning, Ms Li. May I ask you some questions about colours in fashion?', cn: '早上好，李女士。我可以问你一些关于时尚色彩方面的问题吗？', keywords: ['colours in fashion'] },
+          { en: 'Sure.', cn: '当然可以。', keywords: ['Sure'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'How can we choose the right colours to wear? Could you give us some advice?', cn: '我们如何选择合适的颜色来穿搭呢？你能给我们一些建议吗？', keywords: ['choose the right colours', 'advice'] },
+          { en: 'Well, it depends on the colour of our skin. Some people look good in warm colours, like yellow, red and orange, but other people look nice in cool colours, such as green, blue and purple.', cn: '嗯，这取决于我们的肤色。有些人穿暖色好看，比如黄色、红色和橙色，但另一些人穿冷色好看，比如绿色、蓝色和紫色。', keywords: ['depends on', 'warm colours', 'cool colours'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'Which colours go well together?', cn: '哪些颜色搭配协调？', keywords: ['go well together'] },
+          { en: 'Try to pick similar colours. For example, wear dark blue jeans with a light blue blouse or T-shirt.', cn: '尽量选相似的颜色。比如，穿深蓝色牛仔裤搭配浅蓝色衬衫或T恤。', keywords: ['similar colours', 'dark blue', 'light blue'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'OK, but can we mix warm and cool colours?', cn: '好的，但是我们能把暖色和冷色搭配在一起吗？', keywords: ['mix warm and cool'] },
+          { en: 'Yes. In fact, warm and cool colours make each other stand out, such as green and yellow or orange and blue. But don\'t wear more than three colours.', cn: '可以。事实上，暖色和冷色可以相互衬托，比如黄色配绿色，或橙色配蓝色。但是一次不要穿超过三种颜色。', keywords: ['stand out', 'three colours'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'What colours match all?', cn: '什么颜色百搭？', keywords: ['match all'] },
+          { en: 'Black, white and grey go well with any colour. They\'re suitable for both formal suits and casual clothes.', cn: '黑色、白色和灰色与任何颜色都相配。它们既适合正装也适合休闲装。', keywords: ['suitable', 'formal', 'casual'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'Thanks for your advice, Ms Li.', cn: '谢谢您的建议，李女士。', keywords: ['Thanks for your advice'] }
+        ]
+      }
+    ],
+    questions: [
+      { q: 'What does choosing the right colour depend on?', a: 'It depends on the colour of our skin.' },
+      { q: 'Which colours are warm colours and which are cool colours?', a: 'Warm colours are like yellow, red and orange. Cool colours are like green, blue and purple.' },
+      { q: 'What colours go well with any colour?', a: 'Black, white and grey go well with any colour.' },
+      { q: 'How many colours should we wear at most?', a: 'We shouldn\'t wear more than three colours.' }
+    ]
+  },
+  grammar: {
+    title: '疑问句（一般疑问句、特殊疑问句、选择疑问句）',
+    points: [
+      {
+        rule: '一般疑问句（yes-no questions）',
+        detail: '用 yes 或 no 回答的疑问句，把 be / do / can 提到主语前。例如：Is Ms Li a teacher? No, she isn\'t.',
+        examples: ['Do you like this shirt?', 'Is your favourite colour yellow?', 'Can you help me?']
+      },
+      {
+        rule: '特殊疑问句（wh-questions）',
+        detail: '以疑问词 who / what / which / when / where / why / how 开头，需要更多信息来回答。',
+        examples: ['What colours do you like?', 'Where does the show take place?', 'How can we choose the right colours?']
+      },
+      {
+        rule: '选择疑问句（questions with or）',
+        detail: '用 or 给出两个或更多选择，不能用 yes/no 回答。',
+        examples: ['Is your favourite colour a warm colour or a cool colour?', 'Do you like jeans or trousers?']
+      }
+    ]
+  },
+  exams: [
+    {
+      question: '—___ you like this T-shirt? —Yes, I do.',
+      options: ['A. Do', 'B. Are', 'C. Is', 'D. Does'],
+      answer: 'A',
+      explanation: '实义动词 like 的一般疑问句用助动词 do。'
+    },
+    {
+      question: 'It depends ___ the colour of our skin.',
+      options: ['A. in', 'B. on', 'C. at', 'D. for'],
+      answer: 'B',
+      explanation: 'depend on 是固定搭配，意为“取决于”。'
+    },
+    {
+      question: 'Could you give me some ___?',
+      options: ['A. advices', 'B. advice', 'C. an advice', 'D. advises'],
+      answer: 'B',
+      explanation: 'advice 是不可数名词，没有复数形式。'
+    },
+    {
+      question: 'Warm colours make cool colours ___.',
+      options: ['A. stand out', 'B. stand up', 'C. stand for', 'D. stand by'],
+      answer: 'A',
+      explanation: 'stand out 意为“突出，显眼”。'
+    }
+  ]
+},
+
+/* ======================== Unit 7: Be wise with money ======================== */
 {
   unitId: '7a-u7',
-  title: 'Unit 7: Shopping',
-  topic: '购物',
+  title: 'Unit 7: Be wise with money',
+  topic: '明智理财',
   words: [
-    { word: 'shop', phonetic: '/ʃɒp/', pos: 'n.', meaning: '商店', example: 'There is a shop near my home.', exampleCn: '我家附近有一家商店。' },
-    { word: 'gift', phonetic: '/ɡɪft/', pos: 'n.', meaning: '礼物', example: 'I buy a gift for my mother.', exampleCn: '我给妈妈买了一份礼物。' },
-    { word: 'money', phonetic: '/ˈmʌni/', pos: 'n.', meaning: '钱', example: 'I don\'t have enough money.', exampleCn: '我的钱不够。' },
-    { word: 'cost', phonetic: '/kɒst/', pos: 'v.', meaning: '花费', example: 'The book costs 20 yuan.', exampleCn: '这本书花费20元。' },
-    { word: 'price', phonetic: '/praɪs/', pos: 'n.', meaning: '价格', example: 'What is the price of this?', exampleCn: '这个多少钱？' },
-    { word: 'T-shirt', phonetic: '/ˈtiːʃɜːt/', pos: 'n.', meaning: 'T恤衫', example: 'This T-shirt is nice.', exampleCn: '这件T恤很好看。' },
-    { word: 'cheap', phonetic: '/tʃiːp/', pos: 'adj.', meaning: '便宜的', example: 'The shoes are cheap.', exampleCn: '这双鞋很便宜。' },
-    { word: 'expensive', phonetic: '/ɪkˈspensɪv/', pos: 'adj.', meaning: '昂贵的', example: 'The watch is expensive.', exampleCn: '这块手表很贵。' },
-    { word: 'match', phonetic: '/mætʃ/', pos: 'v.', meaning: '搭配', example: 'The tie matches your shirt.', exampleCn: '这条领带和你的衬衫很配。' },
-    { word: 'pretty', phonetic: '/ˈprɪti/', pos: 'adj.', meaning: '漂亮的', example: 'The dress is pretty.', exampleCn: '这条裙子很漂亮。' },
-    { word: 'enough', phonetic: '/ɪˈnʌf/', pos: 'adj.', meaning: '足够的', example: 'I have enough money.', exampleCn: '我有足够的钱。' },
-    { word: 'change', phonetic: '/tʃeɪndʒ/', pos: 'n.', meaning: '零钱', example: 'Here is your change.', exampleCn: '这是你的零钱。' },
-    { word: 'wallet', phonetic: '/ˈwɒlɪt/', pos: 'n.', meaning: '钱包', example: 'I lost my wallet.', exampleCn: '我丢了钱包。' },
-    { word: 'carry', phonetic: '/ˈkæri/', pos: 'v.', meaning: '携带', example: 'Let me carry the bags.', exampleCn: '让我来拿袋子。' },
-    { word: 'note', phonetic: '/nəʊt/', pos: 'n.', meaning: '纸币', example: 'I have a 100-yuan note.', exampleCn: '我有一张100元的纸币。' },
-    { word: 'size', phonetic: '/saɪz/', pos: 'n.', meaning: '尺码', example: 'What size do you wear?', exampleCn: '你穿什么尺码？' },
-    { word: 'blouse', phonetic: '/blaʊz/', pos: 'n.', meaning: '女衬衫', example: 'The blouse is beautiful.', exampleCn: '这件女衬衫很漂亮。' },
-    { word: 'skirt', phonetic: '/skɜːt/', pos: 'n.', meaning: '裙子', example: 'She wears a skirt today.', exampleCn: '她今天穿了裙子。' },
-    { word: 'pair', phonetic: '/peə(r)/', pos: 'n.', meaning: '一双', example: 'I want a pair of shoes.', exampleCn: '我想要一双鞋。' }
+    { word: 'wise', phonetic: '/waɪz/', pos: 'adj.', meaning: '明智的', example: 'It\'s wise to save some money for the future.', exampleCn: '为未来存些钱是明智的。' },
+    { word: 'yuan', phonetic: '/juˈɑːn/', pos: 'n.', meaning: '元（中国货币单位）', example: 'This book costs twenty yuan.', exampleCn: '这本书二十元。' },
+    { word: 'euro', phonetic: '/ˈjʊərəʊ/', pos: 'n.', meaning: '欧元', example: 'They use euros in Europe.', exampleCn: '欧洲使用欧元。' },
+    { word: 'pound', phonetic: '/paʊnd/', pos: 'n.', meaning: '英镑', example: 'A pound is British money.', exampleCn: '英镑是英国的货币。' },
+    { word: 'yen', phonetic: '/jen/', pos: 'n.', meaning: '日元', example: 'The yen is Japanese money.', exampleCn: '日元是日本的货币。' },
+    { word: 'rouble', phonetic: '/ˈruːbl/', pos: 'n.', meaning: '卢布（俄罗斯货币）', example: 'The rouble is Russian money.', exampleCn: '卢布是俄罗斯的货币。' },
+    { word: 'dollar', phonetic: '/ˈdɒlə(r)/', pos: 'n.', meaning: '元（美元等货币单位）', example: 'The dollar is American money.', exampleCn: '美元是美国的货币。' },
+    { word: 'lucky', phonetic: '/ˈlʌki/', pos: 'adj.', meaning: '幸运的', example: 'You are a lucky boy.', exampleCn: '你是个幸运的男孩。' },
+    { word: 'key', phonetic: '/kiː/', pos: 'n.', meaning: '钥匙', example: 'I lost my key.', exampleCn: '我丢了钥匙。' },
+    { word: 'ring', phonetic: '/rɪŋ/', pos: 'n.', meaning: '环状物，圈形的东西', example: 'She has a beautiful ring.', exampleCn: '她有一枚漂亮的戒指。' },
+    { word: 'baseball', phonetic: '/ˈbeɪsbɔːl/', pos: 'n.', meaning: '棒球', example: 'He likes playing baseball.', exampleCn: '他喜欢打棒球。' },
+    { word: 'Russian', phonetic: '/ˈrʌʃn/', pos: 'adj.', meaning: '俄罗斯（人）的，俄语的', example: 'This is a Russian book.', exampleCn: '这是一本俄语书。' },
+    { word: 'set', phonetic: '/set/', pos: 'n.', meaning: '一套，一副，一组', example: 'I bought a set of keys.', exampleCn: '我买了一套钥匙。' },
+    { word: 'a set of', phonetic: '/ə set əv/', pos: 'n.', meaning: '一套，一副', example: 'A set of keys is on the desk.', exampleCn: '一套钥匙在桌子上。' },
+    { word: 'inside', phonetic: '/ˌɪnˈsaɪd/', pos: 'prep.', meaning: '在……里面', example: 'There is a surprise inside the box.', exampleCn: '盒子里有个惊喜。' },
+    { word: 'another', phonetic: '/əˈnʌðə(r)/', pos: 'pron. & det.', meaning: '另一个，又一', example: 'I want another apple.', exampleCn: '我想要另一个苹果。' },
+    { word: 'colourful', phonetic: '/ˈkʌləfl/', pos: 'adj.', meaning: '多彩的', example: 'The flowers are colourful.', exampleCn: '这些花五彩缤纷。' },
+    { word: 'surprise', phonetic: '/səˈpraɪz/', pos: 'n.', meaning: '令人惊奇的事情（或消息）', example: 'What a nice surprise!', exampleCn: '真是个惊喜！' },
+    { word: 'player', phonetic: '/ˈpleɪə(r)/', pos: 'n.', meaning: '运动员', example: 'He is a basketball player.', exampleCn: '他是一名篮球运动员。' },
+    { word: 'protect', phonetic: '/prəˈtekt/', pos: 'vt.', meaning: '保护，防护', example: 'We should protect our eyes.', exampleCn: '我们应该保护眼睛。' },
+    { word: 'mall', phonetic: '/mɔːl/', pos: 'n.', meaning: '购物商场', example: 'There\'s a new mall across the street.', exampleCn: '街对面有个新商场。' },
+    { word: 'across', phonetic: '/əˈkrɒs/', pos: 'prep.', meaning: '在……对面；从一边到另一边', example: 'The school is across the street.', exampleCn: '学校在街对面。' },
+    { word: 'cost', phonetic: '/kɒst/', pos: 'vt.', meaning: '需要付，价钱为', example: 'The computer costs a lot of money.', exampleCn: '这台电脑花很多钱。' },
+    { word: 'manage', phonetic: '/ˈmænɪdʒ/', pos: 'vt.', meaning: '明智地使用；管理', example: 'I\'m trying to manage my money well.', exampleCn: '我在努力管好我的钱。' },
+    { word: 'budget', phonetic: '/ˈbʌdʒɪt/', pos: 'n.', meaning: '预算', example: 'We make a budget every year.', exampleCn: '我们每年都做预算。' },
+    { word: 'cover', phonetic: '/ˈkʌvə(r)/', pos: 'vt.', meaning: '足以支付，够付', example: 'The money can cover my living costs.', exampleCn: '这些钱够支付我的生活费用。' },
+    { word: 'education', phonetic: '/ˌedʒuˈkeɪʃn/', pos: 'n.', meaning: '教育', example: 'We need to cover your education first.', exampleCn: '我们首先要支付你的教育费用。' },
+    { word: 'pay', phonetic: '/peɪ/', pos: 'v.', meaning: '付款', example: 'I paid twenty yuan for this book.', exampleCn: '我花了二十元买这本书。' },
+    { word: 'pay for', phonetic: '/peɪ fɔː(r)/', pos: 'v.', meaning: '支付', example: 'We have to pay for our flat every month.', exampleCn: '我们每个月要付房费。' },
+    { word: 'flat', phonetic: '/flæt/', pos: 'n.', meaning: '〈英〉公寓', example: 'They live in a flat.', exampleCn: '他们住在公寓里。' },
+    { word: 'daily', phonetic: '/ˈdeɪli/', pos: 'adj.', meaning: '每日（的）', example: 'We pay for our daily needs.', exampleCn: '我们支付日常开销。' },
+    { word: 'per cent', phonetic: '/pəˈsent/', pos: 'n.', meaning: '百分之……', example: 'We save about 20 per cent.', exampleCn: '我们存大约 20%。' },
+    { word: 'expensive', phonetic: '/ɪkˈspensɪv/', pos: 'adj.', meaning: '昂贵的', example: 'Holidays can be expensive.', exampleCn: '度假会很贵。' },
+    { word: 'save', phonetic: '/seɪv/', pos: 'v.', meaning: '储蓄；节省', example: 'I save some money every month.', exampleCn: '我每个月存一些钱。' },
+    { word: 'bank', phonetic: '/bæŋk/', pos: 'n.', meaning: '银行', example: 'The money is in the bank.', exampleCn: '钱存在银行里。' },
+    { word: 'account', phonetic: '/əˈkaʊnt/', pos: 'n.', meaning: '账户', example: 'I have a bank account.', exampleCn: '我有一个银行账户。' },
+    { word: 'rainy', phonetic: '/ˈreɪni/', pos: 'adj.', meaning: '有雨的', example: 'Save for a rainy day.', exampleCn: '未雨绸缪。' },
+    { word: 'matter', phonetic: '/ˈmætə(r)/', pos: 'v.', meaning: '要紧，有重大影响', example: 'Money matters in every family.', exampleCn: '在每个家庭，钱都很重要。' },
+    { word: 'pocket', phonetic: '/ˈpɒkɪt/', pos: 'n.', meaning: '口袋', example: 'There is a key in my pocket.', exampleCn: '我口袋里有一把钥匙。' },
+    { word: 'pocket money', phonetic: '/ˈpɒkɪt ˌmʌni/', pos: 'n.', meaning: '零花钱', example: 'I get some pocket money every week.', exampleCn: '我每周得到一些零花钱。' },
+    { word: 'notebook', phonetic: '/ˈnəʊtbʊk/', pos: 'n.', meaning: '笔记本', example: 'I write in my notebook.', exampleCn: '我在笔记本上写字。' },
+    { word: 'rest', phonetic: '/rest/', pos: 'n.', meaning: '剩余部分；其他', example: 'I save the rest of the money.', exampleCn: '我把剩余的钱存起来。' },
+    { word: 'bookshop', phonetic: '/ˈbʊkʃɒp/', pos: 'n.', meaning: '书店', example: 'I bought the book in a bookshop.', exampleCn: '我在书店买了这本书。' },
+    { word: 'eraser', phonetic: '/ɪˈreɪzə(r)/', pos: 'n.', meaning: '橡皮', example: 'Can I use your eraser?', exampleCn: '我能用你的橡皮吗？' },
+    { word: 'as', phonetic: '/æz/', pos: 'prep. & conj.', meaning: '作为；正如；和……一样', example: 'As my mum always says, saving is important.', exampleCn: '正如我妈妈常说的，存钱很重要。' },
+    { word: 'present', phonetic: '/ˈpreznt/', pos: 'n.', meaning: '礼物', example: 'I got a birthday present.', exampleCn: '我收到了生日礼物。' },
+    { word: 'away', phonetic: '/əˈweɪ/', pos: 'adv.', meaning: '离开，在（某距离）处', example: 'The school is far away.', exampleCn: '学校很远。' },
+    { word: 'shell', phonetic: '/ʃel/', pos: 'n.', meaning: '壳', example: 'The coconut shell is hard.', exampleCn: '椰子壳很硬。' },
+    { word: 'deal', phonetic: '/diːl/', pos: 'n.', meaning: '交易', example: 'That is a good deal.', exampleCn: '那是一笔好交易。' },
+    { word: 'coin', phonetic: '/kɔɪn/', pos: 'n.', meaning: '硬币', example: 'Every coin has two sides.', exampleCn: '凡事都有两面。' },
+    { word: 'online', phonetic: '/ˌɒnˈlaɪn/', pos: 'adv. & adj.', meaning: '在线上；线上的', example: 'I like shopping online.', exampleCn: '我喜欢网上购物。' },
+    { word: 'lucky money', phonetic: '/ˌlʌki ˈmʌni/', pos: 'n.', meaning: '压岁钱', example: 'I get lucky money at the Spring Festival.', exampleCn: '我春节收到压岁钱。' },
+    { word: 'grandparent', phonetic: '/ˈɡrænpeərənt/', pos: 'n.', meaning: '（外）祖父，（外）祖母', example: 'My grandparents are kind.', exampleCn: '我的祖父母很慈祥。' },
+    { word: 'relative', phonetic: '/ˈrelətɪv/', pos: 'n.', meaning: '亲戚', example: 'We visit relatives at the Spring Festival.', exampleCn: '我们春节走亲访友。' },
+    { word: 'send', phonetic: '/send/', pos: 'vt.', meaning: '发送', example: 'People send red packets to children.', exampleCn: '人们给孩子们发红包。' },
+    { word: 'red packet', phonetic: '/ˌred ˈpækɪt/', pos: 'n.', meaning: '红包', example: 'Children love red packets.', exampleCn: '孩子们喜欢红包。' },
+    { word: 'survey', phonetic: '/ˈsɜːveɪ/', pos: 'n.', meaning: '民意调查；概述', example: 'We did a survey about pocket money.', exampleCn: '我们做了一项关于零花钱的调查。' },
+    { word: 'in need', phonetic: '/ɪn niːd/', pos: 'adv.', meaning: '在贫困中，在困难中', example: 'I help children in need.', exampleCn: '我帮助生活困难的孩子。' },
+    { word: 'beginning', phonetic: '/bɪˈɡɪnɪŋ/', pos: 'n.', meaning: '开头，开端', example: 'At the beginning of the year, I make a budget.', exampleCn: '年初，我做预算。' },
+    { word: 'habit', phonetic: '/ˈhæbɪt/', pos: 'n.', meaning: '习惯', example: 'Good money habits start young.', exampleCn: '好的金钱习惯从小养成。' }
   ],
   phrases: [
-    { phrase: 'go shopping', meaning: '去购物', example: 'Let\'s go shopping this weekend.' },
-    { phrase: 'a pair of', meaning: '一双/一对', example: 'I need a pair of shoes.' },
-    { phrase: 'try on', meaning: '试穿', example: 'Can I try on this coat?' },
-    { phrase: 'how much', meaning: '多少钱', example: 'How much is this T-shirt?' },
-    { phrase: 'take... please', meaning: '请买下...', example: 'I\'ll take it, please.' },
-    { phrase: 'just a minute', meaning: '等一下', example: 'Just a minute, please.' },
-    { phrase: 'match well', meaning: '很搭配', example: 'The shoes match well with the dress.' }
+    { phrase: 'pocket money', meaning: '零花钱', example: 'Do you get pocket money?' },
+    { phrase: 'make a budget', meaning: '做预算', example: 'We make a budget every year.' },
+    { phrase: 'pay for', meaning: '支付', example: 'We have to pay for our flat.' },
+    { phrase: 'save for a rainy day', meaning: '未雨绸缪', example: 'It\'s a good idea to save for a rainy day.' },
+    { phrase: 'a set of', meaning: '一套', example: 'A set of keys is on the desk.' },
+    { phrase: 'lucky money', meaning: '压岁钱', example: 'I get lucky money at the Spring Festival.' },
+    { phrase: 'red packet', meaning: '红包', example: 'People send red packets to children.' },
+    { phrase: 'in need', meaning: '在贫困中', example: 'I help children in need.' },
+    { phrase: 'at the beginning of', meaning: '在……的开始', example: 'At the beginning of the year, I make a budget.' },
+    { phrase: 'bank account', meaning: '银行账户', example: 'I put money in my bank account.' }
   ],
   sentences: [
-    { en: 'Can I help you?', cn: '我能帮你吗？' },
-    { en: 'How much does this cost?', cn: '这个多少钱？' },
-    { en: 'I\'ll take it.', cn: '我买下了。' },
-    { en: 'Can I try it on?', cn: '我可以试穿吗？' },
-    { en: 'This T-shirt matches your jeans well.', cn: '这件T恤和你的牛仔裤很配。' },
-    { en: 'I don\'t have enough money.', cn: '我的钱不够。' }
+    { en: 'Money matters in every family.', cn: '在每个家庭，钱都很重要。' },
+    { en: 'We make a budget every year.', cn: '我们每年都做预算。' },
+    { en: 'We need to cover your education first.', cn: '我们首先要支付你的教育费用。' },
+    { en: 'We save about 20 per cent in our bank account.', cn: '我们把大约 20% 存在银行账户里。' },
+    { en: 'It\'s a good idea to save for a rainy day.', cn: '未雨绸缪是个好主意。' },
+    { en: 'Money is a good servant, but a bad master.', cn: '金钱是善仆，也是恶主。' }
   ],
   text: {
-    title: 'Shopping at the mall',
+    title: 'Family money management',
+    intro: '西蒙正在和妈妈谈论他家是如何理财的。读一读他们的对话，了解家庭预算的安排。',
     paragraphs: [
       {
         sentences: [
-          { en: 'Amy is shopping at Sunshine Shopping Mall.', cn: '艾米在阳光购物中心购物。', keywords: ['shopping', 'Sunshine Shopping Mall'] },
-          { en: 'She wants to buy some presents for Simon and Sandy.', cn: '她想给西蒙和桑迪买些礼物。', keywords: ['presents'] },
-          { en: 'She goes into a clothes shop.', cn: '她走进一家服装店。', keywords: ['clothes shop'] },
-          { en: 'Shopkeeper: Hello, can I help you?', cn: '店员：你好，需要帮忙吗？', keywords: ['can I help you'] },
-          { en: 'Amy: I\'m looking for a T-shirt for my friend.', cn: '艾米：我在找一件给我朋友的T恤。', keywords: ['looking for', 'T-shirt'] },
-          { en: 'Shopkeeper: What about this one?', cn: '店员：这件怎么样？', keywords: ['What about'] },
-          { en: 'Amy: How much does it cost?', cn: '艾米：多少钱？', keywords: ['How much', 'cost'] },
-          { en: 'Shopkeeper: It is 50 yuan.', cn: '店员：50元。', keywords: ['50 yuan'] },
-          { en: 'Amy: That\'s not cheap, but I\'ll take it.', cn: '艾米：不算便宜，但我买了。', keywords: ['cheap', 'take it'] },
-          { en: 'Amy also buys a pair of hair clips for Sandy.', cn: '艾米还给桑迪买了一对发夹。', keywords: ['hair clips'] },
-          { en: 'They are very pretty and they match Sandy\'s dress.', cn: '它们很漂亮，和桑迪的裙子很配。', keywords: ['pretty', 'match'] },
-          { en: 'Amy is happy with her presents.', cn: '艾米对她的礼物很满意。', keywords: ['happy'] }
+          { en: 'There\'s a new mall across the street. Let\'s go shopping.', cn: '街对面有个新商场。我们去购物吧。', keywords: ['new mall', 'go shopping'] },
+          { en: 'OK. Can I have a new pair of sports shoes?', cn: '好的。我能买双新运动鞋吗？', keywords: ['sports shoes'] },
+          { en: 'Of course. And we also need a new computer.', cn: '当然可以。我们还需要一台新电脑。', keywords: ['new computer'] },
+          { en: 'That will cost a lot of money.', cn: '那要花一大笔钱。', keywords: ['cost a lot of money'] },
+          { en: 'Don\'t worry. Your dad and I manage money well. We make a budget every year.', cn: '别担心。你爸爸和我都很会理财。我们每年都做预算。', keywords: ['manage money', 'make a budget'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'What\'s in the budget?', cn: '预算里有什么？', keywords: ['budget'] },
+          { en: 'Well, we need to cover your education first. Then we have to pay for our flat, car, food and other daily needs every month.', cn: '嗯……我们首先要支付你的教育费用。然后我们每个月还要支付房贷、车贷、吃喝和其他日常开销。', keywords: ['cover', 'education', 'daily needs'] },
+          { en: 'All these cost about 50 per cent of our budget.', cn: '这些大约花费我们预算的 50%。', keywords: ['50 per cent'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'What about the other half?', cn: '另一半呢？', keywords: ['other half'] },
+          { en: 'We spend about 30 per cent on special things.', cn: '我们花大约 30% 在特殊的事情上。', keywords: ['special things'] },
+          { en: 'Like what?', cn: '比如什么？', keywords: ['Like what'] },
+          { en: 'Like taking holidays. Holidays can be expensive.', cn: '比如度假。度假会很贵。', keywords: ['taking holidays', 'expensive'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'Do we save money?', cn: '我们存钱吗？', keywords: ['save money'] },
+          { en: 'Of course. We save about 20 per cent in our bank account. It\'s a good idea to save for a rainy day.', cn: '当然。我们把大约 20% 存在银行账户里。未雨绸缪是个好主意。', keywords: ['bank account', 'save for a rainy day'] },
+          { en: 'I see.', cn: '我明白了。', keywords: ['I see'] }
         ]
       }
+    ],
+    questions: [
+      { q: 'How does Simon\'s family manage their money?', a: 'They make a budget every year.' },
+      { q: 'What comes first in their budget?', a: 'Simon\'s education comes first.' },
+      { q: 'How much do they spend on daily needs?', a: 'About 50 per cent of their budget.' },
+      { q: 'What does \'save for a rainy day\' mean?', a: 'It means to save some money for hard days.' }
     ]
   },
   grammar: {
-    title: 'some / any 的用法',
+    title: '一般现在时与量词',
     points: [
       {
-        rule: 'some和any都表示"一些"',
-        detail: 'some一般用于肯定句；any一般用于否定句和疑问句。两者都可修饰可数名词复数和不可数名词。',
-        examples: ['I have some money.', 'I don\'t have any money.', 'Do you have any questions?']
+        rule: '一般现在时表示习惯与事实',
+        detail: '表示经常性动作或客观事实。主语是第三人称单数时，动词加 s/es。例如：We make a budget every year. My mum manages money well.',
+        examples: ['We make a budget every year.', 'My mum manages money well.', 'Money matters in every family.']
       },
       {
-        rule: 'some的特殊用法',
-        detail: '在表示请求、建议或期望得到肯定回答的疑问句中，用some而不用any。',
-        examples: ['Would you like some tea?', 'Can I have some water?', 'Shall we buy some apples?']
+        rule: '百分比与量词的表达',
+        detail: '用 per cent 表示百分比（50 per cent）；用 a set of、a pair of 等量词修饰名词。',
+        examples: ['about 50 per cent of our budget', 'a new pair of sports shoes', 'a set of keys']
       }
     ]
   },
   exams: [
     {
-      question: 'I have ___ money, but I don\'t have ___ time.',
-      options: ['A. some; some', 'B. some; any', 'C. any; some', 'D. any; any'],
+      question: 'Money ___ in every family.',
+      options: ['A. matter', 'B. matters', 'C. mattering', 'D. mattered'],
       answer: 'B',
-      explanation: '肯定句用some，否定句用any。'
+      explanation: 'money 是不可数名词，谓语动词用单数 matters。'
     },
     {
-      question: '—Would you like ___ juice? —Yes, please.',
-      options: ['A. some', 'B. any', 'C. a', 'D. an'],
+      question: 'We need to pay ___ our flat every month.',
+      options: ['A. for', 'B. at', 'C. in', 'D. on'],
       answer: 'A',
-      explanation: '表示邀请、建议的疑问句，期望肯定回答，用some。'
+      explanation: 'pay for 是固定搭配，意为“支付”。'
     },
     {
-      question: 'This book ___ 20 yuan.',
-      options: ['A. costs', 'B. cost', 'C. takes', 'D. spends'],
+      question: 'We save about 20 ___ in our bank account.',
+      options: ['A. percent', 'B. percents', 'C. a percent', 'D. the percent'],
       answer: 'A',
-      explanation: '物作主语时"花费"用cost，且book是单数，动词加s。'
+      explanation: 'per cent 单复数同形，表示“百分之……”。'
     },
     {
-      question: 'I want to buy a pair ___ shoes.',
-      options: ['A. in', 'B. on', 'C. of', 'D. at'],
-      answer: 'C',
-      explanation: 'a pair of表示"一双/一对"，固定搭配。'
-    },
-    {
-      question: 'Can I ___ this coat?',
-      options: ['A. try on', 'B. try in', 'C. try at', 'D. try for'],
+      question: 'It\'s a good idea to save ___ a rainy day.',
+      options: ['A. for', 'B. at', 'C. in', 'D. on'],
       answer: 'A',
-      explanation: 'try on表示"试穿"，固定搭配。'
+      explanation: 'save for a rainy day 意为“未雨绸缪”。'
     }
   ]
 },
 
-/* ======================== Unit 8: Fashion ======================== */
+/* ======================== Unit 8: Let's celebrate! ======================== */
 {
   unitId: '7a-u8',
-  title: 'Unit 8: Fashion',
-  topic: '时尚',
+  title: 'Unit 8: Let\'s celebrate!',
+  topic: '庆祝节日',
   words: [
-    { word: 'fashion', phonetic: '/ˈfæʃn/', pos: 'n.', meaning: '时尚', example: 'She is interested in fashion.', exampleCn: '她对时尚感兴趣。' },
-    { word: 'clothes', phonetic: '/kləʊðz/', pos: 'n.', meaning: '衣服', example: 'I like these clothes.', exampleCn: '我喜欢这些衣服。' },
-    { word: 'cotton', phonetic: '/ˈkɒtn/', pos: 'n.', meaning: '棉', example: 'This shirt is made of cotton.', exampleCn: '这件衬衫是棉的。' },
-    { word: 'leather', phonetic: '/ˈleðə(r)/', pos: 'n.', meaning: '皮革', example: 'These are leather shoes.', exampleCn: '这些是皮鞋。' },
-    { word: 'popular', phonetic: '/ˈpɒpjələ(r)/', pos: 'adj.', meaning: '流行的', example: 'This style is popular.', exampleCn: '这种款式很流行。' },
-    { word: 'smart', phonetic: '/smɑːt/', pos: 'adj.', meaning: '神气的', example: 'You look smart in this suit.', exampleCn: '你穿这套西服很精神。' },
-    { word: 'comfortable', phonetic: '/ˈkʌmftəbl/', pos: 'adj.', meaning: '舒适的', example: 'These shoes are comfortable.', exampleCn: '这些鞋很舒适。' },
-    { word: 'scarf', phonetic: '/skɑːf/', pos: 'n.', meaning: '围巾', example: 'She wears a red scarf.', exampleCn: '她围着一条红围巾。' },
-    { word: 'jeans', phonetic: '/dʒiːnz/', pos: 'n.', meaning: '牛仔裤', example: 'He wears jeans today.', exampleCn: '他今天穿了牛仔裤。' },
-    { word: 'trainer', phonetic: '/ˈtreɪnə(r)/', pos: 'n.', meaning: '运动鞋', example: 'I like wearing trainers.', exampleCn: '我喜欢穿运动鞋。' },
-    { word: 'boot', phonetic: '/buːt/', pos: 'n.', meaning: '靴子', example: 'These boots are beautiful.', exampleCn: '这些靴子很漂亮。' },
-    { word: 'wool', phonetic: '/wʊl/', pos: 'n.', meaning: '羊毛', example: 'The sweater is made of wool.', exampleCn: '这件毛衣是羊毛的。' },
-    { word: 'silk', phonetic: '/sɪlk/', pos: 'n.', meaning: '丝绸', example: 'She wears a silk dress.', exampleCn: '她穿着丝绸裙子。' },
-    { word: 'style', phonetic: '/staɪl/', pos: 'n.', meaning: '风格', example: 'I like her style.', exampleCn: '我喜欢她的风格。' },
-    { word: 'design', phonetic: '/dɪˈzaɪn/', pos: 'n.', meaning: '设计', example: 'The design is beautiful.', exampleCn: '这个设计很美。' },
-    { word: 'show', phonetic: '/ʃəʊ/', pos: 'n.', meaning: '表演', example: 'There is a fashion show.', exampleCn: '有一场时装秀。' },
-    { word: 'model', phonetic: '/ˈmɒdl/', pos: 'n.', meaning: '模特', example: 'She is a model.', exampleCn: '她是一名模特。' },
-    { word: 'cool', phonetic: '/kuːl/', pos: 'adj.', meaning: '酷的', example: 'You look cool!', exampleCn: '你看起来很酷！' },
-    { word: 'purple', phonetic: '/ˈpɜːpl/', pos: 'adj.', meaning: '紫色的', example: 'I have a purple dress.', exampleCn: '我有一条紫色裙子。' },
-    { word: 'grey', phonetic: '/ɡreɪ/', pos: 'adj.', meaning: '灰色的', example: 'He wears grey trousers.', exampleCn: '他穿灰色裤子。' }
+    { word: 'celebrate', phonetic: '/ˈselɪbreɪt/', pos: 'v.', meaning: '庆祝', example: 'People celebrate New Year in different ways.', exampleCn: '人们用不同的方式庆祝新年。' },
+    { word: 'Christmas', phonetic: '/ˈkrɪsməs/', pos: 'n.', meaning: '圣诞节', example: 'Christmas is on 25 December.', exampleCn: '圣诞节在 12 月 25 日。' },
+    { word: 'remember', phonetic: '/rɪˈmembə(r)/', pos: 'v.', meaning: '纪念，记住', example: 'We remember the good things.', exampleCn: '我们铭记美好的事物。' },
+    { word: 'poet', phonetic: '/ˈpəʊɪt/', pos: 'n.', meaning: '诗人', example: 'We read Robert Burns\' poems.', exampleCn: '我们读罗伯特·彭斯的诗。' },
+    { word: 'dragon', phonetic: '/ˈdræɡən/', pos: 'n.', meaning: '龙', example: 'The dragon is a symbol of China.', exampleCn: '龙是中国的象征。' },
+    { word: 'dragon boat', phonetic: '/ˌdræɡən ˈbəʊt/', pos: 'n.', meaning: '龙舟', example: 'People watch the dragon boat races.', exampleCn: '人们观看龙舟比赛。' },
+    { word: 'race', phonetic: '/reɪs/', pos: 'n.', meaning: '速度竞赛，赛跑', example: 'Do you like watching car races?', exampleCn: '你喜欢看赛车吗？' },
+    { word: 'dumpling', phonetic: '/ˈdʌmplɪŋ/', pos: 'n.', meaning: '饺子，汤团', example: 'We eat dumplings at the Spring Festival.', exampleCn: '我们春节吃饺子。' },
+    { word: 'rice dumpling', phonetic: '/ˌraɪs ˈdʌmplɪŋ/', pos: 'n.', meaning: '粽子', example: 'People eat rice dumplings at the Dragon Boat Festival.', exampleCn: '人们端午节吃粽子。' },
+    { word: 'Scottish', phonetic: '/ˈskɒtɪʃ/', pos: 'adj.', meaning: '苏格兰（人）的', example: 'Haggis is a Scottish dish.', exampleCn: '羊杂碎肚是一道苏格兰菜。' },
+    { word: 'dish', phonetic: '/dɪʃ/', pos: 'n.', meaning: '一道菜，菜肴', example: 'We prepare dishes with special meanings.', exampleCn: '我们准备有特殊寓意的菜肴。' },
+    { word: 'poem', phonetic: '/ˈpəʊɪm/', pos: 'n.', meaning: '诗，韵文', example: 'We read a poem at the party.', exampleCn: '我们在聚会上读诗。' },
+    { word: 'lady', phonetic: '/ˈleɪdi/', pos: 'n.', meaning: '女士，淑女', example: 'Good evening, ladies and gentlemen.', exampleCn: '女士们先生们，晚上好。' },
+    { word: 'gentleman', phonetic: '/ˈdʒentlmən/', pos: 'n.', meaning: '先生，绅士（复数 gentlemen）', example: 'Ladies and gentlemen, welcome.', exampleCn: '女士们先生们，欢迎。' },
+    { word: 'spread', phonetic: '/spred/', pos: 'v.', meaning: '使分散，传播；n. 传播', example: 'The man is spreading salt on his doorstep.', exampleCn: '那个人在门阶上撒盐。' },
+    { word: 'doorstep', phonetic: '/ˈdɔːstep/', pos: 'n.', meaning: '门阶', example: 'There is salt on the doorstep.', exampleCn: '门阶上有盐。' },
+    { word: 'hang', phonetic: '/hæŋ/', pos: 'v.', meaning: '悬挂', example: 'An old woman is hanging onions on her door.', exampleCn: '一位老妇人正在门上挂洋葱。' },
+    { word: 'onion', phonetic: '/ˈʌnjən/', pos: 'n.', meaning: '洋葱', example: 'Onions are a symbol of good luck.', exampleCn: '洋葱是好运的象征。' },
+    { word: 'Greek', phonetic: '/ɡriːk/', pos: 'adj.', meaning: '希腊（人）的，希腊语的', example: 'It\'s a Greek tradition.', exampleCn: '这是希腊的一个传统。' },
+    { word: 'tradition', phonetic: '/trəˈdɪʃn/', pos: 'n.', meaning: '传统', example: 'It is a tradition to welcome the new year.', exampleCn: '迎接新年是一个传统。' },
+    { word: 'traditional', phonetic: '/trəˈdɪʃənl/', pos: 'adj.', meaning: '传统的', example: 'The Spring Festival is a traditional festival.', exampleCn: '春节是一个传统节日。' },
+    { word: 'symbol', phonetic: '/ˈsɪmbl/', pos: 'n.', meaning: '象征，符号', example: 'Onions are a symbol of good luck and health.', exampleCn: '洋葱是好运和健康的象征。' },
+    { word: 'midnight', phonetic: '/ˈmɪdnaɪt/', pos: 'n.', meaning: '午夜', example: 'It\'s near midnight in Denmark.', exampleCn: '丹麦接近午夜了。' },
+    { word: 'strike', phonetic: '/straɪk/', pos: 'v.', meaning: '敲，鸣，报时；撞击', example: 'The clock strikes twelve.', exampleCn: '时钟敲响十二点。' },
+    { word: 'into', phonetic: '/ˈɪntuː/', pos: 'prep.', meaning: '进入，到……里面', example: 'They jump into the new year.', exampleCn: '他们跳入新的一年。' },
+    { word: 'in the hope of', phonetic: '/ɪn ðə həʊp əv/', pos: 'prep.', meaning: '希望', example: 'They jump off their chairs in the hope of getting over problems.', exampleCn: '他们从椅子上跳下，希望克服困难。' },
+    { word: 'ahead', phonetic: '/əˈhed/', pos: 'adv.', meaning: '在前面，向前', example: 'I wish you good luck in the year ahead.', exampleCn: '祝你未来一年好运。' },
+    { word: 'carry', phonetic: '/ˈkæri/', pos: 'vt.', meaning: '拿，提，搬，携带', example: 'People are carrying suitcases around the block.', exampleCn: '人们拎着手提箱在街区上转悠。' },
+    { word: 'suitcase', phonetic: '/ˈsuːtkeɪs/', pos: 'n.', meaning: '（旅行用的）手提箱', example: 'I put my clothes in the suitcase.', exampleCn: '我把衣服放进手提箱。' },
+    { word: 'block', phonetic: '/blɒk/', pos: 'n.', meaning: '街区', example: 'This block is in the centre of the city.', exampleCn: '这个街区在市中心。' },
+    { word: 'traveller', phonetic: '/ˈtrævələ(r)/', pos: 'n.', meaning: '旅行者，游客', example: 'Are they travellers?', exampleCn: '他们是旅行者吗？' },
+    { word: 'wherever', phonetic: '/weərˈevə(r)/', pos: 'conj.', meaning: '在任何地方', example: 'Wherever you are, Happy New Year!', exampleCn: '无论你在哪儿，祝你新年快乐！' },
+    { word: 'violin', phonetic: '/ˌvaɪəˈlɪn/', pos: 'n.', meaning: '小提琴', example: 'She plays the violin well.', exampleCn: '她小提琴拉得很好。' },
+    { word: 'lively', phonetic: '/ˈlaɪvli/', pos: 'adj.', meaning: '轻快的，生气勃勃的', example: 'The music is lively.', exampleCn: '这音乐轻快活泼。' },
+    { word: 'spring roll', phonetic: '/ˌsprɪŋ ˈrəʊl/', pos: 'n.', meaning: '春卷', example: 'We eat spring rolls at the festival.', exampleCn: '我们节日吃春卷。' },
+    { word: 'moment', phonetic: '/ˈməʊmənt/', pos: 'n.', meaning: '某个时刻，瞬间', example: 'Wait a moment, please.', exampleCn: '请稍等。' },
+    { word: 'at the moment', phonetic: '/æt ðə ˈməʊmənt/', pos: 'adv.', meaning: '现在，当时', example: 'He is busy at the moment.', exampleCn: '他现在很忙。' },
+    { word: 'tonight', phonetic: '/təˈnaɪt/', pos: 'adv.', meaning: '在今晚', example: 'We have a big dinner tonight.', exampleCn: '我们今晚吃丰盛的晚餐。' },
+    { word: 'lantern', phonetic: '/ˈlæntən/', pos: 'n.', meaning: '灯笼', example: 'People hang lanterns at the festival.', exampleCn: '人们在节日挂灯笼。' },
+    { word: 'mountain', phonetic: '/ˈmaʊntən/', pos: 'n.', meaning: '高山，山岳', example: 'We climb mountains in spring.', exampleCn: '我们春天爬山。' },
+    { word: 'climb', phonetic: '/klaɪm/', pos: 'v.', meaning: '攀登，爬', example: 'Let\'s go climbing on Sunday.', exampleCn: '我们周日去爬山吧。' },
+    { word: 'natural', phonetic: '/ˈnætʃrəl/', pos: 'adj.', meaning: '自然的', example: 'The pants are made of natural materials.', exampleCn: '这条裤子由天然材料制成。' },
+    { word: 'beauty', phonetic: '/ˈbjuːti/', pos: 'n.', meaning: '美；美人', example: 'We enjoy the beauty of nature.', exampleCn: '我们欣赏自然之美。' },
+    { word: 'respect', phonetic: '/rɪˈspekt/', pos: 'n.', meaning: '尊敬', example: 'We should respect the elders.', exampleCn: '我们应该尊敬长辈。' },
+    { word: 'elder', phonetic: '/ˈeldə(r)/', pos: 'n.', meaning: '长者，长辈；年纪较长的', example: 'The elders give children red packets.', exampleCn: '长辈给孩子们发红包。' },
+    { word: 'double', phonetic: '/ˈdʌbl/', pos: 'adj.', meaning: '双的，两倍的', example: 'We wish you double happiness.', exampleCn: '祝你双喜临门。' },
+    { word: 'forever', phonetic: '/fərˈevə(r)/', pos: 'adv.', meaning: '永远', example: 'Good memories last forever.', exampleCn: '美好回忆永存。' },
+    { word: 'decorate', phonetic: '/ˈdekəreɪt/', pos: 'vt.', meaning: '装饰', example: 'We decorate our house before the festival.', exampleCn: '我们在节前装饰房子。' },
+    { word: 'put up', phonetic: '/ˌpʊt ˈʌp/', pos: 'v.', meaning: '张贴，挂起', example: 'People put up Spring Festival couplets.', exampleCn: '人们张贴春联。' },
+    { word: 'Spring Festival couplets', phonetic: '/ˌsprɪŋ ˈfestɪvl ˈkʌpləts/', pos: 'n.', meaning: '春联', example: 'We put up Spring Festival couplets.', exampleCn: '我们贴春联。' },
+    { word: 'beforehand', phonetic: '/bɪˈfɔːhænd/', pos: 'adv.', meaning: '事先，预先', example: 'People clean their houses beforehand.', exampleCn: '人们事先打扫房子。' },
+    { word: 'prepare', phonetic: '/prɪˈpeə(r)/', pos: 'v.', meaning: '预备（饭菜），把……预备好', example: 'We prepare dishes with special meanings.', exampleCn: '我们准备有特殊寓意的菜肴。' },
+    { word: 'meaning', phonetic: '/ˈmiːnɪŋ/', pos: 'n.', meaning: '意义，意思', example: 'The dishes have special meanings.', exampleCn: '这些菜肴有特殊寓意。' },
+    { word: 'during', phonetic: '/ˈdjʊərɪŋ/', pos: 'prep.', meaning: '在……期间', example: 'During the festival, people visit relatives.', exampleCn: '节日期间，人们走亲访友。' },
+    { word: 'till', phonetic: '/tɪl/', pos: 'prep. & conj.', meaning: '到……时，直到……为止（= until）', example: 'The Spring Festival lasts till the Lantern Festival.', exampleCn: '春节一直持续到元宵节。' },
+    { word: 'heart', phonetic: '/hɑːt/', pos: 'n.', meaning: '内心，心脏', example: 'Festivals are at the heart of a culture.', exampleCn: '节日是文化的核心。' },
+    { word: 'throw', phonetic: '/θrəʊ/', pos: 'vt.', meaning: '扔', example: 'Some people throw old things out of the window.', exampleCn: '有些人把旧东西扔出窗外。' },
+    { word: 'see... off', phonetic: '/siː ... ɒf/', pos: 'v.', meaning: '送别……', example: 'To see the old year off, they throw old things away.', exampleCn: '为了告别旧年，他们把旧东西扔掉。' }
   ],
   phrases: [
-    { phrase: 'fashion show', meaning: '时装秀', example: 'They are having a fashion show.' },
-    { phrase: 'be made of', meaning: '由...制成', example: 'The scarf is made of silk.' },
-    { phrase: 'look smart', meaning: '看起来很精神', example: 'You look smart in this suit.' },
-    { phrase: 'both... and...', meaning: '...和...都', example: 'Both Tom and Jack like football.' },
-    { phrase: 'be popular among', meaning: '在...中受欢迎', example: 'Jeans are popular among young people.' },
-    { phrase: 'match... with...', meaning: '把...和...搭配', example: 'Match the shirt with the tie.' }
+    { phrase: 'dragon boat', meaning: '龙舟', example: 'People watch the dragon boat races.' },
+    { phrase: 'rice dumpling', meaning: '粽子', example: 'People eat rice dumplings at the Dragon Boat Festival.' },
+    { phrase: 'at midnight', meaning: '在午夜', example: 'It\'s near midnight in Denmark.' },
+    { phrase: 'in the hope of', meaning: '希望', example: 'They jump off their chairs in the hope of getting over problems.' },
+    { phrase: 'a symbol of', meaning: '……的象征', example: 'Onions are a symbol of good luck and health.' },
+    { phrase: 'put up', meaning: '张贴，挂起', example: 'People put up Spring Festival couplets.' },
+    { phrase: 'at the moment', meaning: '现在，当时', example: 'He is busy at the moment.' },
+    { phrase: 'see... off', meaning: '送别……', example: 'To see the old year off, they throw old things away.' },
+    { phrase: 'give thanks for', meaning: '对……表示感谢', example: 'We give thanks for all the good things.' },
+    { phrase: 'get together', meaning: '相聚', example: 'Family members get together on New Year\'s Eve.' }
   ],
   sentences: [
-    { en: 'They are having a fashion show.', cn: '他们正在举行时装秀。' },
-    { en: 'This shirt is made of cotton.', cn: '这件衬衫是棉质的。' },
-    { en: 'You look cool in this T-shirt.', cn: '你穿这件T恤看起来很酷。' },
-    { en: 'Trainers are comfortable.', cn: '运动鞋很舒适。' },
-    { en: 'She is wearing a purple dress.', cn: '她穿着一条紫色的裙子。' },
-    { en: 'Both Simon and Daniel are wearing blue jeans.', cn: '西蒙和丹尼尔都穿着蓝色牛仔裤。' }
+    { en: 'Festivals are at the heart of a culture.', cn: '节日是文化的核心。' },
+    { en: 'We give thanks for all the good things in our lives.', cn: '我们对生活中所有美好的事物表示感谢。' },
+    { en: 'To see the old year off, some people throw old things out of the window.', cn: '为了告别旧年，有些人把旧东西扔出窗外。' },
+    { en: 'Onions are a symbol of good luck and health.', cn: '洋葱是好运和健康的象征。' },
+    { en: 'The Spring Festival is one of the most important traditional festivals in China.', cn: '春节是中国最重要的传统节日之一。' },
+    { en: 'People put up Spring Festival couplets before the festival.', cn: '人们在节前贴春联。' }
   ],
   text: {
-    title: 'The fashion show',
+    title: 'Happy New Year',
+    intro: '艾米正在看一段关于世界各地新年庆祝活动的视频。下面是视频脚本。',
     paragraphs: [
       {
         sentences: [
-          { en: 'The students are having a fashion show at school.', cn: '学生们在学校举行时装秀。', keywords: ['fashion show'] },
-          { en: 'Millie is wearing clothes from the 1990s.', cn: '米莉穿着20世纪90年代的衣服。', keywords: ['1990s'] },
-          { en: 'She is wearing a purple shirt and a pair of grey trousers.', cn: '她穿着紫色衬衫和灰色裤子。', keywords: ['purple', 'grey trousers'] },
-          { en: 'She looks beautiful.', cn: '她看起来很漂亮。', keywords: ['beautiful'] },
-          { en: 'Simon is wearing a purple shirt and a pair of grey trousers too.', cn: '西蒙也穿着紫色衬衫和灰色裤子。', keywords: ['purple shirt', 'grey trousers'] },
-          { en: 'They are both made of cotton.', cn: '它们都是棉质的。', keywords: ['made of cotton'] },
-          { en: 'He looks smart.', cn: '他看起来很精神。', keywords: ['smart'] },
-          { en: 'Daniel is wearing a blue T-shirt.', cn: '丹尼尔穿着蓝色T恤。', keywords: ['blue T-shirt'] },
-          { en: 'Both Simon and Daniel are wearing blue jeans.', cn: '西蒙和丹尼尔都穿着蓝色牛仔裤。', keywords: ['Both', 'blue jeans'] },
-          { en: 'They look really cool.', cn: '他们看起来真的很酷。', keywords: ['cool'] },
-          { en: 'Sandy is wearing a black wool skirt.', cn: '桑迪穿着黑色羊毛裙。', keywords: ['black wool skirt'] },
-          { en: 'She is also wearing a pair of red boots.', cn: '她还穿着一双红靴子。', keywords: ['red boots'] },
-          { en: 'The show is a great success.', cn: '这场秀非常成功。', keywords: ['success'] }
+          { en: 'Good evening, ladies and gentlemen. New Year is coming.', cn: '晚上好，女士们先生们。新年就要到了。', keywords: ['ladies and gentlemen'] },
+          { en: 'Let\'s see how people all over the world are celebrating it.', cn: '让我们看看世界各地的人们是如何庆祝新年的。', keywords: ['all over the world'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'Look at the man spreading salt on his doorstep. This is for good luck and peace.', cn: '看那个在门阶上撒盐的人。这是为了祈求好运和安宁。', keywords: ['spreading salt', 'good luck and peace'] },
+          { en: 'People in Türkiye think salt will keep them from bad things in the coming year.', cn: '土耳其人认为盐会让他们在来年远离不好的东西。', keywords: ['Türkiye', 'keep from bad things'] },
+          { en: 'Isn\'t that interesting?', cn: '那不是很有趣吗？', keywords: ['interesting'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'Here in Greece, an old woman is hanging onions on her door.', cn: '在希腊，一位老妇人正在门上挂洋葱。', keywords: ['Greece', 'hanging onions'] },
+          { en: 'It\'s a Greek tradition to welcome the new year. Onions are a symbol of good luck and health.', cn: '这是希腊迎接新年的传统。洋葱是好运和健康的象征。', keywords: ['Greek tradition', 'a symbol of'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'It\'s near midnight in Denmark. Look! The families are all standing on chairs.', cn: '丹麦接近午夜了。看！一家人都站在椅子上。', keywords: ['midnight', 'Denmark', 'standing on chairs'] },
+          { en: 'When the clock strikes 12, they jump off their chairs into the new year, in the hope of getting over any problem in the year ahead!', cn: '当时钟敲响 12 点，他们从椅子上一跃而下进入新的一年，希望在未来一年里克服任何困难。', keywords: ['strikes 12', 'jump off', 'in the hope of'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'In Colombia, some people are carrying suitcases around the block. Are they travellers? No!', cn: '在哥伦比亚，一些人拎着手提箱在街区上转悠。他们是旅行者吗？不！', keywords: ['Colombia', 'suitcases', 'block'] },
+          { en: 'They\'re hoping for a new year with lots of travel.', cn: '他们希望新的一年有很多旅行。', keywords: ['lots of travel'] }
+        ]
+      },
+      {
+        sentences: [
+          { en: 'The world is full of wonderful and interesting New Year traditions.', cn: '世界上充满了奇妙又有趣的新年传统。', keywords: ['full of', 'traditions'] },
+          { en: 'But wherever you are, Happy New Year!', cn: '但是无论你在哪儿，祝你新年快乐！', keywords: ['wherever', 'Happy New Year'] }
         ]
       }
+    ],
+    questions: [
+      { q: 'What do people in Türkiye do to welcome the new year?', a: 'They spread salt on their doorsteps for good luck and peace.' },
+      { q: 'What are onions a symbol of in Greece?', a: 'Onions are a symbol of good luck and health.' },
+      { q: 'What do people in Denmark do at midnight?', a: 'They jump off their chairs into the new year.' },
+      { q: 'Why do people in Colombia carry suitcases around the block?', a: 'They\'re hoping for a new year with lots of travel.' }
     ]
   },
   grammar: {
-    title: '现在进行时',
+    title: '现在进行时（表示正在发生与表示将来）',
     points: [
       {
-        rule: '现在进行时表示正在发生的动作',
-        detail: '结构：be动词 (am/is/are) + 动词-ing形式。常与now, look, listen等词连用。',
-        examples: ['I am reading a book now.', 'She is wearing a red dress.', 'They are having a fashion show.']
+        rule: '现在进行时的构成',
+        detail: 'be + 动词-ing 表示正在发生的动作。例如：An old woman is hanging onions on her door.',
+        examples: ['Some people are throwing old things out of the window.', 'The families are standing on chairs.', 'People are carrying suitcases around the block.']
       },
       {
-        rule: '动词-ing的变化规则',
-        detail: '一般情况直接加-ing；以不发音的e结尾去e加-ing；重读闭音节结尾双写末尾辅音字母加-ing。',
-        examples: ['read → reading', 'make → making', 'wear → wearing', 'run → running', 'sit → sitting']
+        rule: '现在进行时表示将来（安排好的）',
+        detail: '某些动词（come、go、leave 等）用现在进行时表示按计划即将发生的动作。例如：New Year is coming.',
+        examples: ['New Year is coming.', 'The taxi is coming to pick me up.']
       }
     ]
   },
   exams: [
     {
-      question: 'Look! She ___ a red dress.',
-      options: ['A. wear', 'B. wears', 'C. is wearing', 'D. wearing'],
-      answer: 'C',
-      explanation: 'Look提示动作正在进行，用现在进行时is wearing。'
-    },
-    {
-      question: 'The scarf ___ silk.',
-      options: ['A. is made of', 'B. makes of', 'C. made of', 'D. is make of'],
-      answer: 'A',
-      explanation: 'be made of表示"由...制成"（能看出原材料），固定用法。'
-    },
-    {
-      question: 'Both Tom ___ Jack like sports.',
-      options: ['A. or', 'B. and', 'C. but', 'D. with'],
+      question: 'Look! The clock ___ twelve.',
+      options: ['A. strikes', 'B. is striking', 'C. struck', 'D. will strike'],
       answer: 'B',
-      explanation: 'both... and...是固定搭配，表示"两者都"。'
+      explanation: 'Look! 提示动作正在发生，用现在进行时。'
     },
     {
-      question: 'Listen! The students ___ a song.',
-      options: ['A. sing', 'B. sings', 'C. are singing', 'D. is singing'],
-      answer: 'C',
-      explanation: 'Listen提示动作正在进行，主语students是复数，用are singing。'
+      question: 'Onions are a symbol ___ good luck and health.',
+      options: ['A. of', 'B. for', 'C. in', 'D. at'],
+      answer: 'A',
+      explanation: 'a symbol of 是固定搭配，意为“……的象征”。'
     },
     {
-      question: 'I am ___ a book now.',
-      options: ['A. read', 'B. reads', 'C. reading', 'D. to read'],
-      answer: 'C',
-      explanation: '现在进行时结构为be + doing，read的ing形式是reading。'
+      question: 'People ___ old things out of the window to see the old year off.',
+      options: ['A. throw', 'B. throws', 'C. is throwing', 'D. threw'],
+      answer: 'A',
+      explanation: '主语 people 是复数，动词用原形 throw。'
+    },
+    {
+      question: '—___ you celebrating New Year? —Yes, we are.',
+      options: ['A. Do', 'B. Are', 'C. Is', 'D. Does'],
+      answer: 'B',
+      explanation: '现在进行时的疑问句用 be 动词开头，主语 you 用 are。'
     }
   ]
 }
-
 ];
