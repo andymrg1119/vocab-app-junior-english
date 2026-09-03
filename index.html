@@ -141,8 +141,30 @@
     // PWA: 注册 Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
-        navigator.serviceWorker.register('./service-worker.js').catch(function (e) {
+        navigator.serviceWorker.register('./service-worker.js').then(function (reg) {
+          // 每小时检查一次是否有新版本
+          setInterval(function () { reg.update(); }, 60 * 60 * 1000);
+
+          // 发现新版本 → 等它装好后通知立即接管
+          reg.addEventListener('updatefound', function () {
+            var sw = reg.installing;
+            if (!sw) return;
+            sw.addEventListener('statechange', function () {
+              if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+                sw.postMessage({ action: 'skipWaiting' });
+              }
+            });
+          });
+        }).catch(function (e) {
           console.warn('SW 注册失败', e);
+        });
+
+        // 新版本接管后自动刷新一次，确保用户拿到最新内容
+        var reloading = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+          if (reloading) return;
+          reloading = true;
+          window.location.reload();
         });
       });
     }
