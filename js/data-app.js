@@ -6,7 +6,7 @@
 
 /** 应用配置 */
 window.VocabConfig = {
-  /** 版本列表 */
+  /** 版本列表（仅译林版 2024 新教材） */
   versions: [
     {
       id: 'yilin',
@@ -14,20 +14,6 @@ window.VocabConfig = {
       books: [
         { id: '7a', name: '七年级上册' },
         { id: '7b', name: '七年级下册' }
-      ]
-    },
-    {
-      id: 'pep',
-      name: '人教版',
-      books: [
-        { id: '7a', name: '七年级上册' }
-      ]
-    },
-    {
-      id: 'waiyan',
-      name: '外研版',
-      books: [
-        { id: '7a', name: '七年级上册' }
       ]
     }
   ],
