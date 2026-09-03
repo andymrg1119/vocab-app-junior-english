@@ -821,6 +821,133 @@ body {
   font-size: 13px;
 }
 
+/* 背诵模式工具栏 */
+.text-mode-bar {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.mode-btn {
+  padding: 6px 16px;
+  font-size: 14px;
+  border: 1px solid var(--primary-light);
+  border-radius: 20px;
+  background: var(--card-bg);
+  color: var(--primary-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.mode-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* 课文导读 */
+.text-intro {
+  background: var(--accent-light);
+  border-left: 4px solid var(--accent);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* 遮中文 / 遮英文 */
+.mode-hide-cn .text-sentence-cn { visibility: hidden; }
+.mode-hide-cn .text-sentence.reveal .text-sentence-cn { visibility: visible; }
+.mode-hide-en .text-sentence-en { visibility: hidden; }
+.mode-hide-en .text-sentence.reveal .text-sentence-en { visibility: visible; }
+.mode-hide-cn .text-sentence,
+.mode-hide-en .text-sentence { cursor: pointer; }
+
+/* 填空 */
+.text-sentence-en .blank {
+  display: inline-block;
+  min-width: 56px;
+  text-align: center;
+  color: transparent;
+  border-bottom: 2px dashed var(--primary);
+  padding: 0 6px;
+  margin: 0 2px;
+  cursor: pointer;
+}
+.text-sentence-en .blank.revealed {
+  color: var(--primary-dark);
+  background: var(--primary-light);
+  border-radius: 4px;
+  border-bottom-color: var(--primary-dark);
+}
+
+/* 阅读理解题 */
+.text-questions {
+  margin-top: 28px;
+}
+.text-questions-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--primary-light);
+}
+.text-question {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+}
+.text-question-q {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.6;
+}
+.text-question-q .q-num {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 13px;
+  margin-right: 6px;
+}
+.text-question-answer {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--accent-light);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.text-question-answer.show {
+  display: block;
+}
+.answer-toggle-btn {
+  margin-top: 10px;
+  padding: 4px 14px;
+  font-size: 13px;
+  border: 1px solid var(--primary-light);
+  border-radius: 16px;
+  background: var(--card-bg);
+  color: var(--primary-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.answer-toggle-btn:hover {
+  background: var(--primary-light);
+}
+
 /* ===== 语法讲解 ===== */
 .grammar-container {
   max-width: 800px;
