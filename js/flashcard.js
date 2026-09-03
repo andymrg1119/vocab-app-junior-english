@@ -1,7 +1,7 @@
 /**
  * flashcard.js
  * 翻面单词卡组件
- * 功能：卡片翻转、发音、上下张切换、已掌握/未掌握标记、跟读评分
+ * 功能：卡片翻转、发音、上下张切换、已掌握/未掌握标记
  */
 window.VocabApp = window.VocabApp || {};
 
@@ -224,14 +224,6 @@ window.VocabApp.Flashcard = (function () {
       VocabApp.speak(word.word);
     }
   }
-
-  /**
-   * 跟读：先播放发音，然后自动识别打分
-   */
-
-  /**
-   * 更新当前单词的跟读过关标记
-   */
 
   /**
    * 标记掌握状态

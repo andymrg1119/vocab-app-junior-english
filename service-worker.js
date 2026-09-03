@@ -16,7 +16,6 @@ var CORE = [
   './js/data-app.js',
   './js/data-7a.js',
   './js/data-7b.js',
-  './js/data-other.js',
   './js/flashcard.js',
   './js/dictation.js',
   './js/text-reader.js',

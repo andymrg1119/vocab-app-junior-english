@@ -59,62 +59,6 @@ window.VocabApp = window.VocabApp || {};
     window.speechSynthesis.speak(utterance);
   }
 
-  /**
-   * 带回调的朗读：朗读结束后执行回调
-   * 用于跟读功能：先播放，播完再开始录音
-   */
-  function speakWithCallback(text, callback) {
-    if (!window.speechSynthesis) {
-      if (callback) callback();
-      return;
-    }
-    window.speechSynthesis.cancel();
-
-    var utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-GB';
-    utterance.rate = 0.85;
-    utterance.pitch = 1.0;
-
-    // 优先选择英式英语语音
-    var voices = window.speechSynthesis.getVoices();
-    var britishVoice = null;
-    for (var i = 0; i < voices.length; i++) {
-      var lang = voices[i].lang || '';
-      if (lang.indexOf('en-GB') === 0 || lang.indexOf('en_GB') === 0) {
-        britishVoice = voices[i];
-        break;
-      }
-    }
-    if (britishVoice) {
-      utterance.voice = britishVoice;
-    } else {
-      for (var j = 0; j < voices.length; j++) {
-        if (voices[j].lang.indexOf('en') === 0) {
-          utterance.voice = voices[j];
-          break;
-        }
-      }
-    }
-
-    var fired = false;
-    function safeCallback() {
-      if (!fired) {
-        fired = true;
-        if (callback) callback();
-      }
-    }
-
-    utterance.onend = safeCallback;
-    utterance.onerror = safeCallback;
-
-    window.speechSynthesis.speak(utterance);
-
-    // 超时保护：如果 onend 没触发，按预估时间后继续
-    var wordCount = text.split(/\s+/).length;
-    var estimatedMs = Math.max(2000, wordCount * 700 + 1000);
-    setTimeout(safeCallback, estimatedMs);
-  }
-
   // 语音列表可能异步加载
   if (window.speechSynthesis) {
     window.speechSynthesis.onvoiceschanged = function () {
@@ -418,6 +362,83 @@ window.VocabApp = window.VocabApp || {};
       this.set(VocabConfig.storageKeys.wordbook, newBook);
     },
 
+    /* ===== 进度重置 ===== */
+
+    /**
+     * 重置当前单元：清空该单元的闯关进度（掌握/朗读/真题通关/单元通关/成绩）。
+     * 保留其它单元、打卡记录与生词本。重置后该单元需重新闯关，下一单元会重新锁定。
+     */
+    resetUnitProgress: function (unitId) {
+      // 1. 单元通关标记
+      var unlock = this.getCompletedUnits();
+      if (unlock[unitId]) {
+        delete unlock[unitId];
+        this.set(VocabConfig.storageKeys.unitUnlock, unlock);
+      }
+      // 2. 真题通关
+      var examPass = this.get(VocabConfig.storageKeys.examPass, {});
+      if (examPass[unitId]) {
+        delete examPass[unitId];
+        this.set(VocabConfig.storageKeys.examPass, examPass);
+      }
+      // 3. 朗读记录（该单元前缀 unitId| 的项）
+      var readItems = this.getReadItems();
+      var readChanged = false;
+      for (var key in readItems) {
+        if (readItems.hasOwnProperty(key) && key.indexOf(unitId + '|') === 0) {
+          delete readItems[key];
+          readChanged = true;
+        }
+      }
+      if (readChanged) this.set(VocabConfig.storageKeys.readItems, readItems);
+      // 4. 掌握标记（该单元单词）
+      var mastered = this.getMasteredWords();
+      var mChanged = false;
+      var units = getUnits();
+      for (var i = 0; i < units.length; i++) {
+        if (units[i].unitId === unitId && units[i].words) {
+          for (var j = 0; j < units[i].words.length; j++) {
+            if (mastered.hasOwnProperty(units[i].words[j].word)) {
+              delete mastered[units[i].words[j].word];
+              mChanged = true;
+            }
+          }
+          break;
+        }
+      }
+      if (mChanged) this.set(VocabConfig.storageKeys.masteredWords, mastered);
+      // 5. 单词卡进度
+      var progress = this.getProgress();
+      if (progress[unitId] !== undefined) {
+        delete progress[unitId];
+        this.set(VocabConfig.storageKeys.progress, progress);
+      }
+      // 6. 默写成绩 + 真题成绩（该单元）
+      var ds = this.getDictationScores();
+      if (ds[unitId]) { delete ds[unitId]; this.set(VocabConfig.storageKeys.dictationScores, ds); }
+      var es = this.getExamScores();
+      if (es[unitId]) { delete es[unitId]; this.set(VocabConfig.storageKeys.examScores, es); }
+    },
+
+    /**
+     * 重置全部学习进度：清空所有闯关与成绩数据，从第一单元重新开始。
+     * 保留打卡记录（习惯追踪）与生词本（个人收藏）。
+     */
+    resetAllProgress: function () {
+      var keys = [
+        VocabConfig.storageKeys.masteredWords,
+        VocabConfig.storageKeys.progress,
+        VocabConfig.storageKeys.unitUnlock,
+        VocabConfig.storageKeys.readItems,
+        VocabConfig.storageKeys.examPass,
+        VocabConfig.storageKeys.dictationScores,
+        VocabConfig.storageKeys.examScores
+      ];
+      for (var i = 0; i < keys.length; i++) {
+        try { localStorage.removeItem(keys[i]); } catch (e) { /* ignore */ }
+      }
+    },
+
   };
 
 
@@ -459,6 +480,7 @@ window.VocabApp = window.VocabApp || {};
     initTabNav();
     initCheckin();
     initModals();
+    initReset();
 
     // 默认选中第一个单元
     var units = getUnits();
@@ -1335,6 +1357,58 @@ window.VocabApp = window.VocabApp || {};
   }
 
   /* ============================================================
+     进度重置
+     ============================================================ */
+
+  function initReset() {
+    var btn = document.getElementById('resetProgressBtn');
+    var modal = document.getElementById('resetModal');
+    var closeBtn = document.getElementById('resetClose');
+    var unitBtn = document.getElementById('resetUnitBtn');
+    var allBtn = document.getElementById('resetAllBtn');
+    if (!btn || !modal) return;
+
+    btn.addEventListener('click', function () {
+      modal.classList.add('show');
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        modal.classList.remove('show');
+      });
+    }
+
+    // 重置当前单元
+    if (unitBtn) {
+      unitBtn.addEventListener('click', function () {
+        var unit = getCurrentUnit();
+        if (unit) Storage.resetUnitProgress(unit.unitId);
+        modal.classList.remove('show');
+        state.tab = 'flashcard';
+        renderUnitList();
+        updateTabBar();
+        switchTab('flashcard');
+        showToast('✅ 已重置当前单元，可以从头再来啦！');
+      });
+    }
+
+    // 重置全部进度
+    if (allBtn) {
+      allBtn.addEventListener('click', function () {
+        Storage.resetAllProgress();
+        modal.classList.remove('show');
+        state.tab = 'flashcard';
+        var units = getUnits();
+        if (units.length > 0) state.unitId = units[0].unitId;
+        renderUnitList();
+        updateTabBar();
+        switchTab('flashcard');
+        showToast('✅ 已重置全部进度，从第一单元重新开始！');
+      });
+    }
+  }
+
+  /* ============================================================
      工具函数
      ============================================================ */
 
@@ -1376,7 +1450,6 @@ window.VocabApp = window.VocabApp || {};
      ============================================================ */
 
   VocabApp.speak = speak;
-  VocabApp.speakWithCallback = speakWithCallback;
   VocabApp.Storage = Storage;
   VocabApp.state = state;
   VocabApp.getCurrentUnit = getCurrentUnit;

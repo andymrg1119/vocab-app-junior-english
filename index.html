@@ -38,6 +38,9 @@
       <ul class="unit-list" id="unitList">
         <!-- 由JS动态填充 -->
       </ul>
+      <div class="sidebar-footer">
+        <button class="reset-progress-btn" id="resetProgressBtn">⚙️ 重置进度</button>
+      </div>
     </aside>
 
     <!-- 主内容区 -->
@@ -122,6 +125,27 @@
       </div>
       <div class="modal-body" id="keywordBody">
         <!-- 由JS动态填充 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 重置进度弹窗 -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>重置学习进度</h3>
+        <button class="modal-close" id="resetClose">&times;</button>
+      </div>
+      <div class="modal-body reset-modal-body">
+        <p class="reset-tip">重置后无法恢复，请选择要重置的范围：</p>
+        <button class="reset-option-btn" id="resetUnitBtn">
+          <span class="reset-option-title">🔄 重置当前单元</span>
+          <span class="reset-option-desc">清空当前单元的闯关进度，重新学习这一单元</span>
+        </button>
+        <button class="reset-option-btn danger" id="resetAllBtn">
+          <span class="reset-option-title">🗑️ 重置全部进度</span>
+          <span class="reset-option-desc">从第一单元重新开始（保留打卡记录和生词本）</span>
+        </button>
       </div>
     </div>
   </div>

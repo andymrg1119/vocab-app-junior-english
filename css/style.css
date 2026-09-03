@@ -1399,6 +1399,84 @@ body {
   text-align: center;
 }
 
+/* ===== 重置进度 ===== */
+.sidebar-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+.reset-progress-btn {
+  width: 100%;
+  background: none;
+  border: 1px dashed var(--border);
+  color: var(--text-light);
+  border-radius: 8px;
+  padding: 8px 0;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.reset-progress-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: var(--danger-light);
+}
+
+.reset-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reset-tip {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.reset-option-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.reset-option-btn:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.reset-option-btn.danger:hover {
+  border-color: var(--danger);
+  background: var(--danger-light);
+}
+
+.reset-option-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.reset-option-btn.danger .reset-option-title {
+  color: var(--danger);
+}
+
+.reset-option-desc {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
 .encourage-text {
   font-size: 22px;
   font-weight: 600;
@@ -2410,4 +2488,14 @@ body {
     padding: 2px 6px;
   }
 }
+
+/* 重置进度：移动端紧凑显示 */
+@media (max-width: 600px) {
+  .sidebar-footer {
+    padding: 6px 8px;
+  }
+  .reset-progress-btn {
+    padding: 5px 0;
+    font-size: 12px;
+  }
 }
