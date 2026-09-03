@@ -235,6 +235,11 @@ window.VocabApp.Flashcard = (function () {
     VocabApp.Storage.setMastered(word.word, mastered);
     updateMasteryButtons(word.word);
 
+    // 标记「已掌握」时自动进入间隔重复复习计划
+    if (mastered && VocabApp.Review) {
+      VocabApp.Review.scheduleWord(word, currentUnit.unitId);
+    }
+
     // 更新学习进度
     VocabApp.Storage.updateProgress(currentUnit.unitId, currentIndex);
 

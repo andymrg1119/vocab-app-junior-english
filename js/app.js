@@ -418,6 +418,16 @@ window.VocabApp = window.VocabApp || {};
       if (ds[unitId]) { delete ds[unitId]; this.set(VocabConfig.storageKeys.dictationScores, ds); }
       var es = this.getExamScores();
       if (es[unitId]) { delete es[unitId]; this.set(VocabConfig.storageKeys.examScores, es); }
+      // 7. 间隔重复复习计划（该单元单词）
+      var plan = this.get(VocabConfig.storageKeys.review, {});
+      var planChanged = false;
+      for (var w in plan) {
+        if (plan.hasOwnProperty(w) && plan[w].unitId === unitId) {
+          delete plan[w];
+          planChanged = true;
+        }
+      }
+      if (planChanged) this.set(VocabConfig.storageKeys.review, plan);
     },
 
     /**
@@ -432,7 +442,8 @@ window.VocabApp = window.VocabApp || {};
         VocabConfig.storageKeys.readItems,
         VocabConfig.storageKeys.examPass,
         VocabConfig.storageKeys.dictationScores,
-        VocabConfig.storageKeys.examScores
+        VocabConfig.storageKeys.examScores,
+        VocabConfig.storageKeys.review
       ];
       for (var i = 0; i < keys.length; i++) {
         try { localStorage.removeItem(keys[i]); } catch (e) { /* ignore */ }
@@ -494,6 +505,9 @@ window.VocabApp = window.VocabApp || {};
 
     // 更新打卡状态显示
     updateCheckinDisplay();
+
+    // 更新「今日复习」角标
+    if (VocabApp.Review) VocabApp.Review.updateBadge();
   }
 
   /* ============================================================
@@ -750,7 +764,7 @@ window.VocabApp = window.VocabApp || {};
     for (var i = 0; i < tabs.length; i++) {
       var tabName = tabs[i].getAttribute('data-tab');
       var unlocked = unit ? isTabUnlocked(unit, tabName) : true;
-      var isFree = (tabName === 'wordbook');
+      var isFree = (tabName === 'wordbook' || tabName === 'review');
       tabs[i].classList.toggle('locked', !unlocked && !isFree);
       if (unlocked || isFree) {
         tabs[i].removeAttribute('title');
@@ -770,6 +784,16 @@ window.VocabApp = window.VocabApp || {};
 
     if (tabId === 'wordbook') {
       bar.innerHTML = '<span class="tp-info">📚 生词本是复习工具，随时可用</span>';
+      return;
+    }
+
+    if (tabId === 'review') {
+      var dueCount = (VocabApp.Review && VocabApp.Review.getDueCount) ? VocabApp.Review.getDueCount() : 0;
+      if (dueCount > 0) {
+        bar.innerHTML = '<span class="tp-info">🔁 今天有 <b>' + dueCount + '</b> 个单词到期待复习，按遗忘曲线巩固记忆</span>';
+      } else {
+        bar.innerHTML = '<span class="tp-info">🔁 今日复习：把「已掌握」的单词按遗忘曲线定期回访</span>';
+      }
       return;
     }
 
@@ -825,7 +849,7 @@ window.VocabApp = window.VocabApp || {};
   function switchTab(tabName) {
     // 闯关：未解锁的环节不可进入（生词本除外）
     var unit = getCurrentUnit();
-    if (unit && tabName !== 'wordbook' && !isTabUnlocked(unit, tabName)) {
+    if (unit && tabName !== 'wordbook' && tabName !== 'review' && !isTabUnlocked(unit, tabName)) {
       var idx = TAB_ORDER.indexOf(tabName);
       var prevLabel = idx > 0 ? TAB_LABELS[TAB_ORDER[idx - 1]] : '';
       showToast('🔒 请先完成上一环节：' + prevLabel);
@@ -845,6 +869,9 @@ window.VocabApp = window.VocabApp || {};
 
     // 刷新锁定态与进度条
     updateTabBar();
+
+    // 刷新「今日复习」角标
+    if (VocabApp.Review) VocabApp.Review.updateBadge();
   }
 
   function renderTabContent(tabName) {
@@ -884,6 +911,9 @@ window.VocabApp = window.VocabApp || {};
         break;
       case 'wordbook':
         renderWordbook(container);
+        break;
+      case 'review':
+        if (VocabApp.Review) VocabApp.Review.render(container);
         break;
       default:
         VocabApp.Flashcard.render(unit, container);

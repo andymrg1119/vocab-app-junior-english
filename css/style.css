@@ -2499,3 +2499,148 @@ body {
     font-size: 12px;
   }
 }
+
+/* ============================================================
+   间隔重复（今日复习）
+   ============================================================ */
+
+/* Tab 上的到期角标（红点数字） */
+.review-badge {
+  display: inline-block;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 5px;
+  margin-left: 5px;
+  border-radius: 9px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.review-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 8px 0;
+}
+
+.review-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.review-stats {
+  font-size: 15px;
+  color: var(--text-light);
+}
+
+.review-stats b {
+  color: var(--primary-dark);
+  font-size: 18px;
+  margin: 0 2px;
+}
+
+.review-flashcard-wrap {
+  margin-bottom: 8px;
+}
+
+/* 复习卡片略矮一点，给按钮留空间 */
+.review-flashcard-wrapper {
+  height: 340px;
+}
+
+.review-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.review-btn {
+  padding: 10px 22px;
+  border-radius: 24px;
+  border: 2px solid;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  background: #fff;
+}
+
+.review-btn.review-speak {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.review-btn.review-speak:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.review-btn.review-forgot {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.review-btn.review-forgot:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.review-btn.review-remember {
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.review-btn.review-remember:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* 空状态 / 完成状态 */
+.review-empty {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.review-empty-icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+}
+
+.review-empty-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 10px;
+}
+
+.review-empty-sub {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.review-empty-sub b {
+  color: var(--primary-dark);
+}
+
+/* 移动端复习按钮紧凑 */
+@media (max-width: 600px) {
+  .review-flashcard-wrapper {
+    height: 300px;
+  }
+  .review-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  .review-actions {
+    gap: 8px;
+  }
+}

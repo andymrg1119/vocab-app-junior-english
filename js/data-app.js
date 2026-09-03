@@ -31,7 +31,8 @@ window.VocabConfig = {
     wordbook: 'vocabApp_wordbook',
     unitUnlock: 'vocabApp_unit_unlock',
     readItems: 'vocabApp_read_items',
-    examPass: 'vocabApp_exam_pass'
+    examPass: 'vocabApp_exam_pass',
+    review: 'vocabApp_review'
   },
 
   /** 鼓励语列表 */
