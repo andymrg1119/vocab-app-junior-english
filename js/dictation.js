@@ -69,6 +69,7 @@ window.VocabApp.Dictation = (function () {
     html += '      <div class="rule-item">⚠️ 每题只能提交<strong>一次</strong>，提交后<strong>不能修改</strong></div>';
     html += '      <div class="rule-item">⚠️ 必须<strong>全部默写完成</strong>才能查看成绩</div>';
     html += '      <div class="rule-item">⚠️ 必须<strong>全部正确</strong>才算过关（错一个就不行）</div>';
+    html += '      <div class="rule-item">✅ 大小写、空格、标点符号<strong>不影响判定</strong>（字母对即可，不会因多/少空格或标点判错）</div>';
     html += '    </div>';
     html += '    <div class="dictation-mode-select">';
     html += '      <button class="mode-btn active" data-mode="cn2en">中→英（看中文写英文）</button>';
@@ -180,7 +181,7 @@ window.VocabApp.Dictation = (function () {
     html += '      <span class="dict-label">' + labelText + '</span>';
     html += '      <span class="dict-prompt-text" id="dictPrompt">' + escapeHtml(promptText) + '</span>';
     html += '    </div>';
-    html += '    <input type="text" class="dictation-input" id="dictInput" placeholder="' + placeholder + '" autocomplete="off" autocapitalize="off" spellcheck="false">';
+    html += '    <input type="text" class="dictation-input" id="dictInput" placeholder="' + placeholder + '" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-form-type="other">';
     html += '    <div class="dictation-feedback" id="dictFeedback"></div>';
     html += '  </div>';
     html += '  <div class="dictation-controls">';
@@ -231,20 +232,17 @@ window.VocabApp.Dictation = (function () {
     var submitBtn = document.getElementById('dictSubmit');
     var nextBtn = document.getElementById('dictNext');
 
-    var userInput = input.value.trim().toLowerCase();
-    var correctAnswer;
+    // 归一化：忽略大小写、空格、标点符号差异，只比对字母/汉字本身
+    var rawInput = input.value;
+    var isEmpty = (rawInput.trim() === '');
+    var userInput = isEmpty ? '' : normalizeAnswer(rawInput);
+    var correctAnswer = normalizeAnswer(mode === 'cn2en' ? word.word : word.meaning);
 
-    if (mode === 'cn2en') {
-      correctAnswer = word.word.toLowerCase();
-    } else {
-      correctAnswer = word.meaning.trim().toLowerCase();
-    }
-
-    if (userInput === '') {
+    if (isEmpty) {
       userInput = '（未作答）';
     }
 
-    var isCorrect = (userInput === correctAnswer);
+    var isCorrect = (!isEmpty && userInput === correctAnswer);
 
     answered = true;
     input.disabled = true;
@@ -513,6 +511,21 @@ window.VocabApp.Dictation = (function () {
     var div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  /**
+   * 归一化答案用于比对：
+   * - 转小写（忽略大小写）
+   * - 去除所有空格（多一个/少一个空格均忽略）
+   * - 去除所有非字母/非数字字符（标点、括号、引号、省略号等均忽略）
+   * 只要"字母/汉字本身"对得上就算正确，不纠结格式差异。
+   */
+  function normalizeAnswer(text) {
+    if (text == null) return '';
+    return String(text)
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/[^\p{L}\p{N}]/gu, '');
   }
 
   return {

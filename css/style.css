@@ -1188,6 +1188,8 @@ body {
   font-family: inherit;
   text-align: center;
   transition: border-color 0.2s ease;
+  /* 尽可能关闭输入法联想/纠错条（旧版 IE/Edge 支持，现代浏览器主要靠 HTML 属性） */
+  ime-mode: disabled;
 }
 
 .dictation-input:focus {
