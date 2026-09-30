@@ -69,7 +69,7 @@ window.VocabApp.Dictation = (function () {
     html += '      <div class="rule-item">⚠️ 每题只能提交<strong>一次</strong>，提交后<strong>不能修改</strong></div>';
     html += '      <div class="rule-item">⚠️ 必须<strong>全部默写完成</strong>才能查看成绩</div>';
     html += '      <div class="rule-item">⚠️ 必须<strong>全部正确</strong>才算过关（错一个就不行）</div>';
-    html += '      <div class="rule-item">✅ 大小写、空格、标点符号<strong>不影响判定</strong>（字母对即可，不会因多/少空格或标点判错）</div>';
+    html += '      <div class="rule-item">✅ 空格、标点符号、以及<strong>非首字母的大小写</strong>不影响判定；但<strong>首字母大小写需与教材一致</strong>（如 Christmas 必须大写、greet 必须小写）</div>';
     html += '    </div>';
     html += '    <div class="dictation-mode-select">';
     html += '      <button class="mode-btn active" data-mode="cn2en">中→英（看中文写英文）</button>';
@@ -515,17 +515,20 @@ window.VocabApp.Dictation = (function () {
 
   /**
    * 归一化答案用于比对：
-   * - 转小写（忽略大小写）
    * - 去除所有空格（多一个/少一个空格均忽略）
    * - 去除所有非字母/非数字字符（标点、括号、引号、省略号等均忽略）
-   * 只要"字母/汉字本身"对得上就算正确，不纠结格式差异。
+   * - 首字母保留【原始大小写】参与比对（不忽略）：如教材数据 Christmas 必须大写、greet 必须小写
+   * - 其余字母统一小写（忽略大小写）
+   * 即：空格/标点/非首字母的大小写均可忽略，但首字母大小写要与教材数据一致。
    */
   function normalizeAnswer(text) {
     if (text == null) return '';
-    return String(text)
-      .toLowerCase()
+    var s = String(text)
       .replace(/\s+/g, '')
       .replace(/[^\p{L}\p{N}]/gu, '');
+    if (s.length === 0) return s;
+    // 首字母保留原大小写（参与比对），其余字母小写化（忽略大小写）
+    return s.charAt(0) + s.slice(1).toLowerCase();
   }
 
   return {
