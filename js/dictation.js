@@ -69,7 +69,8 @@ window.VocabApp.Dictation = (function () {
     html += '      <div class="rule-item">⚠️ 每题只能提交<strong>一次</strong>，提交后<strong>不能修改</strong></div>';
     html += '      <div class="rule-item">⚠️ 必须<strong>全部默写完成</strong>才能查看成绩</div>';
     html += '      <div class="rule-item">⚠️ 必须<strong>全部正确</strong>才算过关（错一个就不行）</div>';
-    html += '      <div class="rule-item">✅ 空格、标点符号、以及<strong>非首字母的大小写</strong>不影响判定；但<strong>首字母大小写需与教材一致</strong>（如 Christmas 必须大写、greet 必须小写）</div>';
+    html += '      <div class="rule-item">✅ 空格、标点、全角/半角、单词大小写均不影响判定（如 greet / Greet 都对）；仅<strong>专有名词首字母必须大写</strong>（如 Christmas、T-shirt）</div>';
+    html += '      <div class="rule-item">✅ 英→中模式写出<strong>主要释义</strong>即可（如「年级；等级」写「年级」算对）</div>';
     html += '    </div>';
     html += '    <div class="dictation-mode-select">';
     html += '      <button class="mode-btn active" data-mode="cn2en">中→英（看中文写英文）</button>';
@@ -232,17 +233,10 @@ window.VocabApp.Dictation = (function () {
     var submitBtn = document.getElementById('dictSubmit');
     var nextBtn = document.getElementById('dictNext');
 
-    // 归一化：忽略大小写、空格、标点符号差异，只比对字母/汉字本身
+    // 归一化比对：忽略空格/标点/全角差异；首字母大小写按教材数据判定
     var rawInput = input.value;
     var isEmpty = (rawInput.trim() === '');
-    var userInput = isEmpty ? '' : normalizeAnswer(rawInput);
-    var correctAnswer = normalizeAnswer(mode === 'cn2en' ? word.word : word.meaning);
-
-    if (isEmpty) {
-      userInput = '（未作答）';
-    }
-
-    var isCorrect = (!isEmpty && userInput === correctAnswer);
+    var isCorrect = (!isEmpty && isAnswerCorrect(rawInput, mode === 'cn2en' ? word.word : word.meaning, mode));
 
     answered = true;
     input.disabled = true;
@@ -514,21 +508,84 @@ window.VocabApp.Dictation = (function () {
   }
 
   /**
-   * 归一化答案用于比对：
-   * - 去除所有空格（多一个/少一个空格均忽略）
-   * - 去除所有非字母/非数字字符（标点、括号、引号、省略号等均忽略）
-   * - 首字母保留【原始大小写】参与比对（不忽略）：如教材数据 Christmas 必须大写、greet 必须小写
-   * - 其余字母统一小写（忽略大小写）
-   * 即：空格/标点/非首字母的大小写均可忽略，但首字母大小写要与教材数据一致。
+   * 全角转半角：中文输入法误开全角时（ｇｒｅｅｔ / ７年级）也应判对。
    */
-  function normalizeAnswer(text) {
+  function toHalfWidth(str) {
+    return String(str)
+      .replace(/[\uFF01-\uFF5E]/g, function (c) {
+        return String.fromCharCode(c.charCodeAt(0) - 0xFEE0);
+      })
+      .replace(/\u3000/g, ' ');
+  }
+
+  /**
+   * 答案清洗：全角转半角 → 去掉括号及其中内容（补充说明 / 英文对应 / 复数形式）
+   * → 去掉所有空格 → 去掉所有非字母、非数字字符（标点等）。
+   */
+  function cleanAnswer(text) {
     if (text == null) return '';
-    var s = String(text)
+    return toHalfWidth(text)
+      .replace(/[（(][^）)]*[）)]/g, '')
       .replace(/\s+/g, '')
       .replace(/[^\p{L}\p{N}]/gu, '');
-    if (s.length === 0) return s;
-    // 首字母保留原大小写（参与比对），其余字母小写化（忽略大小写）
-    return s.charAt(0) + s.slice(1).toLowerCase();
+  }
+
+  /**
+   * 宽松清洗（仅在严格清洗结果为空时作为兜底使用）：
+   * 只去掉括号字符本身、保留括号内文字。
+   * 场景：孩子把答案整体括起来写，如「（年级）」——括号只是标点，
+   * 内容才是答案，不应因为整条被清空而误判为错。
+   */
+  function cleanAnswerLoose(text) {
+    if (text == null) return '';
+    return toHalfWidth(text)
+      .replace(/[（(）)]/g, '')
+      .replace(/\s+/g, '')
+      .replace(/[^\p{L}\p{N}]/gu, '');
+  }
+
+  /**
+   * 判断用户输入是否正确。
+   * 规则：
+   * - 任一边清洗后为空（空输入 / 纯空格 / 纯标点 / 纯符号）→ 一律判错，
+   *   防止"两边都清洗为空"被误判成正确。
+   * - 英→中（en2cn，写中文释义）：标准答案按多义项分隔符（；;，,、）切分为多个候选，
+   *   孩子答案命中任一候选即算对；或孩子答案长度≥2 且是某一候选的子串，也算对
+   *   （写了主要部分即可，不要求复现整条释义）。
+   * - 中→英（cn2en，写英文单词）：教材数据首字母是**大写**的词（如 Christmas / T-shirt / BBQ）
+   *   必须首字母大写；数据首字母是**小写**的词（如 greet）忽略首字母大小写，
+   *   因为手机/平板输入法常自动首字母大写，不能因此判错。其余字母一律忽略大小写。
+   */
+  function isAnswerCorrect(userRaw, correctRaw, currentMode) {
+    var u = cleanAnswer(userRaw);
+    var c = cleanAnswer(correctRaw);
+
+    // 兜底：整条被括号吞掉（如孩子写「（年级）」）时，退化为只去括号字符
+    if (u.length === 0) u = cleanAnswerLoose(userRaw);
+    if (c.length === 0) c = cleanAnswerLoose(correctRaw);
+
+    // 任一边为空（空输入 / 纯空格 / 纯标点 / 纯符号）→ 一律判错
+    if (u.length === 0 || c.length === 0) return false;
+
+    if (currentMode === 'en2cn') {
+      var parts = String(correctRaw).split(/[；;，,、]/);
+      for (var i = 0; i < parts.length; i++) {
+        var cand = cleanAnswer(parts[i]);
+        if (cand.length === 0) continue;
+        if (u === cand) return true;
+        if (u.length >= 2 && cand.indexOf(u) >= 0) return true;
+      }
+      return false;
+    }
+
+    // cn2en
+    var cFirst = c.charAt(0);
+    if (/^[A-Z]/.test(cFirst)) {
+      // 数据首字母大写：首字母必须大写，其余忽略大小写
+      return u.charAt(0) === cFirst && u.slice(1).toLowerCase() === c.slice(1).toLowerCase();
+    }
+    // 数据首字母小写：忽略首字母大小写（输入法自动大写不判错）
+    return u.toLowerCase() === c.toLowerCase();
   }
 
   return {

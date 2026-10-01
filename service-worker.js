@@ -20,6 +20,7 @@ var CORE = [
   './js/dictation.js',
   './js/text-reader.js',
   './js/exam.js',
+  './js/review.js',
   './js/app.js',
   './manifest.webmanifest',
   './icon-192.png',

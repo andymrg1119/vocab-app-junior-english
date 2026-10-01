@@ -1,7 +1,7 @@
 {
   "name": "初一英语背单词",
   "short_name": "背单词",
-  "description": "译林版/人教版/外研版初一英语背单词 - 单词卡、默写、课文讲解、跟读、打卡、中考真题",
+  "description": "译林版2024新教材初一英语背单词 - 单词卡、默写、课文讲解、打卡、中考真题",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
