@@ -1196,6 +1196,16 @@ body {
   border-color: var(--primary);
 }
 
+/* cn2en 检测到中文字符时的输入框描边提醒。
+   必须声明在 correct/wrong 之前：三者特异性相同（0,2,0），后声明者胜出，
+   这样判分颜色（绿/红）永远优先于输入法提醒的橙框；
+   同时因为排在 :focus 之后，打字时的橙框仍会盖过聚焦蓝框，可见性不变。 */
+.dictation-input.ime-warn {
+  border-color: #d97706;
+  border-width: 2px;
+  background: #FEF3C7;
+}
+
 .dictation-input.correct {
   border-color: var(--accent);
   background: var(--accent-light);
@@ -1204,13 +1214,6 @@ body {
 .dictation-input.wrong {
   border-color: var(--danger);
   background: var(--danger-light);
-}
-
-/* cn2en 检测到中文字符时的输入框描边提醒 */
-.dictation-input.ime-warn {
-  border-color: #d97706;
-  border-width: 2px;
-  background: #FEF3C7;
 }
 
 .dictation-feedback {
