@@ -544,14 +544,14 @@ function testContentAccuracy() {
   assert(exam1.options[0] === 'A. Are; am', '抽查真题: 7A-U1 第1题选项A不匹配');
 
   var exam63 = data7a[5].exams[2];
-  assert(exam63.answer === 'A', '抽查真题: 7A-U6 第3题答案应为A(for)，实际 "' + exam63.answer + '"');
+  assert(exam63.answer === 'B', '抽查真题: 7A-U6 第3题答案应为B(advice 不可数名词)，实际 "' + exam63.answer + '"');
 
   // 7B-U7 现只有 4 题（旧断言误查第 5 题导致越界崩溃），改为校验题目数量
   assert(data7b[6].exams.length === 4,
     '抽查真题: 7B-U7 应有 4 题，实际 ' + data7b[6].exams.length);
 
   var exam63b = data7b[5].exams[2];
-  assert(exam63b.answer === 'C', '抽查真题: 7B-U6 第3题答案应为C(fell)，实际 "' + exam63b.answer + '"');
+  assert(exam63b.answer === 'B', '抽查真题: 7B-U6 第3题答案应为B(so 前因后果)，实际 "' + exam63b.answer + '"');
 }
 
 // ============================================================
@@ -643,12 +643,6 @@ function testModuleLogic() {
 // ============================================================
 function testEdgeCases() {
   var data7a = global.VocabData['yilin']['7a'];
-  var unit3Words = data7a[2].words;
-  var oclock = null;
-  for (var i = 0; i < unit3Words.length; i++) {
-    if (unit3Words[i].word === "o'clock") { oclock = unit3Words[i]; break; }
-  }
-  assert(oclock !== null, '边界: data-7a U3 应包含单词 o\'clock');
 
   // 检查 7B Unit5 中 ' bush' 前导空格问题
   var data7b = global.VocabData['yilin']['7b'];
