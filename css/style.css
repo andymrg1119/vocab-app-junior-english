@@ -1222,6 +1222,14 @@ body {
   font-weight: 600;
 }
 
+.dictation-feedback.warn {
+  color: #d97706;
+  background: #FEF3C7;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
 .dictation-controls {
   display: flex;
   justify-content: center;

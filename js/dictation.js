@@ -22,6 +22,9 @@ window.VocabApp.Dictation = (function () {
   var PASS_THRESHOLD = 100;
   var containerEl = null;
 
+  /** 中文字符检测（含全角区）：用于 cn2en 模式提示孩子切到英文输入法 */
+  var CJK_PATTERN = /[\u4e00-\u9fa5\u3400-\u4dbf\uf900-\ufaff\u3000-\u303f\uff00-\uffef]/;
+
   /**
    * 渲染默写区域
    */
@@ -70,6 +73,7 @@ window.VocabApp.Dictation = (function () {
     html += '      <div class="rule-item">⚠️ 必须<strong>全部默写完成</strong>才能查看成绩</div>';
     html += '      <div class="rule-item">⚠️ 必须<strong>全部正确</strong>才算过关（错一个就不行）</div>';
     html += '      <div class="rule-item">✅ 空格、标点、全角/半角、单词大小写均不影响判定（如 greet / Greet 都对）；仅<strong>专有名词首字母必须大写</strong>（如 Christmas、T-shirt）</div>';
+    html += '      <div class="rule-item">⌨️ 中→英默写请用<strong>英文键盘</strong>；若弹出中文候选，点击输入法上的「中/英」切换</div>';
     html += '      <div class="rule-item">✅ 英→中模式写出<strong>主要释义</strong>即可（如「年级；等级」写「年级」算对）</div>';
     html += '    </div>';
     html += '    <div class="dictation-mode-select">';
@@ -151,17 +155,22 @@ window.VocabApp.Dictation = (function () {
     }
 
     var word = wordOrder[currentIndex];
-    var promptText, labelText, placeholder;
+    var promptText, labelText, placeholder, inputAttrs;
 
     if (mode === 'cn2en') {
       labelText = '请根据中文释义拼写英文单词';
       promptText = word.meaning + ' (' + (word.pos || '') + ')';
       placeholder = '输入英文单词...';
+      // 引导系统直接弹出拉丁/英文键盘，避免调起中文输入法把拼音转成中文候选
+      inputAttrs = ' inputmode="latin" lang="en"';
     } else {
       labelText = '请根据英文单词写出中文释义';
       promptText = word.word + '  ' + (word.phonetic || '');
       placeholder = '输入中文释义...';
+      // 中文释义必须用中文输入法，不能加 inputmode="latin"
+      inputAttrs = ' inputmode="text" lang="zh-CN"';
     }
+    inputAttrs += ' autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-form-type="other"';
 
     var progressPercent = Math.round((currentIndex / wordOrder.length) * 100);
 
@@ -182,7 +191,7 @@ window.VocabApp.Dictation = (function () {
     html += '      <span class="dict-label">' + labelText + '</span>';
     html += '      <span class="dict-prompt-text" id="dictPrompt">' + escapeHtml(promptText) + '</span>';
     html += '    </div>';
-    html += '    <input type="text" class="dictation-input" id="dictInput" placeholder="' + placeholder + '" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-form-type="other">';
+    html += '    <input type="text" class="dictation-input" id="dictInput" placeholder="' + placeholder + '"' + inputAttrs + '>';
     html += '    <div class="dictation-feedback" id="dictFeedback"></div>';
     html += '  </div>';
     html += '  <div class="dictation-controls">';
@@ -209,6 +218,21 @@ window.VocabApp.Dictation = (function () {
         } else {
           nextQuestion();
         }
+      }
+    });
+
+    // cn2en：检测到中文字符时实时提醒切换英文输入法
+    // 仅作提示，不阻止输入、不阻止提交、不自动清空用户输入；提交后（answered）不再干预反馈区
+    input.addEventListener('input', function () {
+      if (mode !== 'cn2en' || answered) return;
+      var feedbackEl = document.getElementById('dictFeedback');
+      if (!feedbackEl) return;
+      if (CJK_PATTERN.test(input.value)) {
+        feedbackEl.className = 'dictation-feedback warn';
+        feedbackEl.innerHTML = '⌨️ 请切换到英文输入法（当前是中文输入）';
+      } else {
+        feedbackEl.className = 'dictation-feedback';
+        feedbackEl.innerHTML = '';
       }
     });
 
