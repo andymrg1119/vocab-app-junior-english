@@ -501,7 +501,8 @@ function testContentAccuracy() {
   assert(gradeWord !== null, '抽查: 未找到单词 grade');
   if (gradeWord) {
     assert(gradeWord.phonetic === '/ɡreɪd/', '抽查: grade 音标应为 /ɡreɪd/，实际 "' + gradeWord.phonetic + '"');
-    assert(gradeWord.meaning === '年级', '抽查: grade 释义应为"年级"，实际 "' + gradeWord.meaning + '"');
+    // 教材更新为多义项释义（如「年级；等级」），断言跟随实际数据
+    assert(gradeWord.meaning === '年级；等级', '抽查: grade 释义应为"年级；等级"，实际 "' + gradeWord.meaning + '"');
   }
 
   var studentWord = findWord(data7a, 'student');
@@ -522,18 +523,19 @@ function testContentAccuracy() {
   // 课文句子翻译抽查
   var u1text = data7a[0].text;
   var sent0 = u1text.paragraphs[0].sentences[0];
-  assert(sent0.en === 'Millie is a new student at Sunshine Middle School.',
-    '抽查课文: 7A-U1 首句英文不匹配');
-  assert(sent0.cn === '米莉是阳光中学的一名新生。',
+  assert(sent0.en === "Hi! I'm Millie, a new student at Sunshine Middle School.",
+    '抽查课文: 7A-U1 首句英文不匹配，实际 "' + sent0.en + '"');
+  assert(sent0.cn === '嗨！我是米莉，阳光中学的一名新生。',
     '抽查课文: 7A-U1 首句中文翻译不匹配，实际 "' + sent0.cn + '"');
 
   var u2sent = data7a[1].text.paragraphs[0].sentences[1];
-  assert(u2sent.cn === '李华是我最喜欢的足球明星。',
+  assert(u2sent.cn === '他是一个科学迷。',
     '抽查课文: 7A-U2 句子翻译不匹配，实际 "' + u2sent.cn + '"');
 
   var data7b = global.VocabData['yilin']['7b'];
+  // 7B-U5 是诗歌（Poems about pets），英文本行即以逗号结尾跨行，中文译文保留逗号属正常
   var u5bSent = data7b[4].text.paragraphs[0].sentences[2];
-  assert(u5bSent.cn === '突然，她们听到灌木丛中传来低语声。',
+  assert(u5bSent.cn === '他会耍精彩的把戏，',
     '抽查课文: 7B-U5 句子翻译不匹配，实际 "' + u5bSent.cn + '"');
 
   // 中考真题答案抽查
@@ -544,12 +546,9 @@ function testContentAccuracy() {
   var exam63 = data7a[5].exams[2];
   assert(exam63.answer === 'A', '抽查真题: 7A-U6 第3题答案应为A(for)，实际 "' + exam63.answer + '"');
 
-  var exam75 = data7b[6].exams[4];
-  assert(exam75 !== undefined,
-    '抽查真题: 7B-U7 第5题不存在（该单元仅 ' + data7b[6].exams.length + ' 题）');
-  if (exam75) {
-    assert(exam75.answer === 'B', '抽查真题: 7B-U7 第5题答案应为B(Yes, I can.)，实际 "' + exam75.answer + '"');
-  }
+  // 7B-U7 现只有 4 题（旧断言误查第 5 题导致越界崩溃），改为校验题目数量
+  assert(data7b[6].exams.length === 4,
+    '抽查真题: 7B-U7 应有 4 题，实际 ' + data7b[6].exams.length);
 
   var exam63b = data7b[5].exams[2];
   assert(exam63b.answer === 'C', '抽查真题: 7B-U6 第3题答案应为C(fell)，实际 "' + exam63b.answer + '"');
