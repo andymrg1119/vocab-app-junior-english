@@ -161,13 +161,15 @@ window.VocabApp.Dictation = (function () {
       labelText = '请根据中文释义拼写英文单词';
       promptText = word.meaning + ' (' + (word.pos || '') + ')';
       placeholder = '输入英文单词...';
-      // 引导系统直接弹出拉丁/英文键盘，避免调起中文输入法把拼音转成中文候选
-      inputAttrs = ' inputmode="latin" lang="en"';
+      // 网页无法强制切换系统键盘：inputmode 的现行合法值（none/text/decimal/
+      // numeric/tel/search/email/url）里没有 latin，写了会回落默认键盘、不起作用。
+      // 这里只用 lang="en" 给浏览器一点提示，真正兜底靠下面的中文字符检测提醒。
+      inputAttrs = ' lang="en"';
     } else {
       labelText = '请根据英文单词写出中文释义';
       promptText = word.word + '  ' + (word.phonetic || '');
       placeholder = '输入中文释义...';
-      // 中文释义必须用中文输入法，不能加 inputmode="latin"
+      // 中文释义必须用中文输入法，保持 inputmode="text"
       inputAttrs = ' inputmode="text" lang="zh-CN"';
     }
     inputAttrs += ' autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-form-type="other"';
@@ -225,9 +227,16 @@ window.VocabApp.Dictation = (function () {
     // 仅作提示，不阻止输入、不阻止提交、不自动清空用户输入；提交后（answered）不再干预反馈区
     input.addEventListener('input', function () {
       if (mode !== 'cn2en' || answered) return;
+      var hasCJK = CJK_PATTERN.test(input.value);
+      // 输入框描边提醒：橙色边框，提示当前是中文输入
+      if (hasCJK) {
+        input.classList.add('ime-warn');
+      } else {
+        input.classList.remove('ime-warn');
+      }
       var feedbackEl = document.getElementById('dictFeedback');
       if (!feedbackEl) return;
-      if (CJK_PATTERN.test(input.value)) {
+      if (hasCJK) {
         feedbackEl.className = 'dictation-feedback warn';
         feedbackEl.innerHTML = '⌨️ 请切换到英文输入法（当前是中文输入）';
       } else {
@@ -264,6 +273,8 @@ window.VocabApp.Dictation = (function () {
 
     answered = true;
     input.disabled = true;
+    // 判分后移除输入法提醒描边，避免与 correct/wrong 边框冲突
+    input.classList.remove('ime-warn');
     submitBtn.style.display = 'none';
     nextBtn.style.display = 'inline-block';
 

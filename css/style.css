@@ -1206,6 +1206,13 @@ body {
   background: var(--danger-light);
 }
 
+/* cn2en 检测到中文字符时的输入框描边提醒 */
+.dictation-input.ime-warn {
+  border-color: #d97706;
+  border-width: 2px;
+  background: #FEF3C7;
+}
+
 .dictation-feedback {
   margin-top: 12px;
   font-size: 16px;
