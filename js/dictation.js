@@ -573,9 +573,13 @@ window.VocabApp.Dictation = (function () {
    * 规则：
    * - 任一边清洗后为空（空输入 / 纯空格 / 纯标点 / 纯符号）→ 一律判错，
    *   防止"两边都清洗为空"被误判成正确。
-   * - 英→中（en2cn，写中文释义）：标准答案按多义项分隔符（；;，,、）切分为多个候选，
-   *   孩子答案命中任一候选即算对；或孩子答案长度≥2 且是某一候选的子串，也算对
-   *   （写了主要部分即可，不要求复现整条释义）。
+   * - 英→中（en2cn，写中文释义）：
+   *   1) 先与整条释义比对——孩子照抄「年级；等级」这类完整释义时必须判对；
+   *   2) 再按多义项分隔符（；;，,、）切分为多个候选，命中任一候选即算对；
+   *   3) 孩子答案是整条释义/某一候选的【前缀】（≥2字）或其【子串】（≥3字）也算对
+   *      （写了主要部分即可，不要求复现整条释义）。
+   *   子串要求≥3字：既保留「和（某人）打招呼」写「打招呼」这类合理简写，
+   *   又挡住「聪明的」被「明的」命中这类跨词误判。
    * - 中→英（cn2en，写英文单词）：教材数据首字母是**大写**的词（如 Christmas / T-shirt / BBQ）
    *   必须首字母大写；数据首字母是**小写**的词（如 greet）忽略首字母大小写，
    *   因为手机/平板输入法常自动首字母大写，不能因此判错。其余字母一律忽略大小写。
@@ -592,12 +596,21 @@ window.VocabApp.Dictation = (function () {
     if (u.length === 0 || c.length === 0) return false;
 
     if (currentMode === 'en2cn') {
+      // 1) 整条比对：孩子照抄完整释义（如「年级；等级」）时必须判对
+      //    c 已是整条标准答案的清洗结果（必要时已走宽松兜底）
+      if (u === c) return true;
+      if (u.length >= 2 && c.indexOf(u) === 0) return true;
+      if (u.length >= 3 && c.indexOf(u) >= 0) return true;
+
+      // 2) 按多义项分隔符切分为候选：命中任一候选即算对；
+      //    或是其【前缀】（≥2字）、或是其子串（≥3字）也算对。
       var parts = String(correctRaw).split(/[；;，,、]/);
       for (var i = 0; i < parts.length; i++) {
         var cand = cleanAnswer(parts[i]);
         if (cand.length === 0) continue;
         if (u === cand) return true;
-        if (u.length >= 2 && cand.indexOf(u) >= 0) return true;
+        if (u.length >= 2 && cand.indexOf(u) === 0) return true;
+        if (u.length >= 3 && cand.indexOf(u) >= 0) return true;
       }
       return false;
     }

@@ -306,30 +306,28 @@ function testData7B() {
 }
 
 // ============================================================
-// 测试3: 其他版本数据
+// 测试3: 版本数据（当前仅译林版 2024 新教材）
 // ============================================================
-function testDataOther() {
-  var pep = global.VocabData['pep'];
-  assert(pep !== undefined, 'data-other: 缺少人教版(pep)数据');
-  assert(pep && pep['7a'] && Array.isArray(pep['7a']), 'data-other: pep.7a 应为数组');
-  assert(pep && pep['7a'] && pep['7a'].length >= 2, 'data-other: pep.7a 至少2个单元');
+function testVersionData() {
+  var versions = Object.keys(global.VocabData);
+  assert(versions.length === 1 && versions[0] === 'yilin',
+    '版本: 应只有译林版(yilin)，实际 [' + versions.join(', ') + ']');
 
-  var waiyan = global.VocabData['waiyan'];
-  assert(waiyan !== undefined, 'data-other: 缺少外研版(waiyan)数据');
-  assert(waiyan && waiyan['7a'] && Array.isArray(waiyan['7a']), 'data-other: waiyan.7a 应为数组');
-  assert(waiyan && waiyan['7a'] && waiyan['7a'].length >= 2, 'data-other: waiyan.7a 至少2个单元');
+  var yilin = global.VocabData['yilin'];
+  assert(yilin !== undefined, '版本: 缺少译林版(yilin)数据');
 
-  if (pep && pep['7a']) {
-    pep['7a'].forEach(function (unit, idx) {
-      assert(unit.words && unit.words.length > 0, 'pep.7a Unit ' + (idx + 1) + ': words 不应为空');
-      unit.words.forEach(function (w, wi) {
-        ['word', 'phonetic', 'pos', 'meaning'].forEach(function (f) {
-          assert(w[f] !== undefined && w[f] !== '',
-            'pep.7a Unit ' + (idx + 1) + ' word[' + wi + ']: 缺少字段 "' + f + '"');
-        });
-      });
-    });
-  }
+  var books = yilin ? Object.keys(yilin) : [];
+  assert(books.length === 2 && books.indexOf('7a') >= 0 && books.indexOf('7b') >= 0,
+    '版本: yilin 应只有 7a/7b 两册，实际 [' + books.join(', ') + ']');
+
+  assert(yilin && Array.isArray(yilin['7a']) && yilin['7a'].length === 8,
+    '版本: yilin.7a 应为 8 个单元，实际 ' + (yilin && yilin['7a'] ? yilin['7a'].length : 0));
+  assert(yilin && Array.isArray(yilin['7b']) && yilin['7b'].length === 8,
+    '版本: yilin.7b 应为 8 个单元，实际 ' + (yilin && yilin['7b'] ? yilin['7b'].length : 0));
+
+  // 已删除的人教版/外研版不应再存在
+  assert(global.VocabData['pep'] === undefined, '版本: 人教版(pep) 已删除，不应存在');
+  assert(global.VocabData['waiyan'] === undefined, '版本: 外研版(waiyan) 已删除，不应存在');
 }
 
 // ============================================================
@@ -339,8 +337,9 @@ function testHTMLStructure() {
   var html = fs.readFileSync(HTML_PATH, 'utf-8');
 
   var scriptOrder = [
-    'js/data-app.js', 'js/data-7a.js', 'js/data-7b.js', 'js/data-other.js',
-    'js/flashcard.js', 'js/dictation.js', 'js/text-reader.js', 'js/exam.js', 'js/app.js'
+    'js/data-app.js', 'js/data-7a.js', 'js/data-7b.js',
+    'js/flashcard.js', 'js/dictation.js', 'js/text-reader.js', 'js/exam.js',
+    'js/review.js', 'js/app.js'
   ];
 
   var positions = {};
@@ -546,7 +545,11 @@ function testContentAccuracy() {
   assert(exam63.answer === 'A', '抽查真题: 7A-U6 第3题答案应为A(for)，实际 "' + exam63.answer + '"');
 
   var exam75 = data7b[6].exams[4];
-  assert(exam75.answer === 'B', '抽查真题: 7B-U7 第5题答案应为B(Yes, I can.)，实际 "' + exam75.answer + '"');
+  assert(exam75 !== undefined,
+    '抽查真题: 7B-U7 第5题不存在（该单元仅 ' + data7b[6].exams.length + ' 题）');
+  if (exam75) {
+    assert(exam75.answer === 'B', '抽查真题: 7B-U7 第5题答案应为B(Yes, I can.)，实际 "' + exam75.answer + '"');
+  }
 
   var exam63b = data7b[5].exams[2];
   assert(exam63b.answer === 'C', '抽查真题: 7B-U6 第3题答案应为C(fell)，实际 "' + exam63b.answer + '"');
@@ -710,12 +713,12 @@ function main() {
   loadJS(path.join(JS_DIR, 'data-app.js'));
   loadJS(path.join(JS_DIR, 'data-7a.js'));
   loadJS(path.join(JS_DIR, 'data-7b.js'));
-  loadJS(path.join(JS_DIR, 'data-other.js'));
   try {
     loadJS(path.join(JS_DIR, 'flashcard.js'));
     loadJS(path.join(JS_DIR, 'dictation.js'));
     loadJS(path.join(JS_DIR, 'text-reader.js'));
     loadJS(path.join(JS_DIR, 'exam.js'));
+    loadJS(path.join(JS_DIR, 'review.js'));
     loadJS(path.join(JS_DIR, 'app.js'));
     passed++;
   } catch (e) {
@@ -737,8 +740,8 @@ function main() {
   testData7B();
   console.log('  完成\n');
 
-  console.log('[5/11] 测试 其他版本数据...');
-  testDataOther();
+  console.log('[5/11] 测试 版本数据...');
+  testVersionData();
   console.log('  完成\n');
 
   console.log('[6/11] 测试 命名空间一致性...');
