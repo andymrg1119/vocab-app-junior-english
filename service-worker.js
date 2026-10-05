@@ -8,7 +8,7 @@
  * 2. 只缓存「有效响应」（HTTP 200 且同源 basic），防止把空响应或错误页写进缓存（缓存投毒）。
  * 3. 支持页面调用 self.skipWaiting() 立即接管，便于主动更新。
  */
-var CACHE = 'vocab-app-v8';
+var CACHE = 'vocab-app-v9';
 var CORE = [
   './',
   './index.html',
