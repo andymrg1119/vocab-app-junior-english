@@ -41,14 +41,24 @@ body {
   background: var(--bg);
   /* PWA standalone 下 100vh 会把系统状态栏/手势条也算进去，比真实可视高度大，
      又因 overflow:hidden 无法滚动补偿，会把底部 footer（今日打卡）顶出屏幕外。
-     逐层回落：dvh 是现代浏览器的真实可视高度；老设备（iOS<15.4 等）由 JS 注入
-     --app-h 实测值命中第三行。 */
+     这里只做「不支持 dvh」时的兜底，dvh 分支放在下方 @supports 里单独给——
+     不能把 100dvh 写成本块内 height 的回退值：不支持 dvh 时 100dvh 非法，按
+     IACVT 规则整条声明会失效，height 会回落到初始值 auto（比截断更糟）。
+     本块两层：第一层 100vh 兼容不支持 CSS 变量的浏览器（var 声明被丢弃）；
+     第二层 var(--app-h, 100vh) 优先取 JS 实测值，取不到仍回落到 100vh。 */
   height: 100vh;
-  height: 100dvh;
-  height: var(--app-h, 100dvh);
+  height: var(--app-h, 100vh);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+/* 支持 dvh 的浏览器：优先用 JS 注入的实测值，其次 100dvh。
+   独立成块，保证「不支持 dvh」的环境完全不会解析到这里，其 100vh 回退恒有效。 */
+@supports (height: 100dvh) {
+  body {
+    height: var(--app-h, 100dvh);
+  }
 }
 
 /* ===== 顶部导航栏 ===== */
