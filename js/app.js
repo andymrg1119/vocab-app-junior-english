@@ -493,6 +493,33 @@ window.VocabApp = window.VocabApp || {};
      初始化
      ============================================================ */
 
+  /* ============================================================
+     视口高度兜底（PWA standalone 底部被截断问题）
+     ============================================================ */
+
+  /**
+   * 当前浏览器是否支持 dvh（动态视口高度）单位。
+   * @returns {boolean}
+   */
+  function supportsDvh() {
+    return typeof CSS !== 'undefined' && CSS.supports && CSS.supports('height', '100dvh');
+  }
+
+  /**
+   * 同步 --app-h：仅在浏览器不支持 dvh 时用 JS 实测值兜底。
+   * 支持 dvh 时必须移除该变量，让 CSS 的 100dvh 生效——否则输入法弹出触发的
+   * resize 会把高度改成缩小值，导致整个布局抖动、输入框被顶飞。
+   */
+  function syncAppHeight() {
+    if (supportsDvh()) {
+      // 支持 dvh 就交给 CSS，避免键盘弹出时 JS 频繁改高度造成布局抖动
+      document.documentElement.style.removeProperty('--app-h');
+      return;
+    }
+    var h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    if (h > 0) document.documentElement.style.setProperty('--app-h', h + 'px');
+  }
+
   function init() {
     initVersionSelect();
     initBookSelect();
@@ -517,6 +544,11 @@ window.VocabApp = window.VocabApp || {};
 
     // 更新「今日复习」角标
     if (VocabApp.Review) VocabApp.Review.updateBadge();
+
+    // 修正 PWA standalone 下的视口高度（老设备走 JS 兜底，支持 dvh 的交给 CSS）
+    syncAppHeight();
+    window.addEventListener('resize', syncAppHeight);
+    window.addEventListener('orientationchange', syncAppHeight);
   }
 
   /* ============================================================
